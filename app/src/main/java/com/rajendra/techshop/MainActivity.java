@@ -9,6 +9,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.TextView;
 
+import com.rajendra.techshop.API.Api;
 import com.rajendra.techshop.adapter.CategoryAdapter;
 import com.rajendra.techshop.adapter.DiscountedProductAdapter;
 import com.rajendra.techshop.adapter.RecentlyViewedAdapter;
@@ -74,6 +75,8 @@ public class MainActivity extends AppCompatActivity {
 //        categoryList.add(new Category(6, ic_home_fish));
 //        categoryList.add(new Category(7, ic_home_meats));
 //        categoryList.add(new Category(8, ic_home_veggies));
+        Api api = new Api();
+        api.getCategory();
         categoryList.add(new Category(1, ic_laptop_windows, "Máy tính"));
         categoryList.add(new Category(3, ic_devices_other, "Phụ kiệndsfaasdfasdf"));
         categoryList.add(new Category(2, ic_smartphone, "Điện thoại"));
