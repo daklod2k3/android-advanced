@@ -5,20 +5,23 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
+import android.os.AsyncTask;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
 
-import com.rajendra.techshop.API.Api;
+import com.rajendra.techshop.DTO.CATEGORY;
 import com.rajendra.techshop.adapter.CategoryAdapter;
 import com.rajendra.techshop.adapter.DiscountedProductAdapter;
 import com.rajendra.techshop.adapter.RecentlyViewedAdapter;
-import com.rajendra.techshop.model.Category;
+import com.rajendra.techshop.controller.CategoryAPI;
 import com.rajendra.techshop.model.DiscountedProducts;
 import com.rajendra.techshop.model.RecentlyViewed;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 import static com.rajendra.techshop.R.drawable.*;
 
@@ -29,7 +32,7 @@ public class MainActivity extends AppCompatActivity {
     List<DiscountedProducts> discountedProductsList;
 
     CategoryAdapter categoryAdapter;
-    List<Category> categoryList;
+    List<CATEGORY> categoryList;
 
     RecentlyViewedAdapter recentlyViewedAdapter;
     List<RecentlyViewed> recentlyViewedList;
@@ -66,7 +69,7 @@ public class MainActivity extends AppCompatActivity {
         discountedProductsList.add(new DiscountedProducts(6, discountmeat));
 
         // adding data to model
-        categoryList = new ArrayList<>();
+//        categoryList = new ArrayList<>();
 //        categoryList.add(new Category(1, ic_home_fruits));
 //        categoryList.add(new Category(2, ic_home_fish));
 //        categoryList.add(new Category(3, ic_home_meats));
@@ -75,24 +78,38 @@ public class MainActivity extends AppCompatActivity {
 //        categoryList.add(new Category(6, ic_home_fish));
 //        categoryList.add(new Category(7, ic_home_meats));
 //        categoryList.add(new Category(8, ic_home_veggies));
-        Api api = new Api();
-        api.getCategory();
-        categoryList.add(new Category(1, ic_laptop_windows, "Máy tính"));
-        categoryList.add(new Category(3, ic_devices_other, "Phụ kiệndsfaasdfasdf"));
-        categoryList.add(new Category(2, ic_smartphone, "Điện thoại"));
+//        api.getCategory(this);
+//        categoryList.add(new CATE(1, ic_laptop_windows, "Máy tính"));
+//        categoryList.add(new Category(3, ic_devices_other, "Phụ kiệndsfaasdfasdf"));
+//        categoryList.add(new Category(2, ic_smartphone, "Điện thoại"));
 
 
         // adding data to model
-       recentlyViewedList = new ArrayList<>();
-       recentlyViewedList.add(new RecentlyViewed("Watermelon", "Watermelon has high water content and also provides some fiber.", "₹ 80", "1", "KG", card4, b4));
-       recentlyViewedList.add(new RecentlyViewed("Papaya", "Papayas are spherical or pear-shaped fruits that can be as long as 20 inches.", "₹ 85", "1", "KG", card3, b3));
-       recentlyViewedList.add(new RecentlyViewed("Strawberry", "The strawberry is a highly nutritious fruit, loaded with vitamin C.", "₹ 30", "1", "KG", card2, b1));
-       recentlyViewedList.add(new RecentlyViewed("Kiwi", "Full of nutrients like vitamin C, vitamin K, vitamin E, folate, and potassium.", "₹ 30", "1", "PC", card1, b2));
+        recentlyViewedList = new ArrayList<>();
+        recentlyViewedList.add(new RecentlyViewed("Watermelon", "Watermelon has high water content and also provides some fiber.", "₹ 80", "1", "KG", card4, b4));
+        recentlyViewedList.add(new RecentlyViewed("Papaya", "Papayas are spherical or pear-shaped fruits that can be as long as 20 inches.", "₹ 85", "1", "KG", card3, b3));
+        recentlyViewedList.add(new RecentlyViewed("Strawberry", "The strawberry is a highly nutritious fruit, loaded with vitamin C.", "₹ 30", "1", "KG", card2, b1));
+        recentlyViewedList.add(new RecentlyViewed("Kiwi", "Full of nutrients like vitamin C, vitamin K, vitamin E, folate, and potassium.", "₹ 30", "1", "PC", card1, b2));
 
         setDiscountedRecycler(discountedProductsList);
-        setCategoryRecycler(categoryList);
-       setRecentlyViewedRecycler(recentlyViewedList);
+//        setCategoryRecycler(categoryList);
+        setRecentlyViewedRecycler(recentlyViewedList);
+        new LoadCategory().execute();
 
+    }
+
+    class LoadCategory extends AsyncTask<Void, Void, List<CATEGORY>>{
+        @Override
+        protected List<CATEGORY> doInBackground(Void... voids) {
+            return new CategoryAPI().getCategory();
+        }
+
+        @Override
+        protected void onPostExecute(List<CATEGORY> categoryList) {
+//            Log.d("request", categoryList.get(0).getImgUrl().toString());
+            CATEGORY.mapName(categoryList);
+            setCategoryRecycler(categoryList);
+        }
     }
 
     private void setDiscountedRecycler(List<DiscountedProducts> dataList) {
@@ -103,7 +120,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
 
-    private void setCategoryRecycler(List<Category> categoryDataList) {
+    private void setCategoryRecycler(List<CATEGORY> categoryDataList) {
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false);
         categoryRecyclerView.setLayoutManager(layoutManager);
         categoryAdapter = new CategoryAdapter(this,categoryDataList);

@@ -9,17 +9,17 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.rajendra.techshop.DTO.CATEGORY;
 import com.rajendra.techshop.R;
-import com.rajendra.techshop.model.Category;
 
 import java.util.List;
 
 public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.CategoryViewHolder> {
 
     Context context;
-    List<Category> categoryList;
+    List<CATEGORY> categoryList;
 
-    public CategoryAdapter(Context context, List<Category> categoryList) {
+    public CategoryAdapter(Context context, List<CATEGORY> categoryList) {
         this.context = context;
         this.categoryList = categoryList;
     }
@@ -36,7 +36,7 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.Catego
     @Override
     public void onBindViewHolder(@NonNull CategoryViewHolder holder, int position) {
 
-        holder.categoryImage.setImageResource(categoryList.get(position).getImageurl());
+        holder.categoryImage.setImageResource(categoryList.get(position).getImgUrl());
         holder.categoryText.setText(categoryList.get(position).getName());
 
     }
