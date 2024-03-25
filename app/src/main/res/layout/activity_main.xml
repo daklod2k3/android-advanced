@@ -14,7 +14,7 @@
         android:layout_marginStart="16dp"
         android:layout_marginTop="16dp"
         android:fontFamily="@font/open_sans_bold"
-        android:text="Daily Groceries"
+        android:text="Trang chủ"
         android:textColor="@android:color/background_dark"
         android:textSize="24sp"
         app:layout_constraintStart_toStartOf="parent"
@@ -40,6 +40,8 @@
         app:layout_constraintTop_toTopOf="@+id/textView"
         app:srcCompat="@drawable/ic_account_settings" />
 
+
+
     <TextView
         android:id="@+id/textView2"
         android:layout_width="wrap_content"
@@ -48,7 +50,7 @@
         android:layout_marginTop="16dp"
         android:fontFamily="@font/open_sans"
         android:lineSpacingExtra="4dp"
-        android:text="Shop groceries items through daily grocery app\nonline super market store at best prices."
+        android:text=""
         android:textColor="#717171"
         android:textSize="14sp"
         app:layout_constraintStart_toStartOf="parent"
@@ -90,7 +92,7 @@
         android:layout_marginStart="16dp"
         android:layout_marginTop="24dp"
         android:fontFamily="@font/open_sans_semibold"
-        android:text="Top Discounted Items"
+        android:text=""
         android:textColor="@android:color/background_dark"
         android:textSize="16sp"
         app:layout_constraintStart_toStartOf="parent"
@@ -103,7 +105,7 @@
         android:layout_marginStart="16dp"
         android:layout_marginTop="24dp"
         android:fontFamily="@font/open_sans_semibold"
-        android:text="Select Categories"
+        android:text="Phân loại"
         android:textColor="@android:color/background_dark"
         android:textSize="16sp"
         app:layout_constraintStart_toStartOf="parent"
@@ -137,7 +139,7 @@
         android:layout_marginStart="16dp"
         android:layout_marginTop="24dp"
         android:fontFamily="@font/open_sans_semibold"
-        android:text="Recently Viewed Items"
+        android:text="Sản phẩm mới"
         android:textColor="@android:color/background_dark"
         android:textSize="16sp"
         app:layout_constraintStart_toStartOf="parent"

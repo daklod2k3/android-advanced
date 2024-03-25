@@ -5,8 +5,7 @@
     android:id="@+id/recently_layout"
     android:layout_width="150dp"
     android:layout_height="220dp"
-    android:layout_marginStart="16dp"
-    android:background="@drawable/card2">
+    android:layout_marginStart="16dp">
 
     <TextView
         android:id="@+id/product_name"
@@ -16,7 +15,7 @@
         android:layout_marginTop="16dp"
         android:fontFamily="@font/open_sans_bold"
         android:text="product_name"
-        android:textColor="#FFFFFF"
+        android:textColor="@color/colorPrimary"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -29,7 +28,7 @@
         android:layout_marginEnd="16dp"
         android:fontFamily="@font/open_sans_light"
         android:text="@android:string/fingerprint_icon_content_description"
-        android:textColor="#FFFFFF"
+        android:textColor="@color/colorPrimary"
         android:textSize="10sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
@@ -44,7 +43,7 @@
         android:layout_marginTop="4dp"
         android:fontFamily="@font/open_sans_bold"
         android:text="TextView"
-        android:textColor="#FFFFFF"
+        android:textColor="@color/colorPrimary"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/description" />
 
@@ -55,7 +54,7 @@
         android:layout_marginStart="16dp"
         android:fontFamily="@font/open_sans_light"
         android:text="qty"
-        android:textColor="#FFFFFF"
+        android:textColor="@color/colorPrimary"
         android:textSize="10sp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/price" />
@@ -67,7 +66,7 @@
         android:layout_marginStart="2dp"
         android:fontFamily="@font/open_sans_light"
         android:text="unit"
-        android:textColor="#FFFFFF"
+        android:textColor="@color/colorPrimary"
         android:textSize="10sp"
         app:layout_constraintBottom_toBottomOf="@+id/qty"
         app:layout_constraintStart_toEndOf="@+id/qty"
@@ -82,4 +81,11 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:srcCompat="@drawable/ic_cart" />
+    <ImageView
+        android:id="@+id/product_img"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        app:layout_constraintTop_toBottomOf="@id/qty"
+        app:layout_constraintStart_toStartOf="@id/qty"
+        android:src="@drawable/no_img"/>
 </androidx.constraintlayout.widget.ConstraintLayout>

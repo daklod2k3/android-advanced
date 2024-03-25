@@ -7,21 +7,20 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
 
 import com.rajendra.techshop.DTO.CATEGORY;
+import com.rajendra.techshop.DTO.PRODUCT;
 import com.rajendra.techshop.adapter.CategoryAdapter;
 import com.rajendra.techshop.adapter.DiscountedProductAdapter;
-import com.rajendra.techshop.adapter.RecentlyViewedAdapter;
+import com.rajendra.techshop.adapter.ProductViewAdapter;
 import com.rajendra.techshop.controller.CategoryAPI;
+import com.rajendra.techshop.controller.ProductAPI;
 import com.rajendra.techshop.model.DiscountedProducts;
-import com.rajendra.techshop.model.RecentlyViewed;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
 
 import static com.rajendra.techshop.R.drawable.*;
 
@@ -34,8 +33,8 @@ public class MainActivity extends AppCompatActivity {
     CategoryAdapter categoryAdapter;
     List<CATEGORY> categoryList;
 
-    RecentlyViewedAdapter recentlyViewedAdapter;
-    List<RecentlyViewed> recentlyViewedList;
+    ProductViewAdapter recentlyViewedAdapter;
+//    List<RecentlyViewed> recentlyViewedList;
 
     TextView allCategory;
 
@@ -85,16 +84,17 @@ public class MainActivity extends AppCompatActivity {
 
 
         // adding data to model
-        recentlyViewedList = new ArrayList<>();
-        recentlyViewedList.add(new RecentlyViewed("Watermelon", "Watermelon has high water content and also provides some fiber.", "₹ 80", "1", "KG", card4, b4));
-        recentlyViewedList.add(new RecentlyViewed("Papaya", "Papayas are spherical or pear-shaped fruits that can be as long as 20 inches.", "₹ 85", "1", "KG", card3, b3));
-        recentlyViewedList.add(new RecentlyViewed("Strawberry", "The strawberry is a highly nutritious fruit, loaded with vitamin C.", "₹ 30", "1", "KG", card2, b1));
-        recentlyViewedList.add(new RecentlyViewed("Kiwi", "Full of nutrients like vitamin C, vitamin K, vitamin E, folate, and potassium.", "₹ 30", "1", "PC", card1, b2));
+//        recentlyViewedList = new ArrayList<>();
+//        recentlyViewedList.add(new RecentlyViewed("Watermelon", "Watermelon has high water content and also provides some fiber.", "₹ 80", "1", "KG", card4, b4));
+//        recentlyViewedList.add(new RecentlyViewed("Papaya", "Papayas are spherical or pear-shaped fruits that can be as long as 20 inches.", "₹ 85", "1", "KG", card3, b3));
+//        recentlyViewedList.add(new RecentlyViewed("Strawberry", "The strawberry is a highly nutritious fruit, loaded with vitamin C.", "₹ 30", "1", "KG", card2, b1));
+//        recentlyViewedList.add(new RecentlyViewed("Kiwi", "Full of nutrients like vitamin C, vitamin K, vitamin E, folate, and potassium.", "₹ 30", "1", "PC", card1, b2));
 
-        setDiscountedRecycler(discountedProductsList);
+//        setDiscountedRecycler(discountedProductsList);
 //        setCategoryRecycler(categoryList);
-        setRecentlyViewedRecycler(recentlyViewedList);
+//        setRecentlyViewedRecycler(recentlyViewedList);
         new LoadCategory().execute();
+        new LoadProduct().execute();
 
     }
 
@@ -109,6 +109,23 @@ public class MainActivity extends AppCompatActivity {
 //            Log.d("request", categoryList.get(0).getImgUrl().toString());
             CATEGORY.mapName(categoryList);
             setCategoryRecycler(categoryList);
+        }
+    }
+
+    class LoadProduct extends AsyncTask<Void, Void, List<PRODUCT>>{
+        @Override
+        protected List<PRODUCT> doInBackground(Void... voids) {
+            List<PRODUCT> productList = new ProductAPI().getProduct();
+            for (PRODUCT product: productList){
+//                product.loadBitmap();
+            }
+            return productList;
+        }
+
+        @Override
+        protected void onPostExecute(List<PRODUCT> productList) {
+//            Log.d("request", categoryList.get(0).getImgUrl().toString());
+            setNewProductRecycler(productList);
         }
     }
 
@@ -127,10 +144,10 @@ public class MainActivity extends AppCompatActivity {
         categoryRecyclerView.setAdapter(categoryAdapter);
     }
 
-    private void setRecentlyViewedRecycler(List<RecentlyViewed> recentlyViewedDataList) {
+    private void setNewProductRecycler(List<PRODUCT> recentlyViewedDataList) {
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false);
         recentlyViewedRecycler.setLayoutManager(layoutManager);
-        recentlyViewedAdapter = new RecentlyViewedAdapter(this,recentlyViewedDataList);
+        recentlyViewedAdapter = new ProductViewAdapter(this,recentlyViewedDataList);
         recentlyViewedRecycler.setAdapter(recentlyViewedAdapter);
     }
     //Now again we need to create a adapter and model class for recently viewed items.
