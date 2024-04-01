@@ -72,6 +72,7 @@
                 android:textColor="@color/colorPrimary"
                 android:padding="1dp"
                 android:id="@+id/txtEditPass"
+                android:inputType="textPassword"
                 />
         </com.google.android.material.textfield.TextInputLayout>
 
