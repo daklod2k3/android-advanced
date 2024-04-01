@@ -22,7 +22,7 @@ public class Api {
 
     public Api(){
         retrofit = new Retrofit.Builder()
-                .baseUrl("http://20.5.227.28:3000")
+                .baseUrl("https://daklod-backend.vercel.app/")
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
 
