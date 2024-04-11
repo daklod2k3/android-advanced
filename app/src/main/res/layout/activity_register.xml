@@ -1,0 +1,222 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="@drawable/gradient_background"
+    android:theme="@style/Theme.MaterialComponents"
+    tools:context=".RegisterActivity">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        android:orientation="vertical"
+        android:gravity="center"
+        android:background="@drawable/login_form_border"
+        android:paddingTop="20dp"
+        android:paddingBottom="40dp"
+        android:layout_marginHorizontal="30dp"
+        >
+
+        <ImageView
+            android:src="@drawable/logo"
+            android:layout_width="100dp"
+            android:layout_height="100dp" />
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:layout_marginTop="20dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
+            app:startIconDrawable="@drawable/ic_person"
+            app:boxBackgroundColor="#fff"
+            app:startIconTint="@color/colorPrimary"
+            android:hint="Họ tên (*)"
+            android:textColorHint="@color/colorPrimary"
+            app:boxStrokeColor="@color/colorPrimary"
+            app:hintTextColor="@color/colorPrimary"
+            android:id="@+id/txtLayoutName"
+            >
+            <com.google.android.material.textfield.TextInputEditText
+                android:layout_width="280dp"
+                android:layout_height="wrap_content"
+                android:textColor="@color/colorPrimary"
+                android:padding="1dp"
+                android:textCursorDrawable="@null"
+                android:id="@+id/txtEditName"
+                />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:layout_marginTop="5dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
+            app:startIconDrawable="@drawable/ic_person"
+            app:boxBackgroundColor="#fff"
+            app:startIconTint="@color/colorPrimary"
+            android:hint="Tài khoản (*)"
+            android:textColorHint="@color/colorPrimary"
+            app:boxStrokeColor="@color/colorPrimary"
+            app:hintTextColor="@color/colorPrimary"
+            android:id="@+id/txtLayoutUser"
+            >
+            <com.google.android.material.textfield.TextInputEditText
+                android:layout_width="280dp"
+                android:layout_height="wrap_content"
+                android:textColor="@color/colorPrimary"
+                android:padding="1dp"
+                android:textCursorDrawable="@null"
+                android:id="@+id/txtEditUser"
+                />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:layout_marginTop="5dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
+            app:startIconDrawable="@drawable/ic_person"
+            app:boxBackgroundColor="#fff"
+            app:startIconTint="@color/colorPrimary"
+            android:hint="Email"
+            android:textColorHint="@color/colorPrimary"
+            app:boxStrokeColor="@color/colorPrimary"
+            app:hintTextColor="@color/colorPrimary"
+            android:id="@+id/txtLayoutEmail"
+            >
+            <com.google.android.material.textfield.TextInputEditText
+                android:layout_width="280dp"
+                android:layout_height="wrap_content"
+                android:textColor="@color/colorPrimary"
+                android:padding="1dp"
+                android:textCursorDrawable="@null"
+                android:id="@+id/txtEditEmail"
+                />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:layout_marginTop="5dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
+            app:startIconDrawable="@drawable/ic_person"
+            app:boxBackgroundColor="#fff"
+            app:startIconTint="@color/colorPrimary"
+            android:hint="Số điện thoại"
+            android:textColorHint="@color/colorPrimary"
+            app:boxStrokeColor="@color/colorPrimary"
+            app:hintTextColor="@color/colorPrimary"
+            android:id="@+id/txtLayoutPhone"
+            >
+            <com.google.android.material.textfield.TextInputEditText
+                android:layout_width="280dp"
+                android:layout_height="wrap_content"
+                android:textColor="@color/colorPrimary"
+                android:padding="1dp"
+                android:textCursorDrawable="@null"
+                android:id="@+id/txtEditPhone"
+                />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:layout_marginTop="5dp"
+            android:layout_width="280dp"
+            android:layout_height="wrap_content"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            app:startIconDrawable="@drawable/lock_solid"
+            app:boxBackgroundColor="#fff"
+            app:startIconTint="@color/colorPrimary"
+            android:hint="Mật khẩu (*)"
+            android:textColorHint="@color/colorPrimary"
+            app:boxStrokeColor="@color/colorPrimary"
+            app:hintTextColor="@color/colorPrimary"
+            android:id="@+id/txtLayoutPass"
+            app:endIconMode="password_toggle"
+            app:endIconTint="@color/colorPrimary"
+            >
+            <com.google.android.material.textfield.TextInputEditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textColor="@color/colorPrimary"
+                android:padding="1dp"
+                android:id="@+id/txtEditPass"
+                android:inputType="textPassword"
+                />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:layout_marginTop="5dp"
+            android:layout_width="280dp"
+            android:layout_height="wrap_content"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            app:startIconDrawable="@drawable/lock_solid"
+            app:boxBackgroundColor="#fff"
+            app:startIconTint="@color/colorPrimary"
+            android:hint="Nhập lại mật khẩu (*)"
+            android:textColorHint="@color/colorPrimary"
+            app:boxStrokeColor="@color/colorPrimary"
+            app:hintTextColor="@color/colorPrimary"
+            android:id="@+id/txtLayoutPassConfirm"
+            app:endIconMode="password_toggle"
+            app:endIconTint="@color/colorPrimary"
+            >
+            <com.google.android.material.textfield.TextInputEditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textColor="@color/colorPrimary"
+                android:padding="1dp"
+                android:id="@+id/txtEditPassConfirm"
+                android:inputType="textPassword"
+                />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <Button
+            android:layout_marginTop="5dp"
+            android:layout_width="280dp"
+            android:layout_height="21dp"
+            android:text="quên mất khẩu"
+            android:gravity="right"
+            android:textColor="@color/colorPrimary"
+            android:textSize="10dp"
+            style="@style/Widget.MaterialComponents.Button.TextButton"
+            android:clickable="true"
+            />
+
+        <Button
+            android:id="@+id/btnRegister"
+            android:layout_width="280dp"
+            android:layout_height="35dp"
+            android:layout_marginTop="5dp"
+            android:text="Đăng ký"
+            android:textSize="12dp"
+            android:background="@drawable/login_form_border"
+            android:backgroundTint="@color/colorPrimary"
+            android:backgroundTintMode="src_over"
+            />
+
+        <Button
+            android:id="@+id/btnLogin"
+            android:layout_marginTop="5dp"
+            android:layout_width="280dp"
+            android:layout_height="21dp"
+            android:text="Đã có tài khoản? Đăng nhập"
+            android:textColor="@color/colorPrimary"
+            android:textSize="10dp"
+            style="@style/Widget.MaterialComponents.Button.TextButton"
+            android:clickable="true"
+            android:textAlignment="center"
+            />
+    </LinearLayout>
+
+
+
+
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

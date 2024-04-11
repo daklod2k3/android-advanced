@@ -2,12 +2,15 @@ package com.rajendra.techshop;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.PorterDuff;
 import android.graphics.Rect;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
@@ -25,6 +28,7 @@ import java.io.IOException;
  * An example full-screen activity that shows and hides the system UI (i.e.
  * status bar and navigation/system bar) with user interaction.
  */
+@SuppressLint("ClickableViewAccessibility")
 public class LoginActivity extends AppCompatActivity {
     String TAG = "Login Activity";
 
@@ -44,18 +48,24 @@ public class LoginActivity extends AppCompatActivity {
                 if (!v.isActivated()) return false;
                 switch (event.getAction()){
                     case MotionEvent.ACTION_DOWN:{
+
+                        if (binding.txtLayoutUser.isErrorEnabled() || binding.txtLayoutPass.isErrorEnabled())
+                            return false;
+
                         v.getBackground().setColorFilter(0x77000000, PorterDuff.Mode.SRC_ATOP);
                         v.invalidate();
+                        v.setActivated(false);
+
                         String username = binding.txtEditUser.getText().toString().trim();
-                        String password = binding.txtEditPass.getText().toString().trim();
+                        String password = binding.txtEditPass.getText().toString();
+
                         if (username.equals("admin") && password.equals("admin")){
                             startActivity(new Intent(getApplication(), MainActivity.class));
                             return false;
                         }
-
                         new LoginTask().execute(new LoginAPI.LoginBody(username, password));
-                        v.setActivated(false);
                         break;
+
                     }
                         // Your action here on button click
                     case MotionEvent.ACTION_UP: {
@@ -70,7 +80,56 @@ public class LoginActivity extends AppCompatActivity {
         binding.txtEditUser.setText("admin");
         binding.txtEditPass.setText("admin");
 
+        binding.txtEditUser.addTextChangedListener(new TextWatcher() {
+               @Override
+               public void beforeTextChanged(CharSequence s, int start, int count, int after) {
 
+               }
+
+               @Override
+               public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+               }
+
+               @Override
+               public void afterTextChanged(Editable s) {
+                   if (s.toString().equals("")) {
+                       binding.txtLayoutUser.setError("Thiếu tài khoản");
+                   }else{
+                        binding.txtLayoutUser.setError(null);
+                        binding.txtLayoutUser.setErrorEnabled(false);
+                   }
+               }
+           });
+
+        binding.txtEditPass.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                if (s.toString().equals("")) {
+                    binding.txtLayoutPass.setError("Thiếu mật khẩu");
+                }else{
+                    binding.txtLayoutPass.setError(null);
+                    binding.txtLayoutPass.setErrorEnabled(false);
+                }
+            }
+        });
+
+        binding.btnRegister.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(getApplication(), RegisterActivity.class));
+            }
+        });
 
     }
 
