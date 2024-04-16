@@ -1,9 +1,14 @@
 package com.rajendra.techshop.controller;
 
+
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.util.Log;
 import android.widget.Toast;
 
 import com.rajendra.techshop.DTO.USER;
+import com.rajendra.techshop.LoginActivity;
+import com.rajendra.techshop.R;
 
 import retrofit2.Call;
 import retrofit2.Response;
@@ -67,6 +72,12 @@ public class LoginAPI extends Api{
         if (response.code() != 200)
             return null;
 //            Log.d("request", getUser().get(0).toString());
+
+//        Log.d(TAG, "postLogin: " + response.headers().get("Authorization"));
+        String token = response.headers().get("authorization");
+        Log.d(TAG, "postLogin: " + token);
+
+        CheckAuthAPI.setToken(LoginActivity.getAppContext(), token);
         return user;
 
     }
