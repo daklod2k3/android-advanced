@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.PorterDuff;
 import android.graphics.Rect;
 import android.os.AsyncTask;
@@ -19,6 +20,7 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import com.rajendra.techshop.DTO.USER;
+import com.rajendra.techshop.controller.CheckAuthAPI;
 import com.rajendra.techshop.controller.LoginAPI;
 import com.rajendra.techshop.databinding.ActivityLoginBinding;
 
@@ -31,8 +33,27 @@ import java.io.IOException;
 @SuppressLint("ClickableViewAccessibility")
 public class LoginActivity extends AppCompatActivity {
     String TAG = "Login Activity";
+    private static Context context;
 
     ActivityLoginBinding binding;
+
+
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        SharedPreferences sharedPref = getBaseContext().getSharedPreferences(getString(R.string.auth_key_stored), Context.MODE_PRIVATE);
+        Log.d(TAG, "onStart: " + sharedPref.getString(getString(R.string.auth_key_stored), null));
+        String token = sharedPref.getString(getString(R.string.auth_key_stored), null);
+        if (token != null){
+            Intent main = new Intent(this, MainActivity.class);
+            Bundle extra = new Bundle();
+            extra.putString("token", token);
+            main.putExtras(extra);
+            startActivity(main);
+            finish();
+        }
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -77,8 +98,8 @@ public class LoginActivity extends AppCompatActivity {
         });
 
 
-        binding.txtEditUser.setText("admin");
-        binding.txtEditPass.setText("admin");
+//        binding.txtEditUser.setText("admin");
+//        binding.txtEditPass.setText("admin");
 
         binding.txtEditUser.addTextChangedListener(new TextWatcher() {
                @Override
@@ -130,6 +151,8 @@ public class LoginActivity extends AppCompatActivity {
                 startActivity(new Intent(getApplication(), RegisterActivity.class));
             }
         });
+
+        context = getBaseContext();
 
     }
 
@@ -196,9 +219,13 @@ public class LoginActivity extends AppCompatActivity {
                 return;
             }
             startActivity(new Intent(getApplication(), MainActivity.class));
+            finish();
         }
     }
 
+    public static Context getAppContext(){
+        return context;
+    }
 
 
 }
