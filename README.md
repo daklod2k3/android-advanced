@@ -3,3 +3,4 @@ Library:
  - Picaso for load image from URL and lazy load
  - Lottie for animation
  - Android Material for UI design
+ - Shared Reference for saving auth token
