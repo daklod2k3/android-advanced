@@ -62,7 +62,7 @@ public class RegisterActivity extends AppCompatActivity {
 
                         disableBtnRegister();
 
-                        if (username.equals("") || password.equals("") || password.equals(confirm) || name.equals("")){
+                        if (username.equals("") || password.equals("") || !password.equals(confirm) || name.equals("")){
                             Toast.makeText(getBaseContext(), "Thiếu thông tin", Toast.LENGTH_SHORT).show();
                             enableBtnRegister();
                             return false;
@@ -79,11 +79,6 @@ public class RegisterActivity extends AppCompatActivity {
                 return false;
             }
         });
-
-
-        binding.txtEditUser.setText("admin");
-        binding.txtEditPass.setText("admin");
-
         binding.txtEditUser.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
@@ -225,9 +220,11 @@ public class RegisterActivity extends AppCompatActivity {
         protected CUSTOMER doInBackground(RegisterAPI.RegisterBody... registerBodies) {
             try {
                 Response<CUSTOMER> response = new RegisterAPI().postRegister(registerBodies[0]);
-                String error = response.errorBody().string();
-                if (error.contains("Username already exist")){
-                    publishProgress("Tài khoản đã tồn tại");
+                if (!response.isSuccessful()){
+                    String error = response.errorBody().string();
+                    if (error.contains("Username already exist")){
+                        publishProgress("Tài khoản đã tồn tại");
+                    }
                 }
 
                 return response.body();
@@ -251,6 +248,7 @@ public class RegisterActivity extends AppCompatActivity {
             enableBtnRegister();
             if (customer == null) return;
             startActivity(new Intent(getApplication(), MainActivity.class));
+            finish();
         }
     }
 
