@@ -47,9 +47,7 @@ public class LoginActivity extends AppCompatActivity {
         String token = sharedPref.getString(getString(R.string.auth_key_stored), null);
         if (token != null){
             Intent main = new Intent(this, MainActivity.class);
-            Bundle extra = new Bundle();
-            extra.putString("token", token);
-            main.putExtras(extra);
+            CheckAuthAPI.setAuthHeader(token);
             startActivity(main);
             finish();
         }
@@ -81,7 +79,10 @@ public class LoginActivity extends AppCompatActivity {
                         String password = binding.txtEditPass.getText().toString();
 
                         if (username.equals("admin") && password.equals("admin")){
-                            startActivity(new Intent(getApplication(), MainActivity.class));
+                            Intent main = new Intent(getApplication(), MainActivity.class);
+                            Bundle extras = new Bundle();
+//                            extras.putString();
+//                            startActivity();
                             return false;
                         }
                         new LoginTask().execute(new LoginAPI.LoginBody(username, password));

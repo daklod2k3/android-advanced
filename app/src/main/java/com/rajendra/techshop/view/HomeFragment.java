@@ -91,6 +91,7 @@ public class HomeFragment extends Fragment {
         @Override
         protected void onPostExecute(List<CATEGORY> categoryList) {
 //            Log.d("request", categoryList.get(0).getImgUrl().toString());
+            if (categoryList == null) return;
             CATEGORY.mapName(categoryList);
             mainView.removeView(categoryLoadAnim);
             setCategoryRecycler(categoryList);

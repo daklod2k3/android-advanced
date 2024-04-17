@@ -31,6 +31,7 @@ import com.rajendra.techshop.DTO.PRODUCT;
 import com.rajendra.techshop.adapter.CategoryAdapter;
 import com.rajendra.techshop.adapter.DiscountedProductAdapter;
 import com.rajendra.techshop.adapter.ProductViewAdapter;
+import com.rajendra.techshop.controller.Api;
 import com.rajendra.techshop.controller.CategoryAPI;
 import com.rajendra.techshop.controller.CheckAuthAPI;
 import com.rajendra.techshop.controller.ProductAPI;
@@ -59,34 +60,22 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        ReplaceFragment(new HomeFragment());
 
         Intent main = getIntent();
         try {
-            String token = main.getExtras().getString("token");
-            // Add token to retrofit header
-            OkHttpClient.Builder clientHeader = new OkHttpClient.Builder();
-            clientHeader.addInterceptor(new Interceptor() {
-                @Override
-                public Response intercept(Chain chain) throws IOException {
-                    Request origin = chain.request();
+//            String token = main.getExtras().getString("token");
+            new CheckAuthTask().execute();
 
-                    Request request = origin.newBuilder()
-                            .header("authorization", token)
-                            .method(origin.method(), origin.body())
-                            .build();
-
-
-                    return chain.proceed(request);
-                }
-            });
-            new CheckAuthTask().execute(token);
 
         }catch (Exception e){
             Log.e(TAG, "onCreate: ", e);
-
+            initUI();
         }
 
+    }
+
+    private void initUI(){
+        ReplaceFragment(new HomeFragment());
 
         bottomNavigationView = findViewById(R.id.bottom_navigation);
         bottomNavigationView.setOnItemSelectedListener(item -> {
@@ -101,8 +90,6 @@ public class MainActivity extends AppCompatActivity {
             }
             return  true;
         });
-
-
     }
 
     private void ReplaceFragment(Fragment fragment){
@@ -112,10 +99,10 @@ public class MainActivity extends AppCompatActivity {
         fragmentTransaction.commit();
     }
 
-    class CheckAuthTask extends AsyncTask<String, Void, Boolean>{
+    class CheckAuthTask extends AsyncTask<Void, Void, Boolean>{
 
         @Override
-        protected Boolean doInBackground(String... strings) {
+        protected Boolean doInBackground(Void... values) {
             try {
                 return new CheckAuthAPI().checkAuth();
             }catch (Exception e){
@@ -137,7 +124,10 @@ public class MainActivity extends AppCompatActivity {
         protected void onPostExecute(Boolean aBoolean) {
             super.onPostExecute(aBoolean);
             Log.d(TAG, "onPostExecute: " + aBoolean);
-            if (aBoolean) return;
+            if (aBoolean) {
+                initUI();
+                return;
+            };
 //            new Intent(getBaseContext(), LoginActivity.class);
 //            startActivity();
             CheckAuthAPI.clearToken(getBaseContext());
