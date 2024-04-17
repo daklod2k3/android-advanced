@@ -41,7 +41,7 @@ public class ProductAPI extends Api{
             return productList;
         } catch (Exception e){
 //            Toast.makeText(context, e.toString(), Toast.LENGTH_LONG).show();
-            Log.d("request", e.toString());
+            Log.e(TAG, "getProduct: ", e);
 //            categoryList.add(new CATEGORY(1, ic_laptop_windows, "Máy tính"));
 //            categoryList.add(new CATEGORY(3, ic_devices_other, "Phụ kiệndsfaasdfasdf"));
 //            categoryList.add(new CATEGORY(2, ic_smartphone, "Điện thoại"));

@@ -80,9 +80,8 @@ public class LoginActivity extends AppCompatActivity {
 
                         if (username.equals("admin") && password.equals("admin")){
                             Intent main = new Intent(getApplication(), MainActivity.class);
-                            Bundle extras = new Bundle();
-//                            extras.putString();
-//                            startActivity();
+                            main.putExtra("admin", "admin");
+                            startActivity(main);
                             return false;
                         }
                         new LoginTask().execute(new LoginAPI.LoginBody(username, password));

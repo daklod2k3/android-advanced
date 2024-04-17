@@ -62,11 +62,10 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         Intent main = getIntent();
+        if (main.getStringExtra("admin") != null) initUI();
+        else
         try {
-//            String token = main.getExtras().getString("token");
             new CheckAuthTask().execute();
-
-
         }catch (Exception e){
             Log.e(TAG, "onCreate: ", e);
             initUI();
