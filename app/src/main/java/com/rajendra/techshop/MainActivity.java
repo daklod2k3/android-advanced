@@ -62,7 +62,9 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         Intent main = getIntent();
-        if (main.getStringExtra("admin") != null) initUI();
+        if (main.getStringExtra("admin") != null) {
+            initUI();
+        }
         else
         try {
             new CheckAuthTask().execute();

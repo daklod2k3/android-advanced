@@ -7,6 +7,7 @@ import android.widget.Toast;
 import com.rajendra.techshop.DTO.CATEGORY;
 import com.rajendra.techshop.DTO.PRODUCT;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -14,19 +15,24 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 import retrofit2.http.GET;
+import retrofit2.http.Path;
+
 import static com.rajendra.techshop.R.drawable.*;
 
 public class ProductAPI extends Api{
     List<PRODUCT> productList;
+    PRODUCT product;
     interface ProductRequest{
         @GET("/api/v1/product")
         Call<List<PRODUCT>> getProduct();
+
+        @GET("/api/v1/product?filter=product:eq:{product_id}")
+        Call<PRODUCT> getProductByID(@Path("product_id") String product_id);
     }
     public ProductAPI(){
         super();
         productList = new ArrayList<>();
     }
-
     public List<PRODUCT> getProduct(){
         return getProduct( false);
     }
@@ -40,15 +46,24 @@ public class ProductAPI extends Api{
             Log.d("request", productList.get(0).toString());
             return productList;
         } catch (Exception e){
-//            Toast.makeText(context, e.toString(), Toast.LENGTH_LONG).show();
             Log.e(TAG, "getProduct: ", e);
-//            categoryList.add(new CATEGORY(1, ic_laptop_windows, "Máy tính"));
-//            categoryList.add(new CATEGORY(3, ic_devices_other, "Phụ kiệndsfaasdfasdf"));
-//            categoryList.add(new CATEGORY(2, ic_smartphone, "Điện thoại"));
+
             return productList;
         }
     }
+    public PRODUCT getProductByID(String id) {
+        ProductRequest productRequest = retrofit.create(ProductRequest.class);
+        try {
+            Response<PRODUCT> response = productRequest.getProductByID(id).execute();
+            product = response.body();
+            Log.d("request", product.toString());
+            return product;
+        } catch (Exception e){
+            Log.e(TAG, "getProduct: ", e);
 
-//    public void ()
+            return product;
+        }
+    }
+
 
 }

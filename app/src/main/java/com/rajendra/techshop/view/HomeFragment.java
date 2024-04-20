@@ -21,6 +21,7 @@ import com.rajendra.techshop.AllCategory;
 import com.rajendra.techshop.DTO.CATEGORY;
 import com.rajendra.techshop.DTO.PRODUCT;
 import com.rajendra.techshop.MainActivity;
+import com.rajendra.techshop.ProductDetails;
 import com.rajendra.techshop.R;
 import com.rajendra.techshop.adapter.CategoryAdapter;
 import com.rajendra.techshop.adapter.DiscountedProductAdapter;
@@ -78,9 +79,12 @@ public class HomeFragment extends Fragment {
                 startActivity(i);
             }
         });
+
         new LoadCategory().execute();
         new LoadProduct().execute();
+
     }
+
 
     class LoadCategory extends AsyncTask<Void, Void, List<CATEGORY>> {
         @Override

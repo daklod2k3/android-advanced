@@ -64,9 +64,11 @@ public class ProductViewAdapter extends RecyclerView.Adapter<ProductViewAdapter.
             public void onClick(View view) {
 
                 Intent i=new Intent(context, ProductDetails.class);
+
                 i.putExtra("id", String.valueOf(recentlyViewedList.get(position).getProduct_id()));
+//                i.putExtra("name", String.valueOf(recentlyViewedList.get(position).getName()));
 //                i.putExtra("name", recentlyViewedList.get(position).getName());
-//                i.putExtra("image", String.valueOf(holder.bg.getDrawable()));
+//                i.putExtra("image", String.valueOf(recentlyViewedList.get(position).getImg_url()));
 //
 ////                BitmapDrawable bitmapDrawable = ((BitmapDrawable) );
 ////                Bitmap bitmap = bitmapDrawable .getBitmap();
@@ -75,8 +77,8 @@ public class ProductViewAdapter extends RecyclerView.Adapter<ProductViewAdapter.
 ////                byte[] imageInByte = stream.toByteArray();
 ////                ByteArrayInputStream bis = new ByteArrayInputStream(imageInByte);
 //
-//                i.putExtra("price",recentlyViewedList.get(position).getPrice());
-////                i.putExtra("desc",recentlyViewedList.get(position).getDescription());
+//                i.putExtra("price",String.valueOf(recentlyViewedList.get(position).getPrice()));
+//                i.putExtra("desc",recentlyViewedList.get(position).getDescription());
 //                i.putExtra("qty",recentlyViewedList.get(position).getAmount());
 //                i.putExtra("unit",recentlyViewedList.get(position).getUnit());
 
