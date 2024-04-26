@@ -14,12 +14,13 @@ import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import retrofit2.Call;
 import retrofit2.Response;
+import retrofit2.http.GET;
 import retrofit2.http.POST;
 
 public class CheckAuthAPI extends Api{
     final String TAG = "Check Auth";
     interface RequestCheckAuth {
-        @POST("/api/v1/check-auth")
+        @GET("/api/v1/check-auth")
         Call<Void> checkAuth();
     }
 

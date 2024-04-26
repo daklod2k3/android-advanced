@@ -6,6 +6,7 @@ import android.content.SharedPreferences;
 import android.util.Log;
 import android.widget.Toast;
 
+import com.rajendra.techshop.DTO.CUSTOMER;
 import com.rajendra.techshop.DTO.USER;
 import com.rajendra.techshop.LoginActivity;
 import com.rajendra.techshop.R;
@@ -47,26 +48,26 @@ public class LoginAPI extends Api{
     }
 
     String TAG = "Login Request";
-    USER user;
+    CUSTOMER user;
     interface RequestLogin{
         @POST("/api/v1/login")
-        Call<USER> login(@Body LoginBody body);
+        Call<CUSTOMER> login(@Body LoginBody body);
     }
     public LoginAPI(){
         super();
     }
 
-    public USER postLogin(LoginBody body) throws Exception{
+    public CUSTOMER postLogin(LoginBody body) throws Exception{
         return postLogin(body, false);
     }
-    public USER postLogin(LoginBody body, boolean isReFetch) throws Exception{
+    public CUSTOMER postLogin(LoginBody body, boolean isReFetch) throws Exception{
         if (user != null && isReFetch){
             Log.d(TAG, "getUser: test");
             return user;
         }
         RequestLogin requestCategory = retrofit.create(RequestLogin.class);
 
-        Response<USER> response = requestCategory.login(body).execute();
+        Response<CUSTOMER> response = requestCategory.login(body).execute();
         user = response.body();
         Log.d(TAG, "postLogin: " + response.code());
         if (response.code() != 200)

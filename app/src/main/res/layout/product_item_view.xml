@@ -5,7 +5,9 @@
     android:id="@+id/recently_layout"
     android:layout_width="150dp"
     android:layout_height="220dp"
-    android:layout_marginStart="16dp">
+    android:layout_marginStart="16dp"
+    android:layout_marginBottom="16dp"
+    android:background="#fff">
 
     <TextView
         android:id="@+id/product_name"

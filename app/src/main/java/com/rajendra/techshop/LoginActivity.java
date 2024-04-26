@@ -19,6 +19,7 @@ import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.rajendra.techshop.DTO.CUSTOMER;
 import com.rajendra.techshop.DTO.USER;
 import com.rajendra.techshop.controller.CheckAuthAPI;
 import com.rajendra.techshop.controller.LoginAPI;
@@ -184,9 +185,9 @@ public class LoginActivity extends AppCompatActivity {
         return super.dispatchTouchEvent( event );
     }
 
-    class LoginTask extends AsyncTask<LoginAPI.LoginBody, Exception, USER>{
+    class LoginTask extends AsyncTask<LoginAPI.LoginBody, Exception, CUSTOMER>{
         @Override
-        protected USER doInBackground(LoginAPI.LoginBody... loginInfos) {
+        protected CUSTOMER doInBackground(LoginAPI.LoginBody... loginInfos) {
             try {
                 return (new LoginAPI().postLogin(loginInfos[0]));
             }catch (Exception e){
@@ -210,7 +211,7 @@ public class LoginActivity extends AppCompatActivity {
         }
 
         @Override
-        protected void onPostExecute(USER user) {
+        protected void onPostExecute(CUSTOMER user) {
             binding.btnLogin.setActivated(true);
             binding.btnLogin.getBackground().clearColorFilter();
             binding.btnLogin.invalidate();

@@ -12,9 +12,13 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.google.android.flexbox.AlignItems;
+import com.google.android.flexbox.AlignSelf;
+import com.google.android.flexbox.FlexboxLayoutManager;
 import com.rajendra.techshop.DTO.PRODUCT;
 import com.rajendra.techshop.ProductDetails;
 import com.rajendra.techshop.R;
+import com.rajendra.techshop.controller.Api;
 import com.squareup.picasso.Picasso;
 
 
@@ -33,7 +37,7 @@ public class ProductViewAdapter extends RecyclerView.Adapter<ProductViewAdapter.
     @NonNull
     @Override
     public RecentlyViewedViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(context).inflate(R.layout.recently_viewed_items, parent, false);
+        View view = LayoutInflater.from(context).inflate(R.layout.product_item_view, parent, false);
 
         return new RecentlyViewedViewHolder(view);
     }
@@ -45,12 +49,19 @@ public class ProductViewAdapter extends RecyclerView.Adapter<ProductViewAdapter.
 //        holder.description.setText(recentlyViewedList.get(position).getDescription());
         holder.price.setText(String.valueOf(recentlyViewedList.get(position).getPrice()));
         holder.qty.setText(String.valueOf(recentlyViewedList.get(position).getAmount()));
+
+        FlexboxLayoutManager.LayoutParams layoutParams = (FlexboxLayoutManager.LayoutParams) holder.itemView.getLayoutParams();
+        layoutParams.setFlexGrow(1);
+//        layoutParams.
+//        layoutParams.set(AlignItems.FLEX_START);
+//        layoutParams.set
+        holder.itemView.setLayoutParams(layoutParams);
 //        holder.unit.setText(recentlyViewedList.get(position).get());
 //        holder.bg.setBackgroundResource(R.drawable.no_img);
 //        Log.d("img","http://localhost:3000/image/" + recentlyViewedList.get(position).getImg_url());
         try {
             Picasso.get()
-                    .load("http://daklod-backend.vercel.app/image/" + recentlyViewedList.get(position).getImg_url())
+                    .load(Api.url + "/image/" + recentlyViewedList.get(position).getImg_url())
                     .fit()
                     .error(R.drawable.no_img)
                     .into(holder.bg);

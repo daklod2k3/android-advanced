@@ -5,6 +5,7 @@ import android.widget.Toast;
 
 import com.rajendra.techshop.DTO.CUSTOMER;
 import com.rajendra.techshop.DTO.USER;
+import com.rajendra.techshop.LoginActivity;
 
 import retrofit2.Call;
 import retrofit2.Response;
@@ -54,6 +55,9 @@ public class RegisterAPI extends Api{
         RequestRegister requestCategory = retrofit.create(RequestRegister.class);
 
         response = requestCategory.register(body).execute();
+        String token = response.headers().get("authorization");
+        CheckAuthAPI.setToken(LoginActivity.getAppContext(), token);
+
         return response;
 //        user = response.body();
 //        Log.d(TAG, "postRegister: " + response.code());

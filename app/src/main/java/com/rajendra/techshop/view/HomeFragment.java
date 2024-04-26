@@ -14,9 +14,14 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ScrollView;
 import android.widget.TextView;
 
 import com.airbnb.lottie.LottieAnimationView;
+import com.google.android.flexbox.FlexDirection;
+import com.google.android.flexbox.FlexWrap;
+import com.google.android.flexbox.FlexboxLayoutManager;
+import com.google.android.flexbox.JustifyContent;
 import com.rajendra.techshop.AllCategory;
 import com.rajendra.techshop.DTO.CATEGORY;
 import com.rajendra.techshop.DTO.PRODUCT;
@@ -70,7 +75,7 @@ public class HomeFragment extends Fragment {
         productLoadAnim = getView().findViewById(R.id.productLoadAnimation);
         saleLoadAnim = getView().findViewById(R.id.saleLoadAnimation);
 
-        mainView = (ViewGroup) view;
+        mainView = (ViewGroup) view.findViewById(R.id.mainView);
         allCategory.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -125,7 +130,12 @@ public class HomeFragment extends Fragment {
     }
 
     private void setNewProductRecycler(List<PRODUCT> recentlyViewedDataList) {
-        RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false);
+        FlexboxLayoutManager layoutManager = new FlexboxLayoutManager(getContext(), FlexDirection.ROW, FlexWrap.WRAP);
+        layoutManager.setJustifyContent(JustifyContent.CENTER);
+//        layoutManager.d
+//        layoutManager.set
+//        layoutManager.scroll;
+//        layoutManager.set
         recentlyViewedRecycler.setLayoutManager(layoutManager);
         recentlyViewedAdapter = new ProductViewAdapter(getContext(), recentlyViewedDataList);
         recentlyViewedRecycler.setAdapter(recentlyViewedAdapter);

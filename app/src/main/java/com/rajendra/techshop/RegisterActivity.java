@@ -235,6 +235,8 @@ public class RegisterActivity extends AppCompatActivity {
                 publishProgress(e.toString());
                 cancel(false);
                 return null;
+            }finally {
+                enableBtnRegister();
             }
         }
 
