@@ -167,6 +167,9 @@ public class HomeFragment extends Fragment {
 
     private void setBannerView(List<BANNER> bannerList){
         bannerSliderView.setSliderAdapter(new BannerViewAdapter(bannerList));
+
+
+
         bannerSliderView.startAutoCycle();
         bannerView.setVisibility(View.VISIBLE);
     }

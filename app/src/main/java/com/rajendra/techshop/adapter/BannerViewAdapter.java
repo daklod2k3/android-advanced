@@ -57,6 +57,7 @@ public class BannerViewAdapter extends SliderViewAdapter<BannerViewAdapter.Slide
                         .fit()
                                 .into(viewHolder.imageViewBackground);
 
+
         viewHolder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
