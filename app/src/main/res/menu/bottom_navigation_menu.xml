@@ -3,7 +3,8 @@
     <item
         android:id="@+id/home"
         android:title="Trang chủ"
-        android:icon="@drawable/home_selector"/>
+        android:icon="@drawable/home_selector"
+        />
     <item
         android:id="@+id/sample"
         android:title="Sample"

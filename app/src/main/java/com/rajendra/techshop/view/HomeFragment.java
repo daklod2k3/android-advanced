@@ -7,6 +7,7 @@ import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.cardview.widget.CardView;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -23,26 +24,30 @@ import com.google.android.flexbox.FlexWrap;
 import com.google.android.flexbox.FlexboxLayoutManager;
 import com.google.android.flexbox.JustifyContent;
 import com.rajendra.techshop.AllCategory;
+import com.rajendra.techshop.DTO.BANNER;
 import com.rajendra.techshop.DTO.CATEGORY;
 import com.rajendra.techshop.DTO.PRODUCT;
 import com.rajendra.techshop.MainActivity;
 import com.rajendra.techshop.R;
+import com.rajendra.techshop.adapter.BannerViewAdapter;
 import com.rajendra.techshop.adapter.CategoryAdapter;
 import com.rajendra.techshop.adapter.DiscountedProductAdapter;
 import com.rajendra.techshop.adapter.ProductViewAdapter;
+import com.rajendra.techshop.controller.BannerApi;
 import com.rajendra.techshop.controller.CategoryAPI;
 import com.rajendra.techshop.controller.ProductAPI;
+import com.smarteist.autoimageslider.SliderView;
 
 import java.util.List;
 
 public class HomeFragment extends Fragment {
 
     RecyclerView discountRecyclerView, categoryRecyclerView, recentlyViewedRecycler;
-    DiscountedProductAdapter discountedProductAdapter;
-//    List<DiscountedProducts> discountedProductsList;
+
+    SliderView bannerSliderView;
+    CardView bannerView;
 
     CategoryAdapter categoryAdapter;
-    List<CATEGORY> categoryList;
 
     ProductViewAdapter recentlyViewedAdapter;
 //    List<RecentlyViewed> recentlyViewedList;
@@ -50,7 +55,7 @@ public class HomeFragment extends Fragment {
     TextView allCategory;
     ViewGroup mainView;
 
-    LottieAnimationView categoryLoadAnim, productLoadAnim, saleLoadAnim;
+    LottieAnimationView categoryLoadAnim, productLoadAnim, bannerLoadAnim;
 
 
     @Override
@@ -66,14 +71,16 @@ public class HomeFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        discountRecyclerView = getView().findViewById(R.id.discountedRecycler);
         categoryRecyclerView = getView().findViewById(R.id.categoryRecycler);
         allCategory = getView().findViewById(R.id.allCategoryImage);
         recentlyViewedRecycler = getView().findViewById(R.id.productRecycler);
+        bannerSliderView = getView().findViewById(R.id.bannerSlider);
+        bannerView = getView().findViewById(R.id.bannerImage);
 
         categoryLoadAnim = getView().findViewById(R.id.categoryLoadAnimation);
         productLoadAnim = getView().findViewById(R.id.productLoadAnimation);
-        saleLoadAnim = getView().findViewById(R.id.saleLoadAnimation);
+        bannerLoadAnim = getView().findViewById(R.id.bannerLoadAnim);
+
 
         mainView = (ViewGroup) view.findViewById(R.id.mainView);
         allCategory.setOnClickListener(new View.OnClickListener() {
@@ -85,6 +92,7 @@ public class HomeFragment extends Fragment {
         });
         new LoadCategory().execute();
         new LoadProduct().execute();
+        new LoadBanner().execute();
     }
 
     class LoadCategory extends AsyncTask<Void, Void, List<CATEGORY>> {
@@ -100,6 +108,22 @@ public class HomeFragment extends Fragment {
             CATEGORY.mapName(categoryList);
             mainView.removeView(categoryLoadAnim);
             setCategoryRecycler(categoryList);
+
+        }
+    }
+
+    class LoadBanner extends AsyncTask<Void, Void, List<BANNER>> {
+        @Override
+        protected List<BANNER> doInBackground(Void... voids) {
+            return new BannerApi().getBanner();
+        }
+
+        @Override
+        protected void onPostExecute(List<BANNER> bannerList) {
+//            Log.d("request", categoryList.get(0).getImgUrl().toString());
+            if (bannerList == null) return;
+            mainView.removeView(bannerLoadAnim);
+            setBannerView(bannerList);
 
         }
     }
@@ -141,5 +165,10 @@ public class HomeFragment extends Fragment {
         recentlyViewedRecycler.setAdapter(recentlyViewedAdapter);
     }
 
+    private void setBannerView(List<BANNER> bannerList){
+        bannerSliderView.setSliderAdapter(new BannerViewAdapter(bannerList));
+        bannerSliderView.startAutoCycle();
+        bannerView.setVisibility(View.VISIBLE);
+    }
 
 }

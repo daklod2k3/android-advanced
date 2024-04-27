@@ -48,7 +48,6 @@ public class ProductViewAdapter extends RecyclerView.Adapter<ProductViewAdapter.
         holder.name.setText(recentlyViewedList.get(position).getName());
 //        holder.description.setText(recentlyViewedList.get(position).getDescription());
         holder.price.setText(String.valueOf(recentlyViewedList.get(position).getPrice()));
-        holder.qty.setText(String.valueOf(recentlyViewedList.get(position).getAmount()));
 
         FlexboxLayoutManager.LayoutParams layoutParams = (FlexboxLayoutManager.LayoutParams) holder.itemView.getLayoutParams();
         layoutParams.setFlexGrow(1);
@@ -69,7 +68,7 @@ public class ProductViewAdapter extends RecyclerView.Adapter<ProductViewAdapter.
         }catch (Exception e){
             Log.d("img", e.toString());
         }
-        holder.bg.setImageBitmap(recentlyViewedList.get(position).getBitmap());
+//        holder.bg.setImageBitmap(recentlyViewedList.get(position).getBitmap());
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

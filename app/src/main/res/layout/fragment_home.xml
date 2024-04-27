@@ -13,7 +13,7 @@
         android:id="@+id/mainView">
 
         <EditText
-            android:id="@+id/editText"
+            android:id="@+id/editTextSearch"
             android:layout_width="0dp"
             android:layout_height="50dp"
             android:layout_marginStart="16dp"
@@ -31,29 +31,46 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"/>
 
-        <androidx.recyclerview.widget.RecyclerView
-            android:minHeight="100dp"
-            android:id="@+id/discountedRecycler"
-            android:layout_width="0dp"
+        <androidx.cardview.widget.CardView
+            android:visibility="invisible"
+            app:layout_constraintTop_toBottomOf="@+id/editTextSearch"
+            android:layout_margin="16dp"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.0"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/textView3" />
+            android:id="@+id/bannerImage">
+
+            <com.smarteist.autoimageslider.SliderView
+                android:id="@+id/bannerSlider"
+                android:layout_width="match_parent"
+                android:layout_height="163dp"
+                app:sliderAnimationDuration="600"
+                app:sliderAutoCycleDirection="right"
+                app:sliderAutoCycleEnabled="true"
+                app:sliderIndicatorAnimationDuration="600"
+                app:sliderIndicatorGravity="center_horizontal|bottom"
+                app:sliderIndicatorMargin="15dp"
+                app:sliderIndicatorOrientation="horizontal"
+                app:sliderIndicatorPadding="2dp"
+                app:sliderIndicatorRadius="1.5dp"
+                app:sliderIndicatorSelectedColor="@color/colorPrimary"
+                app:sliderIndicatorUnselectedColor="#5A5A5A"
+                app:sliderScrollTimeInSec="2"
+                app:sliderStartAutoCycle="true" />
+
+        </androidx.cardview.widget.CardView>
 
         <com.airbnb.lottie.LottieAnimationView
-            android:id="@+id/saleLoadAnimation"
+            android:layout_marginTop="50dp"
+            android:id="@+id/bannerLoadAnim"
             android:layout_height="70dp"
             android:layout_width="70dp"
-            android:translationY="-20dp"
             app:lottie_colorFilter="@color/colorPrimary"
             app:lottie_loop="true"
             app:lottie_autoPlay="true"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintLeft_toRightOf="@id/discountedRecycler"
-            app:layout_constraintTop_toTopOf="@id/discountedRecycler"
+            app:layout_constraintLeft_toRightOf="@id/bannerImage"
+            app:layout_constraintTop_toTopOf="@id/bannerImage"
             app:lottie_rawRes="@raw/loading_animation"/>
 
         <com.airbnb.lottie.LottieAnimationView
@@ -81,7 +98,7 @@
             android:textColor="@android:color/background_dark"
             android:textSize="16sp"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/editText" />
+            app:layout_constraintTop_toBottomOf="@+id/editTextSearch" />
 
         <TextView
             android:id="@+id/textView4"
@@ -91,10 +108,10 @@
             android:layout_marginTop="24dp"
             android:fontFamily="@font/open_sans_semibold"
             android:text="Phân loại"
-            android:textColor="@android:color/background_dark"
+            android:textColor="@color/colorPrimary"
             android:textSize="16sp"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/discountedRecycler" />
+            app:layout_constraintTop_toBottomOf="@+id/bannerImage" />
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/categoryRecycler"
@@ -108,6 +125,7 @@
             app:layout_constraintEnd_toEndOf="parent"/>
 
         <TextView
+            android:visibility="gone"
             android:id="@+id/allCategoryImage"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -124,10 +142,9 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
-            android:layout_marginTop="24dp"
             android:fontFamily="@font/open_sans_semibold"
             android:text="Sản phẩm mới"
-            android:textColor="@android:color/background_dark"
+            android:textColor="@color/colorPrimary"
             android:textSize="16sp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/categoryRecycler" />
