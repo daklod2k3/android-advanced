@@ -12,6 +12,18 @@
         android:layout_height="wrap_content"
         android:id="@+id/mainView">
 
+        <androidx.cardview.widget.CardView
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_marginHorizontal="10dp"
+            android:backgroundTint="#fff"
+            app:layout_constraintBottom_toBottomOf="@id/categoryRecycler"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.473"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@id/textView4"
+            app:layout_constraintVertical_bias="0.0"></androidx.cardview.widget.CardView>
+
         <ImageView
             android:layout_width="match_parent"
             android:layout_height="90dp"
@@ -106,7 +118,10 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/editTextSearch" />
 
+
+
         <TextView
+            android:paddingTop="10dp"
             android:id="@+id/textView4"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -117,18 +132,22 @@
             android:textColor="@color/colorPrimary"
             android:textSize="16sp"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/bannerImage" />
+            app:layout_constraintTop_toBottomOf="@+id/bannerImage"
+            android:elevation="2dp"/>
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/categoryRecycler"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:minHeight="70dp"
-            android:layout_marginTop="16dp"
+            android:layout_marginTop="10dp"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/textView4"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"/>
+            app:layout_constraintEnd_toEndOf="parent"
+            android:elevation="2dp"
+            android:layout_marginBottom="10dp"
+            android:paddingBottom="10dp"/>
 
         <TextView
             android:visibility="gone"
