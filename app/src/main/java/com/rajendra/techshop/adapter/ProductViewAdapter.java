@@ -22,6 +22,9 @@ import com.rajendra.techshop.controller.Api;
 import com.squareup.picasso.Picasso;
 
 
+import java.text.DecimalFormat;
+import java.text.NumberFormat;
+import java.util.Currency;
 import java.util.List;
 
 public class ProductViewAdapter extends RecyclerView.Adapter<ProductViewAdapter.RecentlyViewedViewHolder> {
@@ -47,7 +50,13 @@ public class ProductViewAdapter extends RecyclerView.Adapter<ProductViewAdapter.
 
         holder.name.setText(recentlyViewedList.get(position).getName());
 //        holder.description.setText(recentlyViewedList.get(position).getDescription());
-        holder.price.setText(String.valueOf(recentlyViewedList.get(position).getPrice()));
+        NumberFormat money = NumberFormat.getCurrencyInstance();
+        money.setMaximumFractionDigits(0);
+        money.setCurrency(Currency.getInstance("VND"));
+
+        DecimalFormat formatter = new DecimalFormat("#,###,###");
+
+        holder.price.setText(formatter.format(recentlyViewedList.get(position).getPrice()) + "đ");
 
         FlexboxLayoutManager.LayoutParams layoutParams = (FlexboxLayoutManager.LayoutParams) holder.itemView.getLayoutParams();
         layoutParams.setFlexGrow(1);

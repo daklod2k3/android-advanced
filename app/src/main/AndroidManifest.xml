@@ -3,7 +3,8 @@
     package="com.rajendra.techshop">
 
     <uses-permission android:name="android.permission.INTERNET" />
-    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
+    <uses-permission android:name="android.permission.POST_NOTIFICATIONS" />
 
 
     <application
@@ -20,6 +21,7 @@
             android:label="@string/title_activity_login"
             android:theme="@style/AppTheme.Fullscreen">
             <intent-filter>
+                <action android:name="com.google.firebase.MESSAGING_EVENT" />
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>

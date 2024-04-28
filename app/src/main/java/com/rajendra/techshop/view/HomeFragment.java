@@ -147,7 +147,11 @@ public class HomeFragment extends Fragment {
     }
 
     private void setCategoryRecycler(List<CATEGORY> categoryDataList) {
-        RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false);
+        FlexboxLayoutManager layoutManager = new FlexboxLayoutManager(getContext(), FlexDirection.ROW, FlexWrap.WRAP);
+
+        layoutManager.setJustifyContent(JustifyContent.SPACE_AROUND);
+//        layoutManager.set
+
         categoryRecyclerView.setLayoutManager(layoutManager);
         categoryAdapter = new CategoryAdapter(getContext(), categoryDataList);
         categoryRecyclerView.setAdapter(categoryAdapter);
@@ -167,9 +171,6 @@ public class HomeFragment extends Fragment {
 
     private void setBannerView(List<BANNER> bannerList){
         bannerSliderView.setSliderAdapter(new BannerViewAdapter(bannerList));
-
-
-
         bannerSliderView.startAutoCycle();
         bannerView.setVisibility(View.VISIBLE);
     }

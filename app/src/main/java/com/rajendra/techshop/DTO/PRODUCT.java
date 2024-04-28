@@ -8,13 +8,13 @@ import com.squareup.picasso.Picasso;
 public class PRODUCT {
     int product_id;
     String name;
-    float   price;
+    int   price;
     String img_url;
     int amount;
     int category_id;
     Bitmap bitmap;
 
-    public PRODUCT(int product_id, String name, float price, String img_url, int amount, int category_id) {
+    public PRODUCT(int product_id, String name, int price, String img_url, int amount, int category_id) {
         this.product_id = product_id;
         this.name = name;
         this.price = price;
@@ -58,11 +58,11 @@ public class PRODUCT {
         this.name = name;
     }
 
-    public float getPrice() {
+    public int getPrice() {
         return price;
     }
 
-    public void setPrice(float price) {
+    public void setPrice(int price) {
         this.price = price;
     }
 

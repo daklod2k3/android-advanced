@@ -1,6 +1,9 @@
 package com.rajendra.techshop;
 
+import androidx.activity.result.ActivityResultLauncher;
+import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.content.ContextCompat;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
@@ -9,6 +12,7 @@ import android.content.SharedPreferences;
 import android.graphics.PorterDuff;
 import android.graphics.Rect;
 import android.os.AsyncTask;
+import android.os.Build;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -59,6 +63,10 @@ public class LoginActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         binding = ActivityLoginBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
+
+        getNotiPermis();
+
+
 
         binding.btnLogin.setActivated(true);
 
@@ -226,6 +234,19 @@ public class LoginActivity extends AppCompatActivity {
 
     public static Context getAppContext(){
         return context;
+    }
+
+    private void getNotiPermis(){
+        // Declare the launcher at the top of your Activity/Fragment:
+        ActivityResultLauncher<String> requestPermissionLauncher =
+                registerForActivityResult(new ActivityResultContracts.RequestPermission(), isGranted -> {
+                    if (isGranted) {
+                        // FCM SDK (and your app) can post notifications.
+                    } else {
+                        // TODO: Inform user that that your app will not show notifications.
+                    }
+                });
+
     }
 
 
