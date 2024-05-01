@@ -14,10 +14,10 @@
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
         <activity
-            android:name=".view.CartActivity"
+            android:name="com.daklod.techshop.view.CartActivity"
             android:exported="false" />
         <activity
-            android:name=".LoginActivity"
+            android:name="com.daklod.techshop.LoginActivity"
             android:configChanges="orientation|keyboardHidden|screenSize"
             android:label="@string/title_activity_login"
             android:theme="@style/AppTheme.Fullscreen">
@@ -27,10 +27,10 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".ProductDetails" />
-        <activity android:name=".AllCategory" />
-        <activity android:name=".MainActivity" />
-        <activity android:name=".RegisterActivity" />
+        <activity android:name="com.daklod.techshop.ProductDetails" />
+        <activity android:name="com.daklod.techshop.AllCategory" />
+        <activity android:name="com.daklod.techshop.MainActivity" />
+        <activity android:name="com.daklod.techshop.RegisterActivity" />
 
         <meta-data
             android:name="preloaded_fonts"
