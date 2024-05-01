@@ -7,6 +7,7 @@
     android:padding="2dp"
     tools:context="com.daklod.techshop.ProductDetails">
 
+
     <LinearLayout
         android:id="@+id/layoutTab"
         android:layout_width="match_parent"
@@ -16,7 +17,7 @@
         >
 
         <ImageView
-            android:id="@+id/imageView2"
+            android:id="@+id/imgBack1"
             android:layout_width="50dp"
             android:layout_height="match_parent"
             android:padding="10dp"
@@ -36,85 +37,141 @@
 
 
     <ScrollView
-        app:layout_constraintTop_toBottomOf="@id/layoutTab"
+        android:id="@+id/scrollView3"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@id/layoutTab"
+        tools:layout_editor_absoluteX="2dp">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
-        <ImageView
-            android:id="@+id/productImg"
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            app:layout_constraintDimensionRatio="1"
-            android:src="@drawable/no_img"/>
+            <ImageView
+                android:id="@+id/productImg"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:src="@drawable/no_img"
+                app:layout_constraintDimensionRatio="1"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
 
-        <androidx.constraintlayout.widget.ConstraintLayout
-            app:layout_constraintTop_toBottomOf="@+id/productImg"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginHorizontal="10dp"
-            android:layout_marginTop="16dp"
-            >
-
-            <TextView
-                android:id="@+id/productName"
-                android:textColor="#000"
+            <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Tên sản phẩm"
-                android:textSize="30dp"/>
-
-            <TextView
-                style="@style/textStyleBold"
-                android:text="20.000.00đ"
-                android:textColor="@color/colorPrimary"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                app:layout_constraintTop_toBottomOf="@+id/productName"
-                android:id="@+id/productPrice"/>
-            <TextView
-                android:id="@+id/txtMota"
+                android:layout_marginHorizontal="10dp"
                 android:layout_marginTop="16dp"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="Mô tả"
-                app:layout_constraintTop_toBottomOf="@id/productPrice"/>
+                app:layout_constraintTop_toBottomOf="@+id/productImg">
 
-            <TextView
-                app:layout_constraintTop_toBottomOf="@id/txtMota"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="- Mô tả sản phẩm chi tiết"/>
+                <TextView
+                    android:id="@+id/productName"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Tên sản phẩm"
+                    android:textColor="#000"
+                    android:textSize="30dp" />
 
-        </androidx.constraintlayout.widget.ConstraintLayout>
+                <TextView
+                    android:id="@+id/productPrice"
+                    style="@style/textStyleBold"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="20.000.00đ"
+                    android:textColor="@color/colorPrimary"
+                    app:layout_constraintTop_toBottomOf="@+id/productName" />
+
+                <TextView
+                    android:id="@+id/txtMota"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="16dp"
+                    android:text="Mô tả"
+                    app:layout_constraintTop_toBottomOf="@id/productPrice" />
+
+                <TextView
+                    android:id="@+id/txtMoTaChiTiet"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="- Mô tả sản phẩm chi tiết"
+                    app:layout_constraintTop_toBottomOf="@id/txtMota" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
         </androidx.constraintlayout.widget.ConstraintLayout>
 
     </ScrollView>
 
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toTopOf="@+id/linearLayout"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/scrollView3">
+
+        <TextView
+            android:id="@+id/plusPro"
+            android:layout_width="28dp"
+            android:layout_height="28dp"
+            android:background="@drawable/white_circle"
+            android:gravity="center"
+            android:text="+"
+            android:textSize="16dp"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/minusPro"
+            android:layout_width="28dp"
+            android:layout_height="28dp"
+            android:background="@drawable/white_circle"
+            android:gravity="center"
+            android:text="-"
+            android:textSize="16dp"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/txtAmount"
+            android:layout_width="28dp"
+            android:layout_height="28dp"
+            android:gravity="center"
+            android:text="0"
+            android:textSize="16dp"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/plusPro"
+            app:layout_constraintStart_toEndOf="@+id/minusPro"
+            app:layout_constraintTop_toTopOf="parent" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
     <LinearLayout
+        android:id="@+id/linearLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:layout_constraintBottom_toBottomOf="parent">
+        app:layout_constraintBottom_toBottomOf="parent"
+        tools:layout_editor_absoluteX="2dp">
 
         <Button
+            android:id="@+id/addToCart"
+            android:layout_width="0dp"
+            android:layout_height="55dp"
             android:layout_weight="1"
-            android:layout_width="0dp"
-            android:layout_height="55dp"
-            android:textColor="#fff"
             android:backgroundTint="#4FA74C"
-            android:text="Thêm vào giỏ"/>
+            android:text="Thêm vào giỏ"
+            android:textColor="#fff" />
 
         <Button
-            android:layout_weight="2"
+            android:id="@+id/btnBuyNow"
             android:layout_width="0dp"
             android:layout_height="55dp"
-            android:textColor="#fff"
+            android:layout_weight="2"
             android:backgroundTint="@color/colorPrimary"
-            android:text="Mua ngay"/>
+            android:text="Mua ngay"
+            android:textColor="#fff" />
 
     </LinearLayout>
 

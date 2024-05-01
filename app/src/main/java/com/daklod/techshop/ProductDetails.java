@@ -28,9 +28,10 @@ public class ProductDetails extends AppCompatActivity {
 
         ImageView img, back, cart;
         TextView proName, proPrice, proDesc, btnMinus, btnPlus, txtAmount;
-        ImageView addCart;
+        Button addCart;
         Button btnBuyNow;
         int amount = 1;
+        int amountMax;
 
 
         @Override
@@ -39,20 +40,22 @@ public class ProductDetails extends AppCompatActivity {
             setContentView(R.layout.activity_product_details);
 
             Intent i = getIntent();
-            int id = i.getIntExtra("id", -1);
+            int id = Integer.parseInt(i.getStringExtra("id"));
 
 
-            cart = findViewById(R.id.cart);
+//            cart = findViewById(R.id.cart);
             proName = findViewById(R.id.productName);
-            proDesc = findViewById(R.id.prodDesc);
-            img = findViewById(R.id.big_image);
+            proDesc = findViewById(R.id.txtMoTaChiTiet);
+            img = findViewById(R.id.productImg);
             proPrice = findViewById(R.id.productPrice);
-            back = findViewById(R.id.back2);
+            back = findViewById(R.id.imgBack1);
             addCart = findViewById(R.id.addToCart);
             btnBuyNow = findViewById(R.id.btnBuyNow);
             btnMinus = findViewById(R.id.minusPro);
             btnPlus = findViewById(R.id.plusPro);
             txtAmount = findViewById(R.id.txtAmount);
+
+            txtAmount.setText("1");
 
             back.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -73,23 +76,20 @@ public class ProductDetails extends AppCompatActivity {
             btnPlus.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
+                    if(amount > amountMax) {
+                        Toast.makeText(ProductDetails.this,"Product quantity is not enough", Toast.LENGTH_SHORT).show();
+                        return;
+                    }
                     txtAmount.setText(String.valueOf(++amount));
                 }
             });
 
-            cart.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    Intent i = new Intent(ProductDetails.this, CartActivity.class);
-                    startActivity(i);
-                    finish();
-                }
-            });
+
             addCart.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
                     // Tạo đối tượng addCartBody với thông tin cần thiết
-                    ProductAPI.addCartBody body = new ProductAPI.addCartBody(i.getIntExtra("id", -1), amount); // Thay productId và quantity bằng thông tin thích hợp
+                    ProductAPI.addCartBody body = new ProductAPI.addCartBody(Integer.parseInt(i.getStringExtra("id")), Integer.parseInt(txtAmount.getText().toString())); // Thay productId và quantity bằng thông tin thích hợp
 
                     // Gọi phương thức addProductToCart trong ProductAPI
                     new AddProductToCartTask().execute(body);
@@ -141,6 +141,7 @@ public class ProductDetails extends AppCompatActivity {
                      products) {
                     proName.setText(product.getName());
                     proPrice.setText(String.valueOf(product.getPrice()) + "đ");
+                    amountMax = product.getAmount();
 //                    proDesc.setText(product.getDescription());
 
                     // Load image using Picasso or any other image loading library
