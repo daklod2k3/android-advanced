@@ -1,3 +1,5 @@
+package com.rajendra.techshop.adapter;
+
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -9,7 +11,6 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.rajendra.techshop.R;
-import com.rajendra.techshop.adapter.InvoiceDetailAdapter;
 import com.rajendra.techshop.model.Item;
 import com.squareup.picasso.Picasso;
 
@@ -20,15 +21,15 @@ public class InvoiceDetailAdapter extends RecyclerView.Adapter<InvoiceDetailAdap
     private Context context;
     private List<Item> itemList;
 
-    public detail(Context context, List<Item> itemList) {
+    public InvoiceDetailAdapter(Context context, List<Item> itemList) {
         this.context = context;
         this.itemList = itemList;
     }
 
     @NonNull
     @Override
-    public InvoiceDetailAdapter onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(context).inflate(R.layout.item_invoice_detail, parent, false);
+    public InvoiceDetailViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+        View view = LayoutInflater.from(context).inflate(R.layout.invoicedetail_item, parent, false);
         return new InvoiceDetailViewHolder(view);
     }
 
