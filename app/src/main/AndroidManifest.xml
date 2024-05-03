@@ -28,6 +28,11 @@
         <activity android:name=".AllCategory" />
         <activity android:name=".MainActivity"/>
         <activity android:name=".RegisterActivity"/>
+        <activity
+            android:name=".SearchActivity"
+            android:windowSoftInputMode="adjustNothing">
+        </activity>
+        <activity android:name=".ResultActivity"/>
         <meta-data
             android:name="preloaded_fonts"
             android:resource="@array/preloaded_fonts" />

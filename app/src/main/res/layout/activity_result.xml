@@ -1,0 +1,86 @@
+<!-- activity_main.xml -->
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main3"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <ImageView
+        android:id="@+id/back4"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:padding="10dp"
+        android:layout_marginLeft="12dp"
+        android:layout_marginTop="12dp"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/ic_arrow_back_black_24dp" />
+
+    <EditText
+        android:id="@+id/editTextSearch4"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:background="@drawable/rounded_corner"
+        android:paddingLeft="12dp"
+        android:paddingRight="8dp"
+        android:ems="10"
+        android:fontFamily="@font/open_sans"
+        android:hint="Search"
+        android:inputType="textPersonName"
+        android:textColorHint="#aaa"
+        android:layout_marginLeft="65dp"
+        android:layout_marginRight="28dp"
+        android:textSize="20dp"
+        android:layout_marginTop="6dp"
+        app:layout_constraintLeft_toLeftOf="@id/back4"
+        app:layout_constraintTop_toTopOf="@id/back4"
+        tools:layout_editor_absoluteX="91dp" />
+
+    <TextView
+        android:id="@+id/sort"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="28dp"
+        android:layout_marginTop="16dp"
+        android:text="Sort:"
+        android:textSize="20dp"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/back4" />
+
+    <Button
+        android:id="@+id/sortName"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Name"
+        android:textSize="14dp"
+        android:layout_marginTop="4dp"
+        android:layout_marginLeft="12dp"
+        android:drawableRight="@drawable/sort_default"
+        app:layout_constraintLeft_toRightOf="@id/sort"
+        app:layout_constraintTop_toBottomOf="@id/back4" />
+
+    <Button
+        android:id="@+id/sortPrice"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Giá"
+        android:textSize="14dp"
+        android:layout_marginTop="4dp"
+        android:layout_marginLeft="16dp"
+        android:drawableRight="@drawable/sort_default"
+        android:layout_gravity="center"
+        app:layout_constraintLeft_toRightOf="@id/sortName"
+        app:layout_constraintTop_toBottomOf="@id/back4" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:nestedScrollingEnabled="false"
+        android:id="@+id/productRecycler"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="24dp"
+        android:layout_marginLeft="12dp"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/sort"/>
+
+</androidx.constraintlayout.widget.ConstraintLayout>
