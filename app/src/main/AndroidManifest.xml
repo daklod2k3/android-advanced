@@ -26,22 +26,15 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-<<<<<<< HEAD
-        <activity android:name=".ProductDetails" />
-        <activity android:name=".AllCategory" />
-        <activity android:name=".MainActivity"/>
-        <activity android:name=".RegisterActivity"/>
-        <activity
-            android:name=".SearchActivity"
-            android:windowSoftInputMode="adjustNothing">
-        </activity>
-        <activity android:name=".ResultActivity"/>
-=======
         <activity android:name="com.daklod.techshop.ProductDetails" />
         <activity android:name="com.daklod.techshop.AllCategory" />
         <activity android:name="com.daklod.techshop.MainActivity"/>
         <activity android:name="com.daklod.techshop.RegisterActivity"/>
->>>>>>> 5026df479868b8fa6f47f8f6ded955ce72ee7346
+        <activity
+            android:name="com.daklod.techshop.SearchActivity"
+            android:windowSoftInputMode="adjustNothing">
+        </activity>
+        <activity android:name="com.daklod.techshop.ResultActivity"/>
         <meta-data
             android:name="preloaded_fonts"
             android:resource="@array/preloaded_fonts" />
