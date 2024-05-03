@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "751740642321",
+    "project_id": "realtime-noti-f7e88",
+    "storage_bucket": "realtime-noti-f7e88.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:751740642321:android:34324a31f1ce6cbfd77db0",
+        "android_client_info": {
+          "package_name": "com.daklod.it_shop"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyChFdHqkmRTcKQU6rqBPXKLIsvD1b2g0mc"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

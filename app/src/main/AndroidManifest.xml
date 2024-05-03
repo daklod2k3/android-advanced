@@ -1,9 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.rajendra.techshop">
+    package="com.daklod.techshop">
 
     <uses-permission android:name="android.permission.INTERNET" />
-    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
+    <uses-permission android:name="android.permission.POST_NOTIFICATIONS" />
 
 
     <application
@@ -15,15 +16,17 @@
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
         <activity
-            android:name=".LoginActivity"
+            android:name="com.daklod.techshop.LoginActivity"
             android:configChanges="orientation|keyboardHidden|screenSize"
             android:label="@string/title_activity_login"
             android:theme="@style/AppTheme.Fullscreen">
             <intent-filter>
+                <action android:name="com.google.firebase.MESSAGING_EVENT" />
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+<<<<<<< HEAD
         <activity android:name=".ProductDetails" />
         <activity android:name=".AllCategory" />
         <activity android:name=".MainActivity"/>
@@ -33,6 +36,12 @@
             android:windowSoftInputMode="adjustNothing">
         </activity>
         <activity android:name=".ResultActivity"/>
+=======
+        <activity android:name="com.daklod.techshop.ProductDetails" />
+        <activity android:name="com.daklod.techshop.AllCategory" />
+        <activity android:name="com.daklod.techshop.MainActivity"/>
+        <activity android:name="com.daklod.techshop.RegisterActivity"/>
+>>>>>>> 5026df479868b8fa6f47f8f6ded955ce72ee7346
         <meta-data
             android:name="preloaded_fonts"
             android:resource="@array/preloaded_fonts" />
