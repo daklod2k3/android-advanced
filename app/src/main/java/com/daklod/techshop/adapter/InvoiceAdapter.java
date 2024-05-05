@@ -1,23 +1,21 @@
-package com.rajendra.techshop.adapter;
+package com.daklod.techshop.adapter;
 
 import android.content.Context;
-import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
-
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-
-import com.rajendra.techshop.DTO.INVOICE;
-import com.rajendra.techshop.InvoiceDetailActivity;
-import com.rajendra.techshop.R;
+import com.daklod.techshop.DTO.INVOICE;
+import com.daklod.techshop.R;
+import com.daklod.techshop.controller.InvoiceApi;
 
 import java.util.List;
 
 public class InvoiceAdapter extends RecyclerView.Adapter<InvoiceAdapter.InvoiceViewHolder> {
+
     private Context context;
     private List<INVOICE> invoiceList;
 
@@ -36,32 +34,24 @@ public class InvoiceAdapter extends RecyclerView.Adapter<InvoiceAdapter.InvoiceV
     @Override
     public void onBindViewHolder(@NonNull InvoiceViewHolder holder, int position) {
         INVOICE invoice = invoiceList.get(position);
-        holder.txtInvoice.setText("Đơn hàng: " + invoice.getInvoice_id());
-        holder.txtStatus.setText(invoice.getStatus_id() + "");
 
-        holder.itemView.setOnClickListener(new View.OnClickListener() {
+        holder.txtInvoice.setText("Đơn hàng: " + invoice.getInvoice_id());
+        getStatusName(invoice.getStatus_id(), new InvoiceApi.StatusNameCallback() {
             @Override
-            public void onClick(View view) {
-                // Chuyển đến InvoiceDetailActivity và gửi đối tượng INVOICE
-                Intent intent = new Intent(context, InvoiceDetailActivity.class);
-                intent.putExtra("invoice", (CharSequence) invoice);
-                context.startActivity(intent);
+            public void onStatusNameReceived(String statusName) {
+                holder.txtStatus.setText("Trạng thái: " + statusName);
+            }
+
+            @Override
+            public void onStatusNameError(String errorMessage) {
+                holder.txtStatus.setText("Trạng thái: Unknown");
             }
         });
-
-        LinearLayoutManager layoutManager = new LinearLayoutManager(
-                holder.reChiTiet.getContext(),
-                LinearLayoutManager.VERTICAL,
-                false
-        );
-        layoutManager.setInitialPrefetchItemCount(invoice.getItem().size());
-        holder.reChiTiet.setLayoutManager(layoutManager);
-
-
-
-        //adapter chitiet
-        InvoiceDetailAdapter invoiceDetailAdapter = new InvoiceDetailAdapter(context, invoice.getItem());
-        holder.reChiTiet.setAdapter(invoiceDetailAdapter);
+        // Set up RecyclerView for item details
+        if (invoice.getItem() != null && !invoice.getItem().isEmpty()) {
+            ItemAdapter itemAdapter = new ItemAdapter(context, invoice.getItem());
+            holder.recyclerView.setAdapter(itemAdapter);
+        }
     }
 
     @Override
@@ -69,20 +59,32 @@ public class InvoiceAdapter extends RecyclerView.Adapter<InvoiceAdapter.InvoiceV
         return invoiceList.size();
     }
 
-//    public void setInvoices(List<INVOICE> invoices) {
-//        this.invoiceList = invoices;
-//        notifyDataSetChanged();
-//    }
+    private void getStatusName(int statusId, InvoiceApi.StatusNameCallback statusNameCallback) {
+        InvoiceApi invoiceApi = new InvoiceApi();
+        invoiceApi.getStatusNameById(statusId, new InvoiceApi.StatusNameCallback() {
+            @Override
+            public void onStatusNameReceived(String statusName) {
+                statusNameCallback.onStatusNameReceived(statusName);
+            }
 
-    public class InvoiceViewHolder extends RecyclerView.ViewHolder {
+            @Override
+            public void onStatusNameError(String errorMessage) {
+                statusNameCallback.onStatusNameError(errorMessage);
+            }
+        });
+    }
+
+
+    public static class InvoiceViewHolder extends RecyclerView.ViewHolder {
         TextView txtInvoice, txtStatus;
-        RecyclerView reChiTiet;
+        RecyclerView recyclerView;
 
         public InvoiceViewHolder(@NonNull View itemView) {
             super(itemView);
-            txtInvoice = itemView.findViewById(R.id.idinvoice);
-            txtStatus = itemView.findViewById(R.id.invoicestatus);
-            reChiTiet = itemView.findViewById(R.id.recycleview_chitiet);
+            txtInvoice = itemView.findViewById(R.id.txtInvoiceId);
+            txtStatus = itemView.findViewById(R.id.txtStatus);
+            recyclerView = itemView.findViewById(R.id.recycleview_chitiet);
+            recyclerView.setLayoutManager(new LinearLayoutManager(itemView.getContext()));
         }
     }
 }

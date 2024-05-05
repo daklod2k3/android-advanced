@@ -1,4 +1,4 @@
-package com.rajendra.techshop.DTO;
+package com.daklod.techshop.DTO;
 
 public class INVOICE_STATUS {
     private int invoice_status_id;

@@ -1,72 +1,73 @@
-package com.rajendra.techshop.view;
+package com.daklod.techshop.view;
 
+import android.os.AsyncTask;
 import android.os.Bundle;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.Toolbar;
+import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.rajendra.techshop.DTO.INVOICE;
-import com.rajendra.techshop.R;
-import com.rajendra.techshop.adapter.InvoiceAdapter;
-import com.rajendra.techshop.controller.InvoiceApi;
+import com.daklod.techshop.DTO.INVOICE;
+import com.daklod.techshop.R;
+import com.daklod.techshop.adapter.InvoiceAdapter;
+import com.daklod.techshop.controller.InvoiceApi;
 
 import java.util.List;
 
-import io.reactivex.disposables.CompositeDisposable;
+public class HistoryFragment extends Fragment {
 
-public class HistoryFragment extends AppCompatActivity {
-
-    private CompositeDisposable compositeDisposable = new CompositeDisposable();
-    private RecyclerView reInvoice;
-    private Toolbar toolbar;
-    private InvoiceApi invoiceApi;
+    private RecyclerView recyclerView;
     private InvoiceAdapter invoiceAdapter;
+    private InvoiceApi invoiceApi;
+
+    public HistoryFragment() {
+    }
 
     @Override
-    protected void onCreate(@Nullable Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.fragment_history);
-        initView();
-        initToolbar();
+    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+                             Bundle savedInstanceState) {
+        return inflater.inflate(R.layout.fragment_history, container, false);
+    }
+
+    @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+
+        recyclerView = view.findViewById(R.id.invoiceRecycler);
+        recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         invoiceApi = new InvoiceApi();
-        getInvoice();
+
+        // Gọi loadInvoices trên luồng phụ để tránh chặn luồng chính (UI thread)
+        new LoadInvoicesTask().execute();
     }
 
-    private void getInvoice() {
-        List<INVOICE> invoices = invoiceApi.getAllInvoices();
-        if (invoices != null) {
-            if (invoiceAdapter == null) {
-                invoiceAdapter = new InvoiceAdapter(this, invoices);
-                reInvoice.setAdapter(invoiceAdapter);
-            } else {
-                invoiceAdapter.notifyDataSetChanged();
-            }
-        } else {
-            Toast.makeText(this, "Failed to retrieve invoices", Toast.LENGTH_SHORT).show();
+    private class LoadInvoicesTask extends AsyncTask<Void, Void, List<INVOICE>> {
+
+        @Override
+        protected List<INVOICE> doInBackground(Void... voids) {
+            // Gọi API để lấy danh sách đơn hàng trên luồng phụ
+            return invoiceApi.getAllInvoices();
         }
-    }
 
-    private void initToolbar() {
-        Toolbar toolbar = findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        toolbar.setNavigationOnClickListener(view -> finish());
-    }
+        @Override
+        protected void onPostExecute(List<INVOICE> invoices) {
+            super.onPostExecute(invoices);
 
-    private void initView() {
-        reInvoice = findViewById(R.id.recycleview_chitiet);
-        LinearLayoutManager layoutManager = new LinearLayoutManager(this);
-        reInvoice.setLayoutManager(layoutManager);
-    }
+            if (invoices != null) {
+                // Hiển thị danh sách đơn hàng bằng cách khởi tạo Adapter và đặt Adapter cho RecyclerView
+                invoiceAdapter = new InvoiceAdapter(getContext(), invoices);
+                recyclerView.setAdapter(invoiceAdapter);
+            } else {
+                // Hiển thị thông báo lỗi nếu không thể tải danh sách đơn hàng
+                Toast.makeText(getContext(), "Failed to load invoices", Toast.LENGTH_SHORT).show();
+            }
+        }
 
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
-        compositeDisposable.dispose();
     }
 }
-

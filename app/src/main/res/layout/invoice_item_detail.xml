@@ -20,8 +20,9 @@
                 android:id="@+id/item_imgchitiet"
                 android:src="@drawable/no_img"
                 android:background="#fff"
-                android:layout_width="100dp"
-                android:layout_height="100dp" />
+                android:scaleType="centerCrop"
+                android:layout_width="80dp"
+                android:layout_height="80dp" />
             <LinearLayout
                 android:padding="2dp"
                 android:layout_toEndOf="@+id/item_imgchitiet"
@@ -47,6 +48,17 @@
                     android:textSize="16sp"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"/>
+
+                <TextView
+                    android:id="@+id/item_giachitiet"
+                    android:textColor="#fff"
+                    android:text="20.000.000đ"
+                    android:layout_marginLeft="16dp"
+                    android:layout_marginTop="5dp"
+                    android:textSize="16sp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"/>
+
 
             </LinearLayout>
 

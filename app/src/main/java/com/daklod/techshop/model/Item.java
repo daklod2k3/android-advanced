@@ -1,4 +1,4 @@
-package com.rajendra.techshop.model;
+package com.daklod.techshop.model;
 
 public class Item {
     int idProduct;
