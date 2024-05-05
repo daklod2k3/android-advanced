@@ -20,4 +20,9 @@
         android:title="Sample"
         android:icon="@drawable/ic_person"
         />
+    <item
+        android:id="@+id/history"
+        android:title="History"
+        android:icon="@drawable/home_selector"
+        />
 </menu>

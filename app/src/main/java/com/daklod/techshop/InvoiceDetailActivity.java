@@ -9,8 +9,8 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.rajendra.techshop.DTO.CUSTOMER;
-import com.rajendra.techshop.DTO.EMPLOYEE;
+import com.daklod.techshop.DTO.CUSTOMER;
+import com.daklod.techshop.DTO.EMPLOYEE;
 import com.daklod.techshop.DTO.INVOICE;
 import com.daklod.techshop.adapter.InvoiceDetailAdapter;
 import com.daklod.techshop.controller.InvoiceApi;
