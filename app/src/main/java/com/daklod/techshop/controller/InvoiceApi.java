@@ -2,6 +2,8 @@ package com.daklod.techshop.controller;
 
 import android.util.Log;
 
+import com.daklod.techshop.DTO.CUSTOMER;
+import com.daklod.techshop.DTO.EMPLOYEE;
 import com.daklod.techshop.DTO.INVOICE;
 import com.daklod.techshop.DTO.INVOICE_DETAIL;
 import com.daklod.techshop.DTO.INVOICE_STATUS;
@@ -21,6 +23,7 @@ import retrofit2.http.Path;
 public class InvoiceApi extends Api {
 
     private static final String TAG = "InvoiceApi";
+
     public interface InvoiceService {
         @GET("/api/v1/invoice")
         Call<List<INVOICE>> getAllInvoices();
@@ -36,6 +39,13 @@ public class InvoiceApi extends Api {
 
         @GET("/api/v1/invoice/status/{invoiceStatusId}")
         Call<INVOICE_STATUS> getStatusNameById(@Path("invoiceStatusId") int invoiceStatusId);
+
+        @GET("/api/v1/customer/{customerId}")
+        Call<CUSTOMER> getCustomerById(@Path("customerId") int customerId);
+
+        @GET("/api/v1/employee/{employeeId}")
+        Call<EMPLOYEE> getEmployeeById(@Path("employeeId") int employeeId);
+
     }
 
     private InvoiceService invoiceService;
@@ -44,7 +54,7 @@ public class InvoiceApi extends Api {
         super();
         invoiceService = retrofit.create(InvoiceService.class);
     }
-    
+
     // Lấy tất cả hóa đơn
     public List<INVOICE> getAllInvoices() {
 
@@ -145,10 +155,64 @@ public class InvoiceApi extends Api {
         });
     }
 
+    // Lấy thông tin khách hàng theo ID
+    public void getCustomerById(int customerId, final CustomerCallback callback) {
+        InvoiceService customerService = retrofit.create(InvoiceService.class);
+
+        customerService.getCustomerById(customerId).enqueue(new Callback<CUSTOMER>() {
+            @Override
+            public void onResponse(Call<CUSTOMER> call, Response<CUSTOMER> response) {
+                if (response.isSuccessful()) {
+                    callback.onCustomerReceived(response.body());
+                } else {
+                    callback.onFailure("Request not successful: " + response.message());
+                }
+            }
+
+            @Override
+            public void onFailure(Call<CUSTOMER> call, Throwable t) {
+                callback.onFailure("Error: " + t.getMessage());
+            }
+        });
+    }
+
+    // Lấy thông tin nhân viên theo ID
+    public void getEmployeeById(int employeeId, final EmployeeCallback callback) {
+        InvoiceService employeeService = retrofit.create(InvoiceService.class);
+
+        employeeService.getEmployeeById(employeeId).enqueue(new Callback<EMPLOYEE>() {
+            @Override
+            public void onResponse(Call<EMPLOYEE> call, Response<EMPLOYEE> response) {
+                if (response.isSuccessful()) {
+                    callback.onEmployeeReceived(response.body());
+                } else {
+                    callback.onFailure("Request not successful: " + response.message());
+                }
+            }
+
+            @Override
+            public void onFailure(Call<EMPLOYEE> call, Throwable t) {
+                callback.onFailure("Error: " + t.getMessage());
+            }
+        });
+    }
+
     public interface StatusNameCallback {
         void onStatusNameReceived(String statusName);
+
         void onStatusNameError(String errorMessage);
     }
 
+    public interface CustomerCallback {
+        void onCustomerReceived(CUSTOMER customer);
+
+        void onFailure(String errorMessage);
+    }
+
+    public interface EmployeeCallback {
+        void onEmployeeReceived(EMPLOYEE employee);
+
+        void onFailure(String errorMessage);
+    }
 
 }

@@ -5,6 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
 
+    <!-- CardView for elevation and rounded corners -->
     <androidx.cardview.widget.CardView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -14,16 +15,19 @@
         app:cardCornerRadius="4dp"
         app:layout_constraintTop_toTopOf="parent">
 
+        <!-- LinearLayout for stacking views -->
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@color/colorPrimary"
             android:orientation="vertical">
 
+            <!-- ConstraintLayout for invoice ID and status -->
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
 
+                <!-- Invoice ID TextView -->
                 <TextView
                     android:id="@+id/txtInvoiceId"
                     android:layout_width="wrap_content"
@@ -34,9 +38,9 @@
                     android:textColor="#fff"
                     android:textStyle="bold"
                     app:layout_constraintTop_toTopOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    />
+                    app:layout_constraintStart_toStartOf="parent" />
 
+                <!-- Status TextView -->
                 <TextView
                     android:id="@+id/txtStatus"
                     android:layout_width="wrap_content"
@@ -48,10 +52,10 @@
                     android:textSize="20dp"
                     android:layout_marginEnd="15dp"
                     app:layout_constraintTop_toTopOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    />
+                    app:layout_constraintEnd_toEndOf="parent" />
             </androidx.constraintlayout.widget.ConstraintLayout>
 
+            <!-- RecyclerView for displaying item details -->
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/recycleview_chitiet"
                 android:layout_width="match_parent"
@@ -59,9 +63,7 @@
                 android:layout_marginTop="8dp"
                 android:layout_marginLeft="10dp"
                 android:layout_marginRight="10dp">
-
             </androidx.recyclerview.widget.RecyclerView>
         </LinearLayout>
-
     </androidx.cardview.widget.CardView>
 </androidx.constraintlayout.widget.ConstraintLayout>
