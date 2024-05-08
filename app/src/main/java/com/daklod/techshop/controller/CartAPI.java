@@ -1,6 +1,6 @@
 package com.daklod.techshop.controller;
 
-public class CartAPI extends Api{
+public class CartAPI extends Api {
     public static class CartBody {
         int product_id;
         int amount;

@@ -12,22 +12,25 @@ import retrofit2.Response;
 import retrofit2.http.GET;
 import static com.daklod.techshop.R.drawable.*;
 
-public class BannerApi extends Api{
+public class BannerApi extends Api {
     String TAG = "Banner api";
     List<BANNER> bannerList;
-    interface RequestCategory{
+
+    interface RequestCategory {
         @GET("/api/v1/banner")
         Call<List<BANNER>> getBanner();
     }
-    public BannerApi(){
+
+    public BannerApi() {
         super();
         bannerList = new ArrayList<>();
     }
 
-    public List<BANNER> getBanner(){
-        return getBanner( false);
+    public List<BANNER> getBanner() {
+        return getBanner(false);
     }
-    public List<BANNER> getBanner(boolean isReFetch){
+
+    public List<BANNER> getBanner(boolean isReFetch) {
         if (bannerList.size() > 0 && isReFetch)
             return bannerList;
         RequestCategory requestCategory = retrofit.create(RequestCategory.class);
@@ -36,12 +39,12 @@ public class BannerApi extends Api{
             bannerList = response.body();
             Log.d(TAG, bannerList.get(0).toString());
             return bannerList;
-        } catch (Exception e){
+        } catch (Exception e) {
             Log.d(TAG, e.toString());
             return bannerList;
         }
     }
 
-//    public void ()
+    // public void ()
 
 }

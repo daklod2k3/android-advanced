@@ -31,6 +31,7 @@
         <activity android:name="com.daklod.techshop.MainActivity"/>
         <activity android:name="com.daklod.techshop.RegisterActivity"/>
         <activity android:name="com.daklod.techshop.InvoiceDetailActivity"/>
+        <activity android:name="com.daklod.techshop.InvoiceDetailActivity"/>
 
         <meta-data
             android:name="preloaded_fonts"

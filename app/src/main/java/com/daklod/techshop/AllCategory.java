@@ -35,7 +35,6 @@ public class AllCategory extends AppCompatActivity {
         AllCategoryRecycler = findViewById(R.id.all_category);
         back = findViewById(R.id.back);
 
-
         back.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -44,7 +43,6 @@ public class AllCategory extends AppCompatActivity {
                 finish();
             }
         });
-
 
         // adding data to model
         allCategoryModelList = new ArrayList<>();
@@ -58,7 +56,6 @@ public class AllCategory extends AppCompatActivity {
         allCategoryModelList.add(new AllCategoryModel(8, R.drawable.ic_cookies));
         allCategoryModelList.add(new AllCategoryModel(8, R.drawable.ic_juce));
 
-
         setCategoryRecycler(allCategoryModelList);
 
     }
@@ -68,7 +65,7 @@ public class AllCategory extends AppCompatActivity {
         AllCategoryRecycler.setLayoutManager(layoutManager);
         AllCategoryRecycler.addItemDecoration(new GridSpacingItemDecoration(4, dpToPx(16), true));
         AllCategoryRecycler.setItemAnimator(new DefaultItemAnimator());
-        allCategoryAdapter = new AllCategoryAdapter(this,allcategoryModelList);
+        allCategoryAdapter = new AllCategoryAdapter(this, allcategoryModelList);
         AllCategoryRecycler.setAdapter(allCategoryAdapter);
     }
 
@@ -92,7 +89,8 @@ public class AllCategory extends AppCompatActivity {
             int column = position % spanCount; // item column
 
             if (includeEdge) {
-                outRect.left = spacing - column * spacing / spanCount; // spacing - column * ((1f / spanCount) * spacing)
+                outRect.left = spacing - column * spacing / spanCount; // spacing - column * ((1f / spanCount) *
+                                                                       // spacing)
                 outRect.right = (column + 1) * spacing / spanCount; // (column + 1) * ((1f / spanCount) * spacing)
 
                 if (position < spanCount) { // top edge
@@ -101,7 +99,8 @@ public class AllCategory extends AppCompatActivity {
                 outRect.bottom = spacing; // item bottom
             } else {
                 outRect.left = column * spacing / spanCount; // column * ((1f / spanCount) * spacing)
-                outRect.right = spacing - (column + 1) * spacing / spanCount; // spacing - (column + 1) * ((1f /    spanCount) * spacing)
+                outRect.right = spacing - (column + 1) * spacing / spanCount; // spacing - (column + 1) * ((1f /
+                                                                              // spanCount) * spacing)
                 if (position >= spanCount) {
                     outRect.top = spacing; // item top
                 }
@@ -117,5 +116,3 @@ public class AllCategory extends AppCompatActivity {
         return Math.round(TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, dp, r.getDisplayMetrics()));
     }
 }
-
-

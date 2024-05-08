@@ -8,7 +8,7 @@ import com.squareup.picasso.Picasso;
 public class PRODUCT {
     int product_id;
     String name;
-    int   price;
+    int price;
     String img_url;
     int amount;
     int category_id;
@@ -23,13 +23,13 @@ public class PRODUCT {
         this.category_id = category_id;
     }
 
-    public void loadBitmap(){
+    public void loadBitmap() {
         try {
             Log.d("img", "http://121.0.0.1:3000/image/" + this.img_url);
             bitmap = Picasso.get()
-                .load("http://127.0.0.1:3000/image/" + this.img_url)
+                    .load("http://127.0.0.1:3000/image/" + this.img_url)
                     .get();
-        }catch (Exception e){
+        } catch (Exception e) {
             Log.e("img", e.toString());
         }
     }

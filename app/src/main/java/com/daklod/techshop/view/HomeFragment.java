@@ -20,6 +20,8 @@ import com.google.android.flexbox.FlexDirection;
 import com.google.android.flexbox.FlexWrap;
 import com.google.android.flexbox.FlexboxLayoutManager;
 import com.google.android.flexbox.JustifyContent;
+import com.daklod.techshop.MainActivity;
+import com.daklod.techshop.SearchActivity;
 import com.daklod.techshop.AllCategory;
 import com.daklod.techshop.DTO.BANNER;
 import com.daklod.techshop.DTO.CATEGORY;
@@ -32,6 +34,10 @@ import com.daklod.techshop.controller.BannerApi;
 import com.daklod.techshop.controller.CategoryAPI;
 import com.daklod.techshop.controller.ProductAPI;
 import com.smarteist.autoimageslider.SliderView;
+// test
+import android.widget.Toast;
+import android.view.MotionEvent;
+import android.widget.EditText;
 
 import java.util.List;
 
@@ -45,17 +51,20 @@ public class HomeFragment extends Fragment {
     CategoryAdapter categoryAdapter;
 
     ProductViewAdapter recentlyViewedAdapter;
-//    List<RecentlyViewed> recentlyViewedList;
+    // List<RecentlyViewed> recentlyViewedList;
 
     TextView allCategory;
     ViewGroup mainView;
 
-    LottieAnimationView categoryLoadAnim, productLoadAnim, bannerLoadAnim;
+    //
+    EditText search;
+    //
 
+    LottieAnimationView categoryLoadAnim, productLoadAnim, bannerLoadAnim;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
+            Bundle savedInstanceState) {
 
         inflater.inflate(R.layout.activity_main, container);
         // Inflate the layout for this fragment
@@ -75,7 +84,16 @@ public class HomeFragment extends Fragment {
         categoryLoadAnim = getView().findViewById(R.id.categoryLoadAnimation);
         productLoadAnim = getView().findViewById(R.id.productLoadAnimation);
         bannerLoadAnim = getView().findViewById(R.id.bannerLoadAnim);
-
+        // test
+        search = getView().findViewById(R.id.editTextSearch);
+        search.setOnTouchListener((v, event) -> {
+            if (event.getAction() == MotionEvent.ACTION_DOWN) {
+                Intent i = new Intent(getActivity(), SearchActivity.class);
+                startActivity(i);
+            }
+            return false;
+        });
+        // test
 
         mainView = (ViewGroup) view.findViewById(R.id.mainView);
         allCategory.setOnClickListener(new View.OnClickListener() {
@@ -98,8 +116,9 @@ public class HomeFragment extends Fragment {
 
         @Override
         protected void onPostExecute(List<CATEGORY> categoryList) {
-//            Log.d("request", categoryList.get(0).getImgUrl().toString());
-            if (categoryList == null) return;
+            // Log.d("request", categoryList.get(0).getImgUrl().toString());
+            if (categoryList == null)
+                return;
             CATEGORY.mapName(categoryList);
             mainView.removeView(categoryLoadAnim);
             setCategoryRecycler(categoryList);
@@ -115,27 +134,28 @@ public class HomeFragment extends Fragment {
 
         @Override
         protected void onPostExecute(List<BANNER> bannerList) {
-//            Log.d("request", categoryList.get(0).getImgUrl().toString());
-            if (bannerList == null) return;
+            // Log.d("request", categoryList.get(0).getImgUrl().toString());
+            if (bannerList == null)
+                return;
             mainView.removeView(bannerLoadAnim);
             setBannerView(bannerList);
 
         }
     }
 
-    class LoadProduct extends AsyncTask<Void, Void, List<PRODUCT>>{
+    class LoadProduct extends AsyncTask<Void, Void, List<PRODUCT>> {
         @Override
         protected List<PRODUCT> doInBackground(Void... voids) {
             List<PRODUCT> productList = new ProductAPI().getProduct();
-            for (PRODUCT product: productList){
-//                product.loadBitmap();
+            for (PRODUCT product : productList) {
+                // product.loadBitmap();
             }
             return productList;
         }
 
         @Override
         protected void onPostExecute(List<PRODUCT> productList) {
-//            Log.d("request", categoryList.get(0).getImgUrl().toString());
+            // Log.d("request", categoryList.get(0).getImgUrl().toString());
             mainView.removeView(productLoadAnim);
             setNewProductRecycler(productList);
         }
@@ -145,7 +165,7 @@ public class HomeFragment extends Fragment {
         FlexboxLayoutManager layoutManager = new FlexboxLayoutManager(getContext(), FlexDirection.ROW, FlexWrap.WRAP);
 
         layoutManager.setJustifyContent(JustifyContent.SPACE_AROUND);
-//        layoutManager.set
+        // layoutManager.set
 
         categoryRecyclerView.setLayoutManager(layoutManager);
         categoryAdapter = new CategoryAdapter(getContext(), categoryDataList);
@@ -155,16 +175,16 @@ public class HomeFragment extends Fragment {
     private void setNewProductRecycler(List<PRODUCT> recentlyViewedDataList) {
         FlexboxLayoutManager layoutManager = new FlexboxLayoutManager(getContext(), FlexDirection.ROW, FlexWrap.WRAP);
         layoutManager.setJustifyContent(JustifyContent.CENTER);
-//        layoutManager.d
-//        layoutManager.set
-//        layoutManager.scroll;
-//        layoutManager.set
+        // layoutManager.d
+        // layoutManager.set
+        // layoutManager.scroll;
+        // layoutManager.set
         recentlyViewedRecycler.setLayoutManager(layoutManager);
         recentlyViewedAdapter = new ProductViewAdapter(getContext(), recentlyViewedDataList);
         recentlyViewedRecycler.setAdapter(recentlyViewedAdapter);
     }
 
-    private void setBannerView(List<BANNER> bannerList){
+    private void setBannerView(List<BANNER> bannerList) {
         bannerSliderView.setSliderAdapter(new BannerViewAdapter(bannerList));
         bannerSliderView.startAutoCycle();
         bannerView.setVisibility(View.VISIBLE);

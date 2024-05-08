@@ -5,7 +5,7 @@ public class BANNER {
     String image_url;
     String open_url;
 
-    public BANNER(int banner_id, String image_url, String open_url){
+    public BANNER(int banner_id, String image_url, String open_url) {
         this.banner_id = banner_id;
         this.image_url = image_url;
         this.open_url = open_url;
@@ -35,8 +35,5 @@ public class BANNER {
     public void setOpen_url(String open_url) {
         this.open_url = open_url;
     }
-
-
-
 
 }

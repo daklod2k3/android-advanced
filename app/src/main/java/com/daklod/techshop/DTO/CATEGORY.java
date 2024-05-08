@@ -21,8 +21,7 @@ public class CATEGORY {
         this.imgUrl = imgUrl;
     }
 
-
-    public CATEGORY(int id, Integer imgUrl, String name){
+    public CATEGORY(int id, Integer imgUrl, String name) {
         this.id = id;
         this.name = name;
         this.imgUrl = imgUrl;
@@ -34,16 +33,16 @@ public class CATEGORY {
         this.imgUrl = imgMapping(name);
     }
 
-    public Integer imgMapping(String name){
-        String[] nameMap = new String[]{"Laptop", "Iphone", "Android", "Phụ kiện"};
-        Integer[] imgMap  = new Integer[]{
+    public Integer imgMapping(String name) {
+        String[] nameMap = new String[] { "Laptop", "Iphone", "Android", "Phụ kiện" };
+        Integer[] imgMap = new Integer[] {
                 R.drawable.ic_laptop_windows,
                 R.drawable.ic_smartphone,
                 R.drawable.ic_smartphone,
                 R.drawable.ic_devices_other
         };
         Log.d("for", String.valueOf(nameMap.length));
-        for (int i = 0; i < nameMap.length; i++){
+        for (int i = 0; i < nameMap.length; i++) {
             Log.d("for", nameMap.toString());
             if (nameMap[i].equals(name))
                 return imgMap[i];
@@ -52,7 +51,7 @@ public class CATEGORY {
     }
 
     public static void mapName(List<CATEGORY> categoryList) {
-        for (CATEGORY item : categoryList){
+        for (CATEGORY item : categoryList) {
             item.imgUrl = item.imgMapping(item.name);
         }
     }

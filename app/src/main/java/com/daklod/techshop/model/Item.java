@@ -1,19 +1,22 @@
 package com.daklod.techshop.model;
 
 public class Item {
-    int idProduct;
-    String nameProduct;
-    int Amount;
-    float price;
-    String imgurl;
+    private int idProduct;
+    private String nameProduct;
+    private int amount;
+    private float price;
+    private String imgUrl;
 
-    public Item(String nameProduct, int idProduct,  float price, String imgurl) {
-        this.nameProduct = nameProduct;
+    // Constructor
+    public Item(int idProduct, String nameProduct, int amount, float price, String imgUrl) {
         this.idProduct = idProduct;
+        this.nameProduct = nameProduct;
+        this.amount = amount;
         this.price = price;
-        this.imgurl = imgurl;
+        this.imgUrl = imgUrl;
     }
 
+    // Getters and Setters
     public int getIdProduct() {
         return idProduct;
     }
@@ -31,11 +34,15 @@ public class Item {
     }
 
     public int getAmount() {
-        return Amount;
+        return amount;
     }
 
     public void setAmount(int amount) {
-        Amount = amount;
+        if (amount >= 0) {
+            this.amount = amount;
+        } else {
+            throw new IllegalArgumentException("Số lượng không được là số âm");
+        }
     }
 
     public float getPrice() {
@@ -43,14 +50,19 @@ public class Item {
     }
 
     public void setPrice(float price) {
-        this.price = price;
+        if (price >= 0) {
+            this.price = price;
+        } else {
+            throw new IllegalArgumentException("Giá không được là số âm");
+        }
     }
 
-    public String getImgurl() {
-        return imgurl;
+    public String getImgUrl() {
+        return imgUrl;
     }
 
-    public void setImgurl(String imgurl) {
-        this.imgurl = imgurl;
+    public void setImgUrl(String imgUrl) {
+        this.imgUrl = imgUrl;
     }
+
 }

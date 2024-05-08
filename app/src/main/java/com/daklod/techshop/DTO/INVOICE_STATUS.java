@@ -1,24 +1,20 @@
 package com.daklod.techshop.DTO;
 
 public class INVOICE_STATUS {
-    private int invoice_status_id;
-    private  String name;
+    private int invoiceStatusId;
+    private String name;
 
-
-    public INVOICE_STATUS() {
-
-    }
-    public INVOICE_STATUS(int invoice_status_id, String name) {
-        this.invoice_status_id = invoice_status_id;
+    public INVOICE_STATUS(int invoiceStatusId, String name) {
+        this.invoiceStatusId = invoiceStatusId;
         this.name = name;
     }
 
-    public int getInvoice_status_id() {
-        return invoice_status_id;
+    public int getInvoiceStatusId() {
+        return invoiceStatusId;
     }
 
-    public void setInvoice_status_id(int invoice_status_id) {
-        this.invoice_status_id = invoice_status_id;
+    public void setInvoiceStatusId(int invoiceStatusId) {
+        this.invoiceStatusId = invoiceStatusId;
     }
 
     public String getName() {

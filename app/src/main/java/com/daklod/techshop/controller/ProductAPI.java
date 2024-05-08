@@ -15,9 +15,10 @@ import retrofit2.http.GET;
 import retrofit2.http.POST;
 import retrofit2.http.Query;
 
-public class ProductAPI extends Api{
+public class ProductAPI extends Api {
     List<PRODUCT> productList;
     PRODUCT product;
+
     public static class addCartBody {
         int product_id, amount;
 
@@ -42,7 +43,8 @@ public class ProductAPI extends Api{
             this.amount = amount;
         }
     }
-    interface ProductRequest{
+
+    interface ProductRequest {
         @GET("/api/v1/product")
         Call<List<PRODUCT>> getProduct();
 
@@ -52,14 +54,17 @@ public class ProductAPI extends Api{
         @POST("/api/v1/cart")
         Call<PRODUCT> addProductToCart(@Body addCartBody body);
     }
-    public ProductAPI(){
+
+    public ProductAPI() {
         super();
         productList = new ArrayList<>();
     }
-    public List<PRODUCT> getProduct(){
-        return getProduct( false);
+
+    public List<PRODUCT> getProduct() {
+        return getProduct(false);
     }
-    public List<PRODUCT> getProduct(boolean isReFetch){
+
+    public List<PRODUCT> getProduct(boolean isReFetch) {
         if (productList.size() > 0 && isReFetch)
             return productList;
         ProductRequest productRequest = retrofit.create(ProductRequest.class);
@@ -68,12 +73,13 @@ public class ProductAPI extends Api{
             productList = response.body();
             Log.d("request", productList.get(0).toString());
             return productList;
-        } catch (Exception e){
+        } catch (Exception e) {
             Log.e(TAG, "getProduct: ", e);
 
             return productList;
         }
     }
+
     public List<PRODUCT> getProductByID(int id) {
 
         String filter = "product_id:eq:" + id;
@@ -83,7 +89,7 @@ public class ProductAPI extends Api{
             productList = response.body();
             Log.d("request", productList.get(0).toString());
             return productList;
-        } catch (Exception e){
+        } catch (Exception e) {
             Log.e(TAG, "getProduct: ", e);
 
             return productList;
@@ -109,6 +115,5 @@ public class ProductAPI extends Api{
             throw e;
         }
     }
-
 
 }

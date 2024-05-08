@@ -1,17 +1,19 @@
 package com.daklod.techshop.DTO;
 
+import java.math.BigDecimal;
+
 public class INVOICE_DETAIL {
     private int user_id;
     private int invoice_id;
     private int amount;
-    private float total;
-    private float tax;
+    private BigDecimal total;
+    private BigDecimal tax;
     private int product_id;
 
     public INVOICE_DETAIL() {
     }
 
-    public INVOICE_DETAIL(int user_id, int invoice_id, int amount, float total, float tax, int product_id) {
+    public INVOICE_DETAIL(int user_id, int invoice_id, int amount, BigDecimal total, BigDecimal tax, int product_id) {
         this.user_id = user_id;
         this.invoice_id = invoice_id;
         this.amount = amount;
@@ -44,19 +46,19 @@ public class INVOICE_DETAIL {
         this.amount = amount;
     }
 
-    public float getTotal() {
+    public BigDecimal getTotal() {
         return total;
     }
 
-    public void setTotal(float total) {
+    public void setTotal(BigDecimal total) {
         this.total = total;
     }
 
-    public float getTax() {
+    public BigDecimal getTax() {
         return tax;
     }
 
-    public void setTax(float tax) {
+    public void setTax(BigDecimal tax) {
         this.tax = tax;
     }
 
