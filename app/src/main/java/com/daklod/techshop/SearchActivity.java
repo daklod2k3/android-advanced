@@ -1,4 +1,4 @@
-package com.rajendra.techshop;
+package com.daklod.techshop;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -9,10 +9,10 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
-
+import com.daklod.techshop.R;
 import androidx.appcompat.app.AppCompatActivity;
-import com.rajendra.techshop.adapter.searchViewAdapter;
-import com.rajendra.techshop.model.Recent;
+import com.daklod.techshop.adapter.searchViewAdapter;
+import com.daklod.techshop.model.Recent;
 
 public class SearchActivity extends AppCompatActivity {
     private EditText inputSearch;
@@ -26,6 +26,7 @@ public class SearchActivity extends AppCompatActivity {
         inputSearch = findViewById(R.id.editTextSearch3);
         list = findViewById(R.id.listView1);
         back = findViewById(R.id.back3);
+
 
         Intent intent = getIntent();
         String data = "";

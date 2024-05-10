@@ -1,7 +1,6 @@
-package com.rajendra.techshop.adapter;
+package com.daklod.techshop.adapter;
 
 import java.util.ArrayList;
-import com.rajendra.techshop.R;
 
 import android.widget.ListView;
 import android.widget.TextView;
@@ -10,6 +9,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import com.daklod.techshop.R;
 
 public class searchViewAdapter extends ArrayAdapter<String> {
 
