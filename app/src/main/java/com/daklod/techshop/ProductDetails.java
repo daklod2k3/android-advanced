@@ -44,15 +44,15 @@ public class ProductDetails extends AppCompatActivity {
 
             cart = findViewById(R.id.cart);
             proName = findViewById(R.id.productName);
-            proDesc = findViewById(R.id.prodDesc);
-            img = findViewById(R.id.big_image);
             proPrice = findViewById(R.id.productPrice);
-            back = findViewById(R.id.back2);
-            addCart = findViewById(R.id.addToCart);
-            btnBuyNow = findViewById(R.id.btnBuyNow);
-            btnMinus = findViewById(R.id.minusPro);
-            btnPlus = findViewById(R.id.plusPro);
-            txtAmount = findViewById(R.id.txtAmount);
+//            proDesc = findViewById(R.id.prodDesc);
+//            img = findViewById(R.id.big_image);
+//            back = findViewById(R.id.back2);
+//            addCart = findViewById(R.id.addToCart);
+//            btnBuyNow = findViewById(R.id.btnBuyNow);
+//            btnMinus = findViewById(R.id.minusPro);
+//            btnPlus = findViewById(R.id.plusPro);
+//            txtAmount = findViewById(R.id.txtAmount);
 
             back.setOnClickListener(new View.OnClickListener() {
                 @Override

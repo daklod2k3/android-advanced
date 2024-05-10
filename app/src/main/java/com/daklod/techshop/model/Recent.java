@@ -1,4 +1,4 @@
-package com.rajendra.techshop.model;
+package com.daklod.techshop.model;
 import android.util.Log;
 import java.util.ArrayList;
 
