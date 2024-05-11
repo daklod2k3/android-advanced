@@ -13,14 +13,24 @@ public class PRODUCT {
     int amount;
     int category_id;
     Bitmap bitmap;
+    String description;
 
-    public PRODUCT(int product_id, String name, int price, String img_url, int amount, int category_id) {
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public PRODUCT(int product_id, String name, int price, String img_url, int amount, int category_id, String description) {
         this.product_id = product_id;
         this.name = name;
         this.price = price;
         this.img_url = img_url;
         this.amount = amount;
         this.category_id = category_id;
+        this.description = description;
     }
 
     public void loadBitmap(){

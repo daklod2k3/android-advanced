@@ -15,13 +15,13 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.daklod.techshop.DTO.PRODUCT;
+import com.daklod.techshop.controller.CartAPI;
 import com.daklod.techshop.controller.ProductAPI;
-import com.daklod.techshop.R;
-import com.daklod.techshop.view.CartActivity;
 import com.squareup.picasso.Picasso;
 
 import java.io.IOException;
-import java.util.List;
+
+import retrofit2.Response;
 
 public class ProductDetails extends AppCompatActivity {
 
@@ -33,6 +33,7 @@ public class ProductDetails extends AppCompatActivity {
         int amount = 1;
         int amountMax;
 
+        PRODUCT product;
 
         @Override
         protected void onCreate(Bundle savedInstanceState) {
@@ -88,72 +89,80 @@ public class ProductDetails extends AppCompatActivity {
             addCart.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    // Tạo đối tượng addCartBody với thông tin cần thiết
-                    ProductAPI.addCartBody body = new ProductAPI.addCartBody(Integer.parseInt(i.getStringExtra("id")), Integer.parseInt(txtAmount.getText().toString())); // Thay productId và quantity bằng thông tin thích hợp
-
-                    // Gọi phương thức addProductToCart trong ProductAPI
-                    new AddProductToCartTask().execute(body);
+                    new AddCartTask().execute(new CartAPI.AddCartBody(product.getProduct_id(), Integer.valueOf(txtAmount.getText().toString())));
                 }
             });
 
             new LoadProductDetail().execute(id);
         }
-    private class AddProductToCartTask extends AsyncTask<ProductAPI.addCartBody, Void, PRODUCT> {
-        @Override
-        protected PRODUCT doInBackground(ProductAPI.addCartBody... addCartBodies) {
-            try {
-                // Gọi phương thức addProductToCart trong ProductAPI và trả về kết quả
-                return new ProductAPI().addProductToCart(addCartBodies[0]);
-            } catch (IOException e) {
-                Log.e(TAG, "Error adding product to cart", e);
+
+
+
+        private class AddCartTask extends AsyncTask<CartAPI.AddCartBody, String, Void>{
+            @Override
+            protected Void doInBackground(CartAPI.AddCartBody... addCartBodies) {
+                try {
+                    Response<Void> response = new CartAPI().addCart(addCartBodies[0]);
+                    if (response.isSuccessful()){
+                        return null;
+                    }else {
+                        publishProgress(response.message());
+                    }
+                }catch (IOException e){
+                    Log.e(TAG, "doInBackground: ", e);
+                    publishProgress("Lỗi kết nối! Thêm cart không thành công");
+                }catch (Exception e){
+                    Log.e(TAG, "doInBackground: ", e);
+                    publishProgress(e.toString());
+                }
+
                 return null;
             }
-        }
-
-        @Override
-        protected void onPostExecute(PRODUCT product) {
-            if (product != null) {
-                // Thêm sản phẩm vào giỏ hàng thành công
-                Toast.makeText(ProductDetails.this, "Product added to cart successfully", Toast.LENGTH_SHORT).show();
-                Log.d(TAG, "Product added to cart successfully");
-            } else {
-                // Xử lý khi thêm sản phẩm vào giỏ hàng thất bại
-                Toast.makeText(ProductDetails.this, "Failed to add product", Toast.LENGTH_SHORT).show();
-                Log.e(TAG, "Failed to add product to cart");
-            }
-        }
-    }
-
-        private class LoadProductDetail extends AsyncTask<Integer, Void, List<PRODUCT>> {
 
             @Override
-            protected List<PRODUCT> doInBackground(Integer... integers) {
-                return new ProductAPI().getProductByID(integers[0]);
+            protected void onProgressUpdate(String... values) {
+                Toast.makeText(getBaseContext(), values[0], Toast.LENGTH_SHORT).show();
+                cancel(true);
             }
 
             @Override
-            protected void onPostExecute(List<PRODUCT> products) {
-                if (products == null) {
+            protected void onPostExecute(Void unused) {
+                Toast.makeText(getBaseContext(), "Thêm sản phẩm thành công", Toast.LENGTH_SHORT).show();
+            }
+        }
+
+
+        private class LoadProductDetail extends AsyncTask<Integer, Void, PRODUCT> {
+
+            @Override
+            protected PRODUCT doInBackground(Integer... integers) {
+                return new ProductAPI().getProductByID(integers[0]).get(0);
+            }
+
+            @Override
+            protected void onPostExecute(PRODUCT product) {
+                if (product == null) {
                     return;
                 }
 
-                for (PRODUCT product:
-                     products) {
-                    proName.setText(product.getName());
-                    proPrice.setText(String.valueOf(product.getPrice()) + "đ");
-                    amountMax = product.getAmount();
-//                    proDesc.setText(product.getDescription());
+                setProduct(product);
 
-                    // Load image using Picasso or any other image loading library
-                    Picasso.get()
-                            .load("http://daklod-backend.vercel.app/image/" + product.getImg_url())
-                            .fit()
-                            .error(R.drawable.no_img)
-                            .into(img);
-                    img.setImageBitmap(product.getBitmap());
-                }
+                proName.setText(product.getName());
+                proPrice.setText(String.valueOf(product.getPrice()) + "đ");
+                amountMax = product.getAmount();
+                proDesc.setText(product.getDescription());
+
+                // Load image using Picasso or any other image loading library
+                Picasso.get()
+                        .load("http://daklod-backend.vercel.app/image/" + product.getImg_url())
+                        .fit()
+                        .error(R.drawable.no_img)
+                        .into(img);
+                img.setImageBitmap(product.getBitmap());
             }
         }
 
-
+    public void setProduct(PRODUCT product) {
+        this.product = product;
+    }
 }
