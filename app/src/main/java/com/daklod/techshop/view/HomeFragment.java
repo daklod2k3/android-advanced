@@ -20,6 +20,8 @@ import com.google.android.flexbox.FlexDirection;
 import com.google.android.flexbox.FlexWrap;
 import com.google.android.flexbox.FlexboxLayoutManager;
 import com.google.android.flexbox.JustifyContent;
+import com.daklod.techshop.MainActivity;
+import com.daklod.techshop.SearchActivity;
 import com.daklod.techshop.AllCategory;
 import com.daklod.techshop.DTO.BANNER;
 import com.daklod.techshop.DTO.CATEGORY;
@@ -32,6 +34,10 @@ import com.daklod.techshop.controller.BannerApi;
 import com.daklod.techshop.controller.CategoryAPI;
 import com.daklod.techshop.controller.ProductAPI;
 import com.smarteist.autoimageslider.SliderView;
+// test
+import android.widget.Toast;
+import android.view.MotionEvent;
+import android.widget.EditText;
 
 import java.util.List;
 
@@ -49,6 +55,10 @@ public class HomeFragment extends Fragment {
 
     TextView allCategory;
     ViewGroup mainView;
+
+    //
+    EditText search;
+    //
 
     LottieAnimationView categoryLoadAnim, productLoadAnim, bannerLoadAnim;
 
@@ -75,6 +85,16 @@ public class HomeFragment extends Fragment {
         categoryLoadAnim = getView().findViewById(R.id.categoryLoadAnimation);
         productLoadAnim = getView().findViewById(R.id.productLoadAnimation);
         bannerLoadAnim = getView().findViewById(R.id.bannerLoadAnim);
+        // test
+        search = getView().findViewById(R.id.editTextSearch);
+        search.setOnTouchListener((v, event) -> {
+            if (event.getAction() == MotionEvent.ACTION_DOWN) {
+                Intent i = new Intent(getActivity(), SearchActivity.class);
+                startActivity(i);
+            }
+            return false;
+        });
+        // test
 
 
         mainView = (ViewGroup) view.findViewById(R.id.mainView);

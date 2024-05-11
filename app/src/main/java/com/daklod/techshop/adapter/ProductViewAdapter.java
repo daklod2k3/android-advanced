@@ -127,4 +127,7 @@ public class ProductViewAdapter extends RecyclerView.Adapter<ProductViewAdapter.
         }
     }
 
+    public void setList(List<PRODUCT> recentlyViewedList) {
+        this.recentlyViewedList = recentlyViewedList;
+    }
 }

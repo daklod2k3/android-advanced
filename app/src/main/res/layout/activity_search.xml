@@ -1,0 +1,62 @@
+<!-- activity_main.xml -->
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main1"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <ImageView
+        android:id="@+id/back3"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:padding="10dp"
+        android:layout_marginLeft="12dp"
+        android:layout_marginTop="12dp"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/btn_back" />
+
+    <EditText
+        android:id="@+id/editTextSearch3"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:background="@drawable/rounded_corner"
+        android:paddingLeft="8dp"
+        android:ems="10"
+        android:fontFamily="@font/open_sans"
+        android:hint="Search"
+        android:inputType="textPersonName"
+        android:textColorHint="#aaa"
+        android:layout_marginLeft="60dp"
+        android:layout_marginRight="28dp"
+        android:textSize="20dp"
+        android:layout_marginTop="6dp"
+        app:layout_constraintLeft_toLeftOf="@id/back3"
+        app:layout_constraintTop_toTopOf="@id/back3"
+        app:layout_constraintLeft_toRightOf="@id/searchButton1"
+        tools:layout_editor_absoluteX="91dp" />
+
+    <Button
+        android:id="@+id/searchButton1"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:paddingLeft="8dp"
+        android:background="@drawable/bg_search"
+        android:onClick="onSearchButtonClick"
+        android:drawableStart="@drawable/ic_search"
+        app:layout_constraintRight_toRightOf="@id/editTextSearch3"
+        app:layout_constraintTop_toTopOf="@id/editTextSearch3"/>
+
+    <ListView
+        android:id="@+id/listView1"
+        android:layout_width="wrap_content"
+        android:layout_height="0dp"
+        tools:layout_editor_absoluteX="40dp"
+        tools:layout_editor_absoluteY="56dp"
+        android:layout_marginTop="60dp"
+        app:layout_constraintStart_toStartOf="@id/back3"
+        app:layout_constraintTop_toTopOf="@id/back3"
+        app:layout_constraintBottom_toBottomOf="parent" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

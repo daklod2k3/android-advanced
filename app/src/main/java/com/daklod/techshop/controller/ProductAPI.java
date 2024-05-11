@@ -47,6 +47,9 @@ public class ProductAPI extends Api{
         Call<List<PRODUCT>> getProduct();
 
         @GET("/api/v1/product")
+        Call<List<PRODUCT>> getProductBySearch();
+
+        @GET("/api/v1/product")
         Call<List<PRODUCT>> getProductByID(@Query("filter") String filter);
 
         @POST("/api/v1/cart")
@@ -74,6 +77,23 @@ public class ProductAPI extends Api{
             return productList;
         }
     }
+    public List<PRODUCT> getProductBySearch(String s) {
+        ProductRequest productRequest = retrofit.create(ProductRequest.class);
+        try {
+            Response<List<PRODUCT>> response = productRequest.getProduct().execute();
+            productList = response.body();
+            List<PRODUCT> newList = new ArrayList<>();
+            for (PRODUCT element : productList) {
+                if(element.getName().toLowerCase().contains(s.toLowerCase())) {
+                    newList.add(element);
+                }
+            }
+            return newList;
+        } catch (Exception e){
+            Log.e(TAG, "getProduct: ", e);
+            return productList;
+        }
+    }
     public List<PRODUCT> getProductByID(int id) {
 
         String filter = "product_id:eq:" + id;
@@ -89,7 +109,6 @@ public class ProductAPI extends Api{
             return productList;
         }
     }
-
     public PRODUCT addProductToCart(addCartBody body) throws IOException {
         ProductRequest requestProduct = retrofit.create(ProductRequest.class);
 
@@ -109,6 +128,4 @@ public class ProductAPI extends Api{
             throw e;
         }
     }
-
-
 }
