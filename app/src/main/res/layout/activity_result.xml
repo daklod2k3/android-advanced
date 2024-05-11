@@ -1,0 +1,222 @@
+<!-- activity_main.xml -->
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main3"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/nav"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="12dp"
+        app:flow_verticalBias="0.5"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        android:visibility="gone"
+        app:layout_constraintTop_toBottomOf="@id/productSearch">
+
+        <Button
+            android:id="@+id/prev"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="&#60;"
+            android:textColor="@color/colorPrimary"
+            android:textSize="30dp"
+            android:background="@android:color/transparent"
+            app:layout_constraintLeft_toLeftOf="@id/nav"
+            app:layout_constraintTop_toTopOf="@id/nav"
+            />
+
+        <Button
+            android:id="@+id/next"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text=">"
+            android:layout_marginLeft="6dp"
+            android:textColor="@color/colorPrimary"
+            android:textSize="30dp"
+            android:background="@android:color/transparent"
+            app:layout_constraintLeft_toRightOf="@id/textNav"
+            app:layout_constraintTop_toTopOf="@id/nav"
+            />
+
+        <TextView
+            android:id="@+id/textNav"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="1/2"
+            android:textSize="20dp"
+            android:layout_marginLeft="6dp"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintTop_toTopOf="@id/nav"
+            app:layout_constraintLeft_toRightOf="@id/prev"
+            app:layout_constraintBottom_toBottomOf="@id/nav"
+            />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/viewLoc"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="12dp"
+        android:layout_marginLeft="14dp"
+        android:layout_marginRight="14dp"
+        android:visibility="gone"
+        app:layout_constraintTop_toBottomOf="@id/editTextSearch4"
+        app:layout_constraintLeft_toLeftOf="@id/back4">
+
+        <TextView
+            android:id="@+id/rangePrice"
+            android:layout_width="50dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="4dp"
+            android:text="giá:"
+            android:textSize="20dp"
+            app:layout_constraintLeft_toLeftOf="@id/viewLoc"
+            app:layout_constraintTop_toTopOf="@id/startPrice"/>
+
+        <EditText
+            android:id="@+id/startPrice"
+            android:layout_width="110dp"
+            android:layout_height="40dp"
+            android:layout_marginTop="6dp"
+            android:background="@drawable/rounded_corner"
+            android:ems="10"
+            android:fontFamily="@font/open_sans"
+            android:hint="Tối Thiểu"
+            android:inputType="textPersonName"
+            android:paddingLeft="4dp"
+            android:paddingRight="4dp"
+            android:textColorHint="#aaa"
+            android:textSize="20dp"
+            app:layout_constraintLeft_toRightOf="@id/rangePrice"
+            app:layout_constraintTop_toTopOf="@id/sortPrice" />
+
+        <EditText
+            android:id="@+id/endPrice"
+            android:layout_width="110dp"
+            android:layout_height="40dp"
+            android:layout_marginLeft="8dp"
+            android:layout_marginTop="6dp"
+            android:background="@drawable/rounded_corner"
+            android:ems="10"
+            android:fontFamily="@font/open_sans"
+            android:hint="Tối đa"
+            android:inputType="textPersonName"
+            android:paddingLeft="4dp"
+            android:paddingRight="4dp"
+            android:textColorHint="#aaa"
+            android:textSize="20dp"
+            app:layout_constraintLeft_toRightOf="@id/startPrice"
+            app:layout_constraintTop_toTopOf="@id/sortPrice" />
+
+        <Button
+            android:id="@+id/sortPrice"
+            android:layout_width="70dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginLeft="4dp"
+            android:background="@android:color/transparent"
+            android:drawableRight="@drawable/sort_default"
+            android:text="Giá"
+            android:textSize="14dp"
+            app:layout_constraintLeft_toRightOf="@id/endPrice"
+            app:layout_constraintTop_toTopOf="@id/viewLoc"/>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <ImageView
+        android:id="@+id/back4"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:padding="10dp"
+        android:layout_marginLeft="12dp"
+        android:layout_marginTop="12dp"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/btn_back" />
+
+    <EditText
+        android:id="@+id/editTextSearch4"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:background="@drawable/rounded_corner"
+        android:paddingLeft="12dp"
+        android:paddingRight="8dp"
+        android:ems="10"
+        android:fontFamily="@font/open_sans"
+        android:hint="Search"
+        android:inputType="textPersonName"
+        android:textColorHint="#aaa"
+        android:layout_marginLeft="65dp"
+        android:layout_marginRight="80dp"
+        android:textSize="20dp"
+        android:layout_marginTop="6dp"
+        app:layout_constraintLeft_toLeftOf="@id/back4"
+        app:layout_constraintTop_toTopOf="@id/back4"
+        tools:layout_editor_absoluteX="91dp" />
+
+    <Button
+        android:id="@+id/filter"
+        android:layout_width="60dp"
+        android:layout_height="wrap_content"
+        android:text="lọc"
+        android:textSize="14dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginTop="4dp"
+        android:background="@android:color/transparent"
+        android:drawableLeft="@drawable/filter"
+        android:onClick="changeLoc"
+        app:layout_constraintLeft_toRightOf="@id/editTextSearch4"
+        app:layout_constraintTop_toTopOf="@id/back4" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:layout_marginTop="12dp"
+        android:id="@+id/categorySearch"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintLeft_toLeftOf="@id/back4"
+        app:layout_constraintTop_toBottomOf="@id/viewLoc" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/productSearch"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:nestedScrollingEnabled="false"
+        android:layout_marginTop="16dp"
+        android:layout_marginRight="16dp"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/categorySearch"
+         />
+
+
+    <com.airbnb.lottie.LottieAnimationView
+        android:id="@+id/loadCategory"
+        android:layout_marginTop="4dp"
+        android:layout_height="70dp"
+        android:layout_width="70dp"
+        app:lottie_colorFilter="@color/colorPrimary"
+        app:lottie_loop="true"
+        app:lottie_autoPlay="true"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintLeft_toRightOf="@id/back4"
+        app:layout_constraintTop_toBottomOf="@id/editTextSearch4"
+        app:lottie_rawRes="@raw/loading_animation"/>
+
+    <com.airbnb.lottie.LottieAnimationView
+        android:layout_marginTop="50dp"
+        android:id="@+id/loadSearch"
+        android:layout_height="70dp"
+        android:layout_width="70dp"
+        app:lottie_colorFilter="@color/colorPrimary"
+        app:lottie_loop="true"
+        app:lottie_autoPlay="true"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintLeft_toRightOf="@id/back4"
+        app:layout_constraintTop_toBottomOf="@id/loadCategory"
+        app:lottie_rawRes="@raw/loading_animation"/>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

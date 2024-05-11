@@ -12,12 +12,11 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
 
+import com.daklod.techshop.view.CartFragment;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.daklod.techshop.controller.CheckAuthAPI;
 import com.daklod.techshop.view.HomeFragment;
 import com.daklod.techshop.view.SampleFragment;
-
-import static com.daklod.techshop.R.drawable.*;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -55,6 +54,9 @@ public class MainActivity extends AppCompatActivity {
                 case R.id.sample:
                     ReplaceFragment(new SampleFragment());
                     break;
+
+                case R.id.cart:
+                    ReplaceFragment(new CartFragment());
             }
             return  true;
         });
