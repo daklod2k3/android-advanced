@@ -14,8 +14,16 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.daklod.techshop.DTO.INVOICE_DETAIL;
+import com.daklod.techshop.DTO.PRODUCT;
 import com.daklod.techshop.R;
+import com.daklod.techshop.adapter.CartViewAdapter;
+import com.daklod.techshop.adapter.ProductViewAdapter;
 import com.daklod.techshop.controller.CartAPI;
+import com.google.android.flexbox.FlexDirection;
+import com.google.android.flexbox.FlexWrap;
+import com.google.android.flexbox.FlexboxLayoutManager;
+import com.google.android.flexbox.JustifyContent;
 
 import java.io.IOException;
 
@@ -25,6 +33,7 @@ public class CartFragment extends Fragment {
     String TAG = "Cart Activity";
     RecyclerView recyclerViewCart;
     TextView txtTotal;
+    CartViewAdapter cartViewAdapter;
 
 //    @Override
 //    protected void onCreate(Bundle savedInstanceState) {
@@ -80,12 +89,25 @@ public class CartFragment extends Fragment {
         @Override
         protected void onPostExecute(CartAPI.GetCartResponse getCartResponse) {
              setCartViewAdapter(getCartResponse);
+            for (INVOICE_DETAIL invoice : getCartResponse.getInvoiceDetail()) {
+                for (PRODUCT product: getCartResponse.getProductList()) {
+                    if(invoice.getProduct_id() == product.getProduct_id()) {
+                        txtTotal.setText(invoice.getAmount() * product.getPrice()+"");
+                    }
+                }
+            }
             Log.d(TAG, "onPostExecute: " + String.valueOf(getCartResponse.getInvoiceDetail().size()));
         }
     }
 
     void setCartViewAdapter(CartAPI.GetCartResponse cartResponse){
-//        recyclerViewCart.setAdapter(new CartViewAdapter());
+        FlexboxLayoutManager layoutManager = new FlexboxLayoutManager(getContext());
+        layoutManager.setJustifyContent(JustifyContent.CENTER);
+
+        recyclerViewCart.setLayoutManager(layoutManager);
+        cartViewAdapter = new CartViewAdapter(getContext(), cartResponse.getProductList(), cartResponse.getInvoiceDetail());
+        recyclerViewCart.setAdapter(cartViewAdapter);
+//        recyclerViewCart.setAdapter(new CartViewAdapter(getView().getContext(), cartResponse.getProductList(), cartResponse.getInvoiceDetail()));
     }
 
 }

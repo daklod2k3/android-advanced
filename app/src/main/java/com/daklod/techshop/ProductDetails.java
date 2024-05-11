@@ -3,6 +3,7 @@ package com.daklod.techshop;
 import static android.content.ContentValues.TAG;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.constraintlayout.widget.ConstraintLayout;
 
 import android.content.Intent;
 import android.os.AsyncTask;
@@ -26,7 +27,8 @@ import retrofit2.Response;
 public class ProductDetails extends AppCompatActivity {
 
 
-        ImageView img, back, cart;
+        ImageView img, back;
+        ConstraintLayout layout;
         TextView proName, proPrice, proDesc, btnMinus, btnPlus, txtAmount;
         Button addCart;
         Button btnBuyNow;
@@ -44,7 +46,8 @@ public class ProductDetails extends AppCompatActivity {
             int id = Integer.parseInt(i.getStringExtra("id"));
 
 
-//            cart = findViewById(R.id.cart);
+            layout = findViewById(R.id.detailLayout);
+            layout.setVisibility(View.GONE);
             proName = findViewById(R.id.productName);
             proDesc = findViewById(R.id.txtMoTaChiTiet);
             img = findViewById(R.id.productImg);
@@ -104,6 +107,7 @@ public class ProductDetails extends AppCompatActivity {
                 try {
                     Response<Void> response = new CartAPI().addCart(addCartBodies[0]);
                     if (response.isSuccessful()){
+//                        Toast.makeText(getBaseContext(), "Thêm sản phẩm thành công", Toast.LENGTH_SHORT).show();
                         return null;
                     }else {
                         publishProgress(response.message());
@@ -159,6 +163,7 @@ public class ProductDetails extends AppCompatActivity {
                         .error(R.drawable.no_img)
                         .into(img);
                 img.setImageBitmap(product.getBitmap());
+                layout.setVisibility(View.VISIBLE);
             }
         }
 
