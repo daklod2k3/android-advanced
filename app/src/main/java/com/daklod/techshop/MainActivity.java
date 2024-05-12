@@ -25,6 +25,8 @@ public class MainActivity extends AppCompatActivity {
     HomeFragment homeFragment;
     CartFragment cartFragment;
 
+    SampleFragment sampleFragment;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -55,14 +57,16 @@ public class MainActivity extends AppCompatActivity {
                         homeFragment = new HomeFragment();
                     ReplaceFragment(homeFragment);
                     break;
-                case R.id.sample:
-                    if (cartFragment == null)
-                        cartFragment = new CartFragment();
-                    ReplaceFragment(cartFragment);
+                case R.id.personal:
+                    if (sampleFragment == null)
+                        sampleFragment = new SampleFragment();
+                    ReplaceFragment(sampleFragment);
                     break;
 
                 case R.id.cart:
-                    ReplaceFragment(new CartFragment());
+                    if (cartFragment == null)
+                        cartFragment = new CartFragment();
+                    ReplaceFragment(cartFragment);
                     break;
             }
             return  true;

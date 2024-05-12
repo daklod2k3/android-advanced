@@ -42,7 +42,7 @@ public class LoginAPI extends Api{
     }
 
     String TAG = "Login Request";
-    CUSTOMER user;
+    public static  CUSTOMER user;
     interface RequestLogin{
         @POST("/api/v1/login")
         Call<CUSTOMER> login(@Body LoginBody body);

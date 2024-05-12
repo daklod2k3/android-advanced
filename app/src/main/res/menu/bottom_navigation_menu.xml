@@ -10,15 +10,15 @@
         android:title="Giỏ hàng"
         android:icon="@drawable/cart_shopping_solid"
         />
-    <item
-        android:id="@+id/noti"
-        android:title="Thông báo"
-        android:icon="@drawable/home_selector"
-        />
+<!--    <item-->
+<!--        android:id="@+id/noti"-->
+<!--        android:title="Thông báo"-->
+<!--        android:icon="@drawable/home_selector"-->
+<!--        />-->
 
     <item
-        android:id="@+id/sample"
-        android:title="Sample"
+        android:id="@+id/personal"
+        android:title="Cá nhân"
         android:icon="@drawable/ic_person"
         />
 </menu>

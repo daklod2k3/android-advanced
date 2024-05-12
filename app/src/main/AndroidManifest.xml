@@ -30,6 +30,7 @@
         <activity android:name="com.daklod.techshop.AllCategory" />
         <activity android:name="com.daklod.techshop.MainActivity"/>
         <activity android:name="com.daklod.techshop.RegisterActivity"/>
+        <activity android:name="com.daklod.techshop.view.thanhtoanActivity"/>
         <activity
             android:name="com.daklod.techshop.SearchActivity"
             android:windowSoftInputMode="adjustNothing">
