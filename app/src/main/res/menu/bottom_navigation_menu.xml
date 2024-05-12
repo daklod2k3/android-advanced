@@ -8,13 +8,14 @@
     <item
         android:id="@+id/cart"
         android:title="Giỏ hàng"
-        android:icon="@drawable/baseline_add_shopping_cart_24"
+        android:icon="@drawable/cart_shopping_solid"
         />
     <item
         android:id="@+id/noti"
         android:title="Thông báo"
         android:icon="@drawable/home_selector"
         />
+
     <item
         android:id="@+id/sample"
         android:title="Sample"

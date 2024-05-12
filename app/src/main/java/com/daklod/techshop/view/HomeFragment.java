@@ -63,13 +63,15 @@ public class HomeFragment extends Fragment {
     LottieAnimationView categoryLoadAnim, productLoadAnim, bannerLoadAnim;
 
 
+    View fragmentView;
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+       if (fragmentView == null)
+            fragmentView = inflater.inflate(R.layout.fragment_home, container, false);
 
-//        inflater.inflate(R.layout.activity_main, container);
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_home, container, false);
+        return fragmentView;
     }
 
     @Override

@@ -81,7 +81,10 @@ public class CartViewAdapter extends RecyclerView.Adapter<CartViewAdapter.CartVi
         holder.plus.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                new CartFragment.ChangeAmountTask(fragment).execute(new CartAPI.AddCartBody(holder.product.getProduct_id(),  1));
+                if (holder.product.getAmount() < holder.detail.getAmount() + 1)
+                    Toast.makeText(view.getContext(), "Đã đạt giới hạn số lượng", Toast.LENGTH_SHORT).show();
+                else
+                    new CartFragment.ChangeAmountTask(fragment).execute(new CartAPI.AddCartBody(holder.product.getProduct_id(),  1));
 
             }
         });

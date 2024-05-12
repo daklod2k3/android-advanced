@@ -22,6 +22,9 @@ public class MainActivity extends AppCompatActivity {
 
     static String TAG = "MainActivity";
     BottomNavigationView bottomNavigationView;
+    HomeFragment homeFragment;
+    CartFragment cartFragment;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -31,12 +34,12 @@ public class MainActivity extends AppCompatActivity {
         Intent main = getIntent();
         if (main.getStringExtra("admin") != null) initUI();
         else
-        try {
-            new CheckAuthTask().execute();
-        }catch (Exception e){
-            Log.e(TAG, "onCreate: ", e);
-            initUI();
-        }
+            try {
+                new CheckAuthTask().execute();
+            }catch (Exception e){
+                Log.e(TAG, "onCreate: ", e);
+                initUI();
+            }
 
     }
 
@@ -48,10 +51,14 @@ public class MainActivity extends AppCompatActivity {
             Log.d("fragment", String.valueOf(item.getItemId()));
             switch (item.getItemId()){
                 case R.id.home:
-                    ReplaceFragment(new HomeFragment());
+                    if (homeFragment == null)
+                        homeFragment = new HomeFragment();
+                    ReplaceFragment(homeFragment);
                     break;
                 case R.id.sample:
-                    ReplaceFragment(new SampleFragment());
+                    if (cartFragment == null)
+                        cartFragment = new CartFragment();
+                    ReplaceFragment(cartFragment);
                     break;
 
                 case R.id.cart:
@@ -146,15 +153,6 @@ public class MainActivity extends AppCompatActivity {
                 finish();
             }
         }).setCancelable(false).show();
-        //set negative button
-//        .setNegativeButton("No", new DialogInterface.OnClickListener() {
-//            @Override
-//            public void onClick(DialogInterface dialogInterface, int i) {
-//                //set what should happen when negative button is clicked
-//                Toast.makeText(getApplicationContext(),"Nothing Happened",Toast.LENGTH_LONG).show();
-//            }
-//        })
-//        .show();
     }
 
 

@@ -44,6 +44,7 @@ public class CartFragment extends Fragment {
     View animationView;
     View rootView;
     TextView txtEmpty;
+    View fragmentView;
 
 //    @Override
 //    protected void onCreate(Bundle savedInstanceState) {
@@ -59,8 +60,9 @@ public class CartFragment extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
 //        inflater.inflate(R.layout.activity_main, container);
-        return inflater.inflate(R.layout.activity_cart, container, false);
-//        return null;
+        if (fragmentView == null)
+            fragmentView = inflater.inflate(R.layout.activity_cart, container, false);
+        return fragmentView;
 
     }
 
