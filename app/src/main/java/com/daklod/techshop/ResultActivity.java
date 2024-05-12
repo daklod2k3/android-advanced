@@ -52,7 +52,7 @@ public class ResultActivity extends AppCompatActivity {
     private static ProductViewAdapter listAdapter;
     private ResultViewAdapter listCategory;
     private LottieAnimationView load,categoryLoad;
-    private static TextView textNav;
+    private static TextView textNav, empty;
     private static List<PRODUCT> listData, listDataCurrent;
     private static ArrayList<Integer> listChecked = new ArrayList<>();
     private String dataIntent = "";
@@ -81,6 +81,7 @@ public class ResultActivity extends AppCompatActivity {
         next = findViewById(R.id.next);
         startPrice = findViewById(R.id.startPrice);
         endPrice = findViewById(R.id.endPrice);
+        empty = findViewById(R.id.emptySearch);
 
         Intent intent = getIntent();
 
@@ -103,7 +104,7 @@ public class ResultActivity extends AppCompatActivity {
                     startPrice.setText(s.toString().replaceAll("[^\\d]", ""));
                     startPrice.setSelection(startPrice.getText().length());
                 }
-                handleRangePrice();
+                checkedCategory();
             }
 
             @Override
@@ -124,7 +125,7 @@ public class ResultActivity extends AppCompatActivity {
                     endPrice.setText(s.toString().replaceAll("[^\\d]", ""));
                     endPrice.setSelection(endPrice.getText().length());
                 }
-                handleRangePrice();
+                checkedCategory();
             }
 
             @Override
@@ -209,11 +210,7 @@ public class ResultActivity extends AppCompatActivity {
                     }
                 }
             }
-            if(listChecked.size() != 0) {
-                checkedCategory();
-            } else {
-                handleRangePrice();
-            }
+            checkedCategory();
         } else if(statePrice == 2) {
             int n = listData.size();
             for (int i = 0; i < n - 1; i++) {
@@ -225,12 +222,7 @@ public class ResultActivity extends AppCompatActivity {
                     }
                 }
             }
-
-            if(listChecked.size() != 0) {
-                checkedCategory();
-            } else {
-                handleRangePrice();
-            }
+            checkedCategory();
         }
     }
     class LoadProduct extends AsyncTask<Void, Void, List<PRODUCT>> {
@@ -249,12 +241,22 @@ public class ResultActivity extends AppCompatActivity {
             main.removeView(load);
             if(productList.size() > 0) {
                 nav.setVisibility(View.VISIBLE);
+                setNewProductRecycler(productList, 1, true);
+            } else {
+                empty.setVisibility(View.VISIBLE);
+                category.setVisibility(View.GONE);
+                btnLoc.setVisibility(View.GONE);
             }
-            setNewProductRecycler(productList,1,true);
         }
     }
     public static void updateNav(int idx,List<PRODUCT> list) {
-        textNav.setText(idx + "/" + (int)Math.ceil(list.size()/4 + 0.0000001));
+        if(list.size() % 4 == 0) {
+            textNav.setText(idx + "/" + (int)Math.ceil(list.size()/4));
+        } else {
+            textNav.setText(idx + "/" + (int)Math.ceil(list.size()/4 + 0.0000001));
+        }
+        Log.d("console", "kq: " + (int)Math.ceil(list.size()/4));
+        Log.d("console", "kq: " + (int)Math.ceil(list.size()/4 + 0.0000001));
     }
     public void handleNav(int idx) {
         int value = Character.getNumericValue(textNav.getText().charAt(0));
@@ -268,45 +270,6 @@ public class ResultActivity extends AppCompatActivity {
                 setNewProductRecycler(listDataCurrent,value - 1,false);
             }
         }
-    }
-
-    public void handleRangePrice() {
-        listDataCurrent = new ArrayList<>();
-
-        for (int i = 0; i < listData.size(); i++) {
-            if(startPrice.getText().toString().equalsIgnoreCase("")
-                    && endPrice.getText().toString().equalsIgnoreCase(""))
-            {
-                listDataCurrent.add(listData.get(i));
-            }
-            else if(!startPrice.getText().toString().equalsIgnoreCase("")
-                    && !endPrice.getText().toString().equalsIgnoreCase(""))
-            {
-                if(listData.get(i).getPrice() >= Integer.parseInt(startPrice.getText().toString())
-                        && listData.get(i).getPrice() <= Integer.parseInt(endPrice.getText().toString()))
-                {
-                    listDataCurrent.add(listData.get(i));
-                }
-            } else if(!startPrice.getText().toString().equalsIgnoreCase("")) {
-                if(listData.get(i).getPrice() >= Integer.parseInt(startPrice.getText().toString())) {
-                    listDataCurrent.add(listData.get(i));
-                }
-            } else {
-                if(listData.get(i).getPrice() <= Integer.parseInt(endPrice.getText().toString())) {
-                    listDataCurrent.add(listData.get(i));
-                }
-            }
-        }
-
-        if(listDataCurrent.size() > 4) {
-            List<PRODUCT> newArray = listDataCurrent.subList(0, Math.min(listDataCurrent.size(), 4));
-            updateNav(1,listDataCurrent);
-            listAdapter.setList(newArray);
-        } else {
-            updateNav(1,listDataCurrent);
-            listAdapter.setList(listDataCurrent);
-        }
-        listResult.setAdapter(listAdapter);
     }
     class LoadCategory extends AsyncTask<Void, Void, List<CATEGORY>> {
         @Override
@@ -355,45 +318,52 @@ public class ResultActivity extends AppCompatActivity {
         listDataCurrent = new ArrayList<>();
 
         for (int i = 0; i < listData.size(); i++) {
-            for(Integer elem: listChecked) {
-                if(listData.get(i).getCategory_id() == elem){
-                    if(startPrice.getText().toString().equalsIgnoreCase("")
-                            && endPrice.getText().toString().equalsIgnoreCase(""))
-                    {
-                        listDataCurrent.add(listData.get(i));
-                        break;
-                    }
-                    else if(!startPrice.getText().toString().equalsIgnoreCase("")
-                            && !endPrice.getText().toString().equalsIgnoreCase(""))
-                    {
-                        if(listData.get(i).getPrice() >= Integer.parseInt(startPrice.getText().toString())
-                                && listData.get(i).getPrice() <= Integer.parseInt(endPrice.getText().toString()))
+            if(listChecked.size() == 0) {
+                listDataCurrent.add(listData.get(i));
+            } else {
+                for(Integer elem: listChecked) {
+                    if(listData.get(i).getCategory_id() == elem){
+                        if(startPrice.getText().toString().equalsIgnoreCase("")
+                                && endPrice.getText().toString().equalsIgnoreCase(""))
                         {
                             listDataCurrent.add(listData.get(i));
                             break;
                         }
-                    } else if(!startPrice.getText().toString().equalsIgnoreCase("")) {
-                        if(listData.get(i).getPrice() >= Integer.parseInt(startPrice.getText().toString())) {
-                            listDataCurrent.add(listData.get(i));
-                            break;
-                        }
-                    } else {
-                        if(listData.get(i).getPrice() <= Integer.parseInt(endPrice.getText().toString())) {
-                            listDataCurrent.add(listData.get(i));
-                            break;
+                        else if(!startPrice.getText().toString().equalsIgnoreCase("")
+                                && !endPrice.getText().toString().equalsIgnoreCase(""))
+                        {
+                            if(listData.get(i).getPrice() >= Integer.parseInt(startPrice.getText().toString())
+                                    && listData.get(i).getPrice() <= Integer.parseInt(endPrice.getText().toString()))
+                            {
+                                listDataCurrent.add(listData.get(i));
+                                break;
+                            }
+                        } else if(!startPrice.getText().toString().equalsIgnoreCase("")) {
+                            if(listData.get(i).getPrice() >= Integer.parseInt(startPrice.getText().toString())) {
+                                listDataCurrent.add(listData.get(i));
+                                break;
+                            }
+                        } else {
+                            if(listData.get(i).getPrice() <= Integer.parseInt(endPrice.getText().toString())) {
+                                listDataCurrent.add(listData.get(i));
+                                break;
+                            }
                         }
                     }
                 }
             }
         }
 
-//        Log.d("console", "listData: " + listData.size());
-
         if(listDataCurrent.size() == 0) {
+            empty.setText("không tìm được sản phẩm đã lọc!");
+            empty.setVisibility(View.VISIBLE);
             nav.setVisibility(View.GONE);
         } else {
+            empty.setVisibility(View.GONE);
             nav.setVisibility(View.VISIBLE);
         }
+
+        Log.d("console", "listData: " + listData.size());
 
         if(listDataCurrent.size() > 4) {
             List<PRODUCT> newArray = listDataCurrent.subList(0, Math.min(listDataCurrent.size(), 4));
