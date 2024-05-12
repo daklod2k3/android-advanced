@@ -19,8 +19,13 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.daklod.techshop.AllCategory;
+import com.daklod.techshop.DTO.CUSTOMER;
+import com.daklod.techshop.DTO.USER;
+import com.daklod.techshop.LoginActivity;
 import com.daklod.techshop.R;
 import com.daklod.techshop.SearchActivity;
+import com.daklod.techshop.controller.Api;
+import com.daklod.techshop.controller.CheckAuthAPI;
 import com.daklod.techshop.controller.LoginAPI;
 
 /**
@@ -76,10 +81,11 @@ public class SampleFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        btn = getView().findViewById(R.id.testbtn);
+        btn = getView().findViewById(R.id.btnLogout);
         username = getView().findViewById(R.id.username);
-        if (LoginAPI.user != null){
-            username.setText(LoginAPI.user.getName());
+        CUSTOMER user = CheckAuthAPI.getUserFromToken();
+        if (user != null){
+            username.setText(user.getName());
         }
         else{
             username.setText("Null");
@@ -89,16 +95,9 @@ public class SampleFragment extends Fragment {
         btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
-                Intent i = new Intent(getContext(), thanhtoanActivity.class);
-                Bundle bundle = new Bundle();
-                if(LoginAPI.user != null){
-                    bundle.putString("address", LoginAPI.user.getAddress());// Đặt dữ liệu vào Bundle
-                    Log.d(TAG, "address: " + LoginAPI.user.getAddress());
-                }
-                i.putExtras(bundle); // Đặt Bundle vào Intent
-                startActivity(i);
-//                Toast.makeText(getContext(), "hello", Toast.LENGTH_SHORT).show();
+                CheckAuthAPI.clearToken(getContext());
+                startActivity(new Intent(getContext(), LoginActivity.class));
+                getActivity().finish();
             }
         });
 

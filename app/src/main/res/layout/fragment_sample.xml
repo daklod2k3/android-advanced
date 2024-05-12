@@ -5,7 +5,9 @@
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.daklod.techshop.view.SampleFragment">
+    tools:context="com.daklod.techshop.view.SampleFragment"
+
+    android:gravity="center">
 
     <!-- TODO: Update blank fragment layout -->
     <androidx.cardview.widget.CardView
@@ -39,12 +41,26 @@
                 android:layout_height="20dp"
                 android:layout_marginTop="64dp"
                 android:text="UserName"
-
+                android:textColor="#fff"
+                android:textStyle="bold"
                 android:textSize="15dp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.3"
                 app:layout_constraintStart_toEndOf="@+id/imageView"
-                app:layout_constraintTop_toTopOf="parent"></TextView>
+                app:layout_constraintTop_toTopOf="parent"/>
+
+            <TextView
+                android:layout_width="150dp"
+                android:layout_height="20dp"
+                android:layout_marginTop="44dp"
+                android:text="Khách hàng"
+                android:textColor="#fff"
+                android:textSize="12dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.3"
+                app:layout_constraintStart_toEndOf="@+id/imageView"
+                app:layout_constraintTop_toTopOf="parent"/>
+
 
             <Button
                 android:visibility="gone"
@@ -68,12 +84,14 @@
     <androidx.cardview.widget.CardView
         app:cardCornerRadius="8dp"
         android:layout_width="match_parent"
-        android:layout_height="172dp"
+        android:layout_height="wrap_content"
         android:layout_margin="5dp">
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="10dp">
             <TextView
+                android:textColor="@color/colorPrimary"
                 android:text="Đơn mua"
                 android:textSize="18dp"
                 android:layout_margin="10dp"
@@ -84,6 +102,7 @@
             </TextView>
 
             <TextView
+                android:id="@+id/btnInvoiceHistory"
                 android:layout_width="160dp"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="130dp"
@@ -109,7 +128,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content">
                 <ImageView
-                    android:layout_marginLeft="15dp"
+                    android:layout_marginLeft="25dp"
                     android:background="@drawable/package_delivery_status_time_icon"
                     android:layout_width="40dp"
                     android:layout_height="40dp">
@@ -118,7 +137,7 @@
                 <TextView
                     android:textSize="12dp"
                     android:layout_marginTop="5dp"
-                    android:layout_marginLeft="5dp"
+                    android:layout_marginLeft="10dp"
                     android:text="Chờ xác nhận"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content">
@@ -130,7 +149,8 @@
                 android:layout_weight="2.5"
                 android:orientation="vertical"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content">
+                android:layout_height="wrap_content"
+                android:paddingBottom="10dp">
                 <ImageView
                     android:layout_marginLeft="15dp"
                     android:background="@drawable/product_package_delivered_icon"
@@ -201,10 +221,19 @@
         </LinearLayout>
     </androidx.cardview.widget.CardView>
 
-    <Button
-        android:id="@+id/testbtn"
+    <LinearLayout
         android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:layout_gravity="center"/>
+
+    <Button
+        android:backgroundTint="@color/colorPrimary"
+        android:textColor="#fff"
+        android:id="@+id/btnLogout"
+        android:layout_width="250dp"
         android:layout_height="wrap_content"
-        android:text="Test" />
+        android:text="Đăng xuất"
+        android:layout_marginBottom="20dp"/>
 
 </LinearLayout>
