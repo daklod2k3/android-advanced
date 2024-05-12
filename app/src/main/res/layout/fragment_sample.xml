@@ -33,12 +33,14 @@
                 tools:ignore="MissingConstraints"></ImageView>
 
             <TextView
+
+                android:id="@+id/username"
                 android:layout_width="150dp"
                 android:layout_height="20dp"
                 android:layout_marginTop="64dp"
                 android:text="UserName"
-                android:textSize="15dp"
 
+                android:textSize="15dp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.3"
                 app:layout_constraintStart_toEndOf="@+id/imageView"
@@ -198,5 +200,11 @@
 
         </LinearLayout>
     </androidx.cardview.widget.CardView>
+
+    <Button
+        android:id="@+id/testbtn"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Test" />
 
 </LinearLayout>
