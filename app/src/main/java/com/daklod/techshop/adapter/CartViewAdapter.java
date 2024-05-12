@@ -14,6 +14,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.daklod.techshop.DTO.INVOICE_DETAIL;
 import com.daklod.techshop.DTO.PRODUCT;
 import com.daklod.techshop.ProductDetails;
 import com.daklod.techshop.R;
@@ -23,13 +24,14 @@ import java.util.List;
 
 public class CartViewAdapter extends RecyclerView.Adapter<CartViewAdapter.CartViewHolder> {
     Context context;
-    List<PRODUCT> CartList;
+    List<PRODUCT> productList;
+    List<INVOICE_DETAIL> invoiceDetail;
     int amount;
 
-    public CartViewAdapter(Context context, List<PRODUCT> cartList, int amount) {
+    public CartViewAdapter(Context context, List<PRODUCT> productList, List<INVOICE_DETAIL> invoiceDetail) {
         this.context = context;
-        this.CartList = cartList;
-        this.amount = amount;
+        this.productList = productList;
+        this.invoiceDetail = invoiceDetail;
     }
 
     @NonNull
@@ -41,49 +43,60 @@ public class CartViewAdapter extends RecyclerView.Adapter<CartViewAdapter.CartVi
     }
 
     @Override
-    public void onBindViewHolder(@NonNull CartViewAdapter.CartViewHolder holder, int position) {
-        holder.title.setText(CartList.get(position).getName());
-        holder.price.setText(CartList.get(position).getPrice()+"");
-        holder.totalPrice.setText((CartList.get(position).getPrice()*amount)+"");
-        Picasso.get()
-                .load("http://daklod-backend.vercel.app/image/" + CartList.get(position).getImg_url())
-                .fit()
-                .error(R.drawable.no_img)
-                .into(holder.img);
-        holder.img.setImageBitmap(CartList.get(position).getBitmap());
-        holder.numberItem.setText(amount+"");
+    public void onBindViewHolder(@NonNull CartViewAdapter.CartViewHolder holder, final int position) {
+        for (INVOICE_DETAIL invoice : invoiceDetail) {
+            for (PRODUCT product: productList) {
+                if(invoice.getProduct_id() == product.getProduct_id()) {
+                    holder.title.setText(product.getName());
+                    holder.price.setText(product.getPrice()+"");
+                    holder.totalPrice.setText((product.getPrice()*invoice.getAmount())+"");
+                    Picasso.get()
+                            .load("http://daklod-backend.vercel.app/image/" + product.getImg_url())
+                            .fit()
+                            .error(R.drawable.no_img)
+                            .into(holder.img);
+                    holder.img.setImageBitmap(product.getBitmap());
+                    holder.numberItem.setText(invoice.getAmount()+"");
 
-        holder.minus.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                if(amount<=1) return;
-                holder.numberItem.setText(String.valueOf(--amount));
-            }
-        });
-        holder.plus.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                if(amount > CartList.get(position).getAmount()) {
-                    Toast.makeText(context,"Product quantity is not enough", Toast.LENGTH_SHORT).show();
-                    return;
+                    holder.minus.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View view) {
+                            if(invoice.getAmount()<=1) return;
+                            invoice.setAmount(invoice.getAmount()-1);
+                            holder.numberItem.setText(invoice.getAmount()+"");
+                            holder.totalPrice.setText(invoice.getAmount()*product.getPrice()+"");
+                        }
+                    });
+                    holder.plus.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View view) {
+                            if(invoice.getAmount() > product.getAmount()) {
+                                Toast.makeText(context,"Product quantity is not enough", Toast.LENGTH_SHORT).show();
+                                return;
+                            }
+                            invoice.setAmount(invoice.getAmount()+1);
+                            holder.numberItem.setText(String.valueOf(invoice.getAmount()));
+                            holder.totalPrice.setText(invoice.getAmount()*product.getPrice()+"");
+                        }
+                    });
+                    holder.delete.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View view) {
+//                            CartList.remove(CartList.get(position));
+                        }
+                    });
                 }
-                holder.numberItem.setText(String.valueOf(++amount));
             }
-        });
-        holder.delete.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                CartList.remove(CartList.get(position));
-            }
-        });
+        }
+
     }
 
     @Override
     public int getItemCount() {
-        return 0;
+        return invoiceDetail.size();
     }
 
-    public class CartViewHolder extends RecyclerView.ViewHolder{
+    public static class CartViewHolder extends RecyclerView.ViewHolder{
         ImageView img, delete;
         TextView title, price, totalPrice, minus, plus, numberItem;
 
