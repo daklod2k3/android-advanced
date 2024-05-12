@@ -84,9 +84,9 @@
             </TextView>
 
             <TextView
-                android:layout_width="180dp"
+                android:layout_width="160dp"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="100dp"
+                android:layout_marginLeft="130dp"
                 android:layout_marginTop="10dp"
                 android:text="Xem lịch sử mua hàng  >"
                 android:textSize="14dp"

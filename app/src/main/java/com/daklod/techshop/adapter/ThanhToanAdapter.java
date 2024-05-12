@@ -11,6 +11,7 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.daklod.techshop.DTO.INVOICE_DETAIL;
 import com.daklod.techshop.DTO.PRODUCT;
 import com.daklod.techshop.R;
 import com.daklod.techshop.controller.Api;
@@ -24,10 +25,12 @@ import java.util.List;
 public class ThanhToanAdapter extends RecyclerView.Adapter<ThanhToanAdapter.ThanhToanViewHolder> {
     Context context;
     List<PRODUCT> productList;
+    List<INVOICE_DETAIL> details;
 
-    public ThanhToanAdapter(Context context,List<PRODUCT> productList){
+    public ThanhToanAdapter(Context context,List<PRODUCT> productList,List<INVOICE_DETAIL> details){
         this.context = context;
         this.productList = productList;
+        this.details = details;
     }
     @NonNull
     @Override
@@ -47,12 +50,12 @@ public class ThanhToanAdapter extends RecyclerView.Adapter<ThanhToanAdapter.Than
         DecimalFormat formatter = new DecimalFormat("#,###,###");
 
         holder.donGia.setText(formatter.format(productList.get(position).getPrice()) + "đ");
-        holder.SLSanpham.setText(productList.get(position).getAmount()+"");
+        holder.SLSanpham.setText(details.get(position).getAmount()+"");
 
-        holder.tongGiaMoiSP.setText(formatter.format(productList.get(position).getPrice()*productList.get(position).getAmount()) + "đ");
+        holder.tongGiaMoiSP.setText(formatter.format(productList.get(position).getPrice()*details.get(position).getAmount()) + "đ");
         try {
             Picasso.get()
-                    .load(productList.get(position).getImg_url())
+                    .load(Api.url +"/image/"+ productList.get(position).getImg_url())
                     .fit()
                     .error(R.drawable.no_img)
                     .into(holder.anhSp);

@@ -6,9 +6,9 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -20,21 +20,23 @@ import com.daklod.techshop.controller.CartAPI;
 import com.daklod.techshop.controller.InvoiceAPI;
 
 import java.io.IOException;
+import java.text.DecimalFormat;
+import java.text.NumberFormat;
 import java.util.ArrayList;
+import java.util.Currency;
 import java.util.List;
 
 import retrofit2.Response;
 
 public class thanhtoanActivity extends AppCompatActivity {
     RecyclerView recyclerView;
-    TextView subTotal,totalTax,total,address;
+    TextView subTotal,promotion,total,address;
     Button btnThanhToan;
+    ImageView btnBack;
     View rootView;
     List<PRODUCT> productList = new ArrayList<PRODUCT>();
     List<INVOICE_DETAIL> details = new ArrayList<INVOICE_DETAIL>();
-    int tongTienChuaThue = 0;
-    int thue = 0;
-    int tongTien;
+    int tongTien=0;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -47,10 +49,18 @@ public class thanhtoanActivity extends AppCompatActivity {
 
         rootView = findViewById(R.id.rootView);
         subTotal = findViewById(R.id.subTotalTxt);
-        totalTax = findViewById(R.id.totalTaxTxt);
+        promotion = findViewById(R.id.promotionTxt);
         total = findViewById(R.id.totalTxt);
         address = findViewById(R.id.addressTxt);
         btnThanhToan = findViewById(R.id.btnOrderNow);
+        btnBack = findViewById(R.id.btnBack);
+        btnBack.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                // Xử lý sự kiện khi ImageView được nhấn
+                onBackPressed();
+            }
+        });
         new LoadCartTask().execute();
 
     }
@@ -66,21 +76,25 @@ public class thanhtoanActivity extends AppCompatActivity {
 
 
         for (int i = 0; i < productList.size();i++){
-            tongTienChuaThue += productList.get(i).getPrice()*details.get(i).getAmount();
-            thue += details.get(i).getTax()*details.get(i).getAmount();
+            tongTien += productList.get(i).getPrice()*details.get(i).getAmount();
         }
-        tongTien = tongTienChuaThue - thue;
-        subTotal.setText(tongTienChuaThue+"");
-        totalTax.setText(thue+"");
-        total.setText(tongTien+"");
-        ThanhToanAdapter adapter = new ThanhToanAdapter(this,productList);
+        NumberFormat money = NumberFormat.getCurrencyInstance();
+        money.setMaximumFractionDigits(0);
+        money.setCurrency(Currency.getInstance("VND"));
+
+        DecimalFormat formatter = new DecimalFormat("#,###,###");
+        promotion.setText("0đ");
+
+        subTotal.setText(formatter.format(tongTien) + "đ");
+        total.setText(formatter.format(tongTien) + "đ");
+        ThanhToanAdapter adapter = new ThanhToanAdapter(this,productList,details);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         recyclerView.setAdapter(adapter);
         btnThanhToan.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 try {
-                    new InvoiceAPI().pay();
+                    new payTask().execute();
                 } catch (Exception e) {
                     throw new RuntimeException(e);
                 }
@@ -113,12 +127,9 @@ public class thanhtoanActivity extends AppCompatActivity {
 
         }
 
-        protected void setLoad(boolean b) {
-            if(!b){
-                rootView.setVisibility(View.VISIBLE);
-                return;
-            }
-            rootView.setVisibility(View.GONE);
+
+        public void onBackPressed() {
+            finish();
         }
 
         @Override
@@ -127,6 +138,30 @@ public class thanhtoanActivity extends AppCompatActivity {
             productList = getCartResponse.getProductList();
             details = getCartResponse.getInvoiceDetail();
             loadGiaoDien(productList,details);
+        }
+    }
+    protected void setLoad(boolean b) {
+        if(!b){
+            rootView.setVisibility(View.VISIBLE);
+            return;
+        }
+        rootView.setVisibility(View.GONE);
+    }
+    class payTask extends AsyncTask<Void, Void, Void> {
+
+        @Override
+        protected Void doInBackground(Void... voids) {
+            try {
+                return new InvoiceAPI().pay();
+            } catch (Exception e) {
+                throw new RuntimeException(e);
+            }
+        }
+
+        @Override
+        protected void onPostExecute(Void unused) {
+            Toast.makeText(getApplicationContext(), "Đặt hàng thành công", Toast.LENGTH_SHORT).show();
+            onBackPressed();
         }
     }
 }
