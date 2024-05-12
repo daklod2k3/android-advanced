@@ -1,16 +1,21 @@
 package com.daklod.techshop.view;
 
+import static android.content.ContentValues.TAG;
+
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.os.Parcelable;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -21,6 +26,7 @@ import com.daklod.techshop.R;
 import com.daklod.techshop.adapter.CartViewAdapter;
 import com.daklod.techshop.adapter.ProductViewAdapter;
 import com.daklod.techshop.controller.CartAPI;
+import com.daklod.techshop.controller.LoginAPI;
 import com.google.android.flexbox.FlexDirection;
 import com.google.android.flexbox.FlexWrap;
 import com.google.android.flexbox.FlexboxLayoutManager;
@@ -28,6 +34,7 @@ import com.google.android.flexbox.JustifyContent;
 
 import java.io.IOException;
 import java.text.DecimalFormat;
+import java.util.ArrayList;
 import java.util.List;
 
 import retrofit2.Response;
@@ -44,6 +51,7 @@ public class CartFragment extends Fragment {
     View animationView;
     View rootView;
     TextView txtEmpty;
+    Button btn;
 
 //    @Override
 //    protected void onCreate(Bundle savedInstanceState) {
@@ -69,11 +77,31 @@ public class CartFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         rootView = getView().findViewById(R.id.rootView);
         recyclerViewCart = getView().findViewById(R.id.RecycleViewCart);
+        btn = getView().findViewById(R.id.btnSubmit);
         txtTotal = getView().findViewById(R.id.txtTotal);
         animationView = getView().findViewById(R.id.loadingAnimation);
         animationView.setActivated(true);
         txtEmpty = getView().findViewById(R.id.txtEmpty);
         new LoadCartTask().execute();
+
+        btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                Intent i = new Intent(getContext(), thanhtoanActivity.class);
+                Bundle bundle = new Bundle();
+                if(LoginAPI.user != null){
+                    bundle.putString("address", LoginAPI.user.getAddress());// Đặt dữ liệu vào Bundle
+                    Log.d(TAG, "address: " + LoginAPI.user.getAddress());
+                }
+//                bundle.putParcelableArrayList("productList", (ArrayList<? extends Parcelable>) productList);
+//                bundle.putParcelableArrayList("details", (ArrayList<? extends Parcelable>) details);
+
+                i.putExtras(bundle); // Đặt Bundle vào Intent
+                startActivity(i);
+//                Toast.makeText(getContext(), "hello", Toast.LENGTH_SHORT).show();
+            }
+        });
     }
 
     private void updateTotal(){
