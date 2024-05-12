@@ -3,6 +3,7 @@ package com.daklod.techshop;
 import static android.content.ContentValues.TAG;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.constraintlayout.widget.ConstraintLayout;
 
 import android.content.Intent;
 import android.os.AsyncTask;
@@ -20,13 +21,15 @@ import com.daklod.techshop.controller.ProductAPI;
 import com.squareup.picasso.Picasso;
 
 import java.io.IOException;
+import java.text.DecimalFormat;
 
 import retrofit2.Response;
 
 public class ProductDetails extends AppCompatActivity {
 
 
-        ImageView img, back, cart;
+        ImageView img, back;
+        ConstraintLayout layout;
         TextView proName, proPrice, proDesc, btnMinus, btnPlus, txtAmount;
         Button addCart;
         Button btnBuyNow;
@@ -44,7 +47,8 @@ public class ProductDetails extends AppCompatActivity {
             int id = Integer.parseInt(i.getStringExtra("id"));
 
 
-//            cart = findViewById(R.id.cart);
+            layout = findViewById(R.id.detailLayout);
+            layout.setVisibility(View.GONE);
             proName = findViewById(R.id.productName);
             proDesc = findViewById(R.id.txtMoTaChiTiet);
             img = findViewById(R.id.productImg);
@@ -77,7 +81,7 @@ public class ProductDetails extends AppCompatActivity {
             btnPlus.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    if(amount > amountMax) {
+                    if(amount >= amountMax) {
                         Toast.makeText(ProductDetails.this,"Product quantity is not enough", Toast.LENGTH_SHORT).show();
                         return;
                     }
@@ -104,6 +108,7 @@ public class ProductDetails extends AppCompatActivity {
                 try {
                     Response<Void> response = new CartAPI().addCart(addCartBodies[0]);
                     if (response.isSuccessful()){
+//                        Toast.makeText(getBaseContext(), "Thêm sản phẩm thành công", Toast.LENGTH_SHORT).show();
                         return null;
                     }else {
                         publishProgress(response.message());
@@ -147,8 +152,9 @@ public class ProductDetails extends AppCompatActivity {
 
                 setProduct(product);
 
+                DecimalFormat formatter = new DecimalFormat("#,###,###");
                 proName.setText(product.getName());
-                proPrice.setText(String.valueOf(product.getPrice()) + "đ");
+                proPrice.setText(formatter.format(product.getPrice()) +"đ");
                 amountMax = product.getAmount();
                 proDesc.setText(product.getDescription());
 
@@ -159,6 +165,7 @@ public class ProductDetails extends AppCompatActivity {
                         .error(R.drawable.no_img)
                         .into(img);
                 img.setImageBitmap(product.getBitmap());
+                layout.setVisibility(View.VISIBLE);
             }
         }
 

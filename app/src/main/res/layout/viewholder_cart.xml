@@ -4,9 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_marginTop="10dp"
-    android:background="@drawable/grey_background"
-    tools:background="@drawable/grey_background">
+    android:layout_marginTop="10dp">
 
     <View
         android:id="@+id/itemView"
@@ -37,6 +35,7 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
         android:text="Title"
+        android:textColor="@color/colorPrimary"
         app:layout_constraintStart_toEndOf="@+id/itemView"
         app:layout_constraintTop_toTopOf="@+id/itemView" />
 
@@ -46,7 +45,7 @@
         android:layout_height="wrap_content"
         android:layout_marginBottom="10dp"
         android:text="$0"
-        android:textColor="#AF3F3F"
+        android:textColor="@color/colorError"
         android:textSize="20sp"
         android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -80,6 +79,7 @@
             android:text="+"
             android:textSize="16dp"
             android:textStyle="bold"
+            android:textColor="#fff"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
@@ -93,6 +93,7 @@
             android:text="-"
             android:textSize="16dp"
             android:textStyle="bold"
+            android:textColor="#fff"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
@@ -113,8 +114,8 @@
 
     <ImageView
         android:id="@+id/imgDelete"
-        android:layout_width="20dp"
-        android:layout_height="18dp"
+        android:layout_width="28dp"
+        android:layout_height="28dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="@+id/EachItemPrice"
         app:layout_constraintTop_toBottomOf="@+id/EachItemPrice"

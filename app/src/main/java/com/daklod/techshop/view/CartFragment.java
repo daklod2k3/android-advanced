@@ -14,10 +14,21 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.airbnb.lottie.LottieAnimationView;
+import com.daklod.techshop.DTO.INVOICE_DETAIL;
+import com.daklod.techshop.DTO.PRODUCT;
 import com.daklod.techshop.R;
+import com.daklod.techshop.adapter.CartViewAdapter;
+import com.daklod.techshop.adapter.ProductViewAdapter;
 import com.daklod.techshop.controller.CartAPI;
+import com.google.android.flexbox.FlexDirection;
+import com.google.android.flexbox.FlexWrap;
+import com.google.android.flexbox.FlexboxLayoutManager;
+import com.google.android.flexbox.JustifyContent;
 
 import java.io.IOException;
+import java.text.DecimalFormat;
+import java.util.List;
 
 import retrofit2.Response;
 
@@ -25,6 +36,14 @@ public class CartFragment extends Fragment {
     String TAG = "Cart Activity";
     RecyclerView recyclerViewCart;
     TextView txtTotal;
+    CartViewAdapter cartViewAdapter;
+
+    List<PRODUCT> productList;
+    List<INVOICE_DETAIL> details;
+
+    View animationView;
+    View rootView;
+    TextView txtEmpty;
 
 //    @Override
 //    protected void onCreate(Bundle savedInstanceState) {
@@ -40,7 +59,6 @@ public class CartFragment extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
 //        inflater.inflate(R.layout.activity_main, container);
-        super.onCreateView(inflater, container, savedInstanceState);
         return inflater.inflate(R.layout.activity_cart, container, false);
 //        return null;
 
@@ -49,13 +67,42 @@ public class CartFragment extends Fragment {
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
-        super.onViewCreated(view, savedInstanceState);
+        rootView = getView().findViewById(R.id.rootView);
         recyclerViewCart = getView().findViewById(R.id.RecycleViewCart);
         txtTotal = getView().findViewById(R.id.txtTotal);
+        animationView = getView().findViewById(R.id.loadingAnimation);
+        animationView.setActivated(true);
+        txtEmpty = getView().findViewById(R.id.txtEmpty);
         new LoadCartTask().execute();
     }
 
+    private void updateTotal(){
+        DecimalFormat formatter = new DecimalFormat("#,###,###");
+        int total = 0;
+        if (details != null)
+            for (int i = 0; i < details.size(); i++){
+                total += details.get(i).getAmount() * productList.get(i).getPrice();
+            }
+        txtTotal.setText(formatter.format(total)+"đ");
+    }
+
+    private void setLoad(boolean load){
+        if (!load){
+            animationView.setVisibility(View.GONE);
+            rootView.setVisibility(View.VISIBLE);
+            return;
+        }
+
+        animationView.setVisibility(View.VISIBLE);
+        rootView.setVisibility(View.GONE);
+    }
+
     class LoadCartTask extends AsyncTask<Void, String, CartAPI.GetCartResponse>{
+
+        public LoadCartTask(){
+
+        }
+
         @Override
         protected CartAPI.GetCartResponse doInBackground(Void... voids) {
             try {
@@ -63,7 +110,6 @@ public class CartFragment extends Fragment {
                 if (response.isSuccessful()){
                     return response.body();
                 }
-
                 publishProgress(response.message());
 
             }catch (IOException e){
@@ -74,18 +120,74 @@ public class CartFragment extends Fragment {
 
         @Override
         protected void onProgressUpdate(String... values) {
+            setLoad(false);
             Toast.makeText(getView().getContext(), values[0], Toast.LENGTH_SHORT).show();
         }
 
         @Override
         protected void onPostExecute(CartAPI.GetCartResponse getCartResponse) {
-             setCartViewAdapter(getCartResponse);
+            setLoad(false);
+            if (getCartResponse.getInvoiceDetail().size() > 0){
+                txtEmpty.setVisibility(View.GONE);
+
+            }else {
+                txtEmpty.setVisibility(View.VISIBLE);
+            }
+            productList = getCartResponse.getProductList();
+            details = getCartResponse.getInvoiceDetail();
+            setCartViewAdapter(getCartResponse);
+            updateTotal();
             Log.d(TAG, "onPostExecute: " + String.valueOf(getCartResponse.getInvoiceDetail().size()));
         }
     }
 
     void setCartViewAdapter(CartAPI.GetCartResponse cartResponse){
-//        recyclerViewCart.setAdapter(new CartViewAdapter());
+        FlexboxLayoutManager layoutManager = new FlexboxLayoutManager(getContext());
+        layoutManager.setJustifyContent(JustifyContent.CENTER);
+
+        recyclerViewCart.setLayoutManager(layoutManager);
+        cartViewAdapter = new CartViewAdapter(this, cartResponse.getProductList(), cartResponse.getInvoiceDetail());
+        recyclerViewCart.setAdapter(cartViewAdapter);
+//        recyclerViewCart.setAdapter(new CartViewAdapter(getView().getContext(), cartResponse.getProductList(), cartResponse.getInvoiceDetail()));
+    }
+
+    public static class ChangeAmountTask extends AsyncTask<CartAPI.AddCartBody, String, Response<Void>>{
+
+        CartFragment view;
+
+        public ChangeAmountTask(CartFragment view){
+            this.view = view;
+            view.setLoad(true);
+        }
+        @Override
+        protected Response<Void> doInBackground(CartAPI.AddCartBody... addCartBodies) {
+            try {
+                return new CartAPI().addCart(addCartBodies[0]);
+
+
+            }catch (IOException e){
+                publishProgress("Lỗi server");
+                cancel(true);
+            }catch (Exception e){
+                publishProgress(e.toString());
+                cancel(true);
+            }
+            return null;
+        }
+
+        @Override
+        protected void onProgressUpdate(String... values) {
+            Toast.makeText(view.getContext(), "Lỗi server", Toast.LENGTH_SHORT).show();
+        }
+
+        @Override
+        protected void onPostExecute(Response<Void> voidResponse) {
+            view.reloadCart();
+        }
+    }
+
+    public void reloadCart(){
+        new LoadCartTask().execute();
     }
 
 }
