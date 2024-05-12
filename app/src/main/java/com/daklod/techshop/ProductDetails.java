@@ -21,6 +21,7 @@ import com.daklod.techshop.controller.ProductAPI;
 import com.squareup.picasso.Picasso;
 
 import java.io.IOException;
+import java.text.DecimalFormat;
 
 import retrofit2.Response;
 
@@ -80,7 +81,7 @@ public class ProductDetails extends AppCompatActivity {
             btnPlus.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    if(amount > amountMax) {
+                    if(amount >= amountMax) {
                         Toast.makeText(ProductDetails.this,"Product quantity is not enough", Toast.LENGTH_SHORT).show();
                         return;
                     }
@@ -151,8 +152,9 @@ public class ProductDetails extends AppCompatActivity {
 
                 setProduct(product);
 
+                DecimalFormat formatter = new DecimalFormat("#,###,###");
                 proName.setText(product.getName());
-                proPrice.setText(String.valueOf(product.getPrice()) + "đ");
+                proPrice.setText(formatter.format(product.getPrice()) +"đ");
                 amountMax = product.getAmount();
                 proDesc.setText(product.getDescription());
 

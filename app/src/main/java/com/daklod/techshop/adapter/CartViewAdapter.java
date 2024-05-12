@@ -1,6 +1,7 @@
 package com.daklod.techshop.adapter;
 
 import android.content.Context;
+import android.content.Intent;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -18,18 +19,23 @@ import com.daklod.techshop.DTO.INVOICE_DETAIL;
 import com.daklod.techshop.DTO.PRODUCT;
 import com.daklod.techshop.ProductDetails;
 import com.daklod.techshop.R;
+import com.daklod.techshop.controller.CartAPI;
+import com.daklod.techshop.view.CartFragment;
 import com.squareup.picasso.Picasso;
 
+import java.text.DecimalFormat;
 import java.util.List;
 
 public class CartViewAdapter extends RecyclerView.Adapter<CartViewAdapter.CartViewHolder> {
-    Context context;
+    CartFragment fragment;
     List<PRODUCT> productList;
     List<INVOICE_DETAIL> invoiceDetail;
     int amount;
+    Context context;
 
-    public CartViewAdapter(Context context, List<PRODUCT> productList, List<INVOICE_DETAIL> invoiceDetail) {
-        this.context = context;
+    public CartViewAdapter(CartFragment fragment, List<PRODUCT> productList, List<INVOICE_DETAIL> invoiceDetail) {
+        this.fragment = fragment;
+        this.context = fragment.getContext();
         this.productList = productList;
         this.invoiceDetail = invoiceDetail;
     }
@@ -38,56 +44,53 @@ public class CartViewAdapter extends RecyclerView.Adapter<CartViewAdapter.CartVi
     @Override
     public CartViewAdapter.CartViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(context).inflate(R.layout.viewholder_cart, parent, false);
-
         return new CartViewAdapter.CartViewHolder(view);
     }
 
     @Override
     public void onBindViewHolder(@NonNull CartViewAdapter.CartViewHolder holder, final int position) {
-        for (INVOICE_DETAIL invoice : invoiceDetail) {
-            for (PRODUCT product: productList) {
-                if(invoice.getProduct_id() == product.getProduct_id()) {
-                    holder.title.setText(product.getName());
-                    holder.price.setText(product.getPrice()+"");
-                    holder.totalPrice.setText((product.getPrice()*invoice.getAmount())+"");
-                    Picasso.get()
-                            .load("http://daklod-backend.vercel.app/image/" + product.getImg_url())
-                            .fit()
-                            .error(R.drawable.no_img)
-                            .into(holder.img);
-                    holder.img.setImageBitmap(product.getBitmap());
-                    holder.numberItem.setText(invoice.getAmount()+"");
+        DecimalFormat formatter = new DecimalFormat("#,###,###");
 
-                    holder.minus.setOnClickListener(new View.OnClickListener() {
-                        @Override
-                        public void onClick(View view) {
-                            if(invoice.getAmount()<=1) return;
-                            invoice.setAmount(invoice.getAmount()-1);
-                            holder.numberItem.setText(invoice.getAmount()+"");
-                            holder.totalPrice.setText(invoice.getAmount()*product.getPrice()+"");
-                        }
-                    });
-                    holder.plus.setOnClickListener(new View.OnClickListener() {
-                        @Override
-                        public void onClick(View view) {
-                            if(invoice.getAmount() > product.getAmount()) {
-                                Toast.makeText(context,"Product quantity is not enough", Toast.LENGTH_SHORT).show();
-                                return;
-                            }
-                            invoice.setAmount(invoice.getAmount()+1);
-                            holder.numberItem.setText(String.valueOf(invoice.getAmount()));
-                            holder.totalPrice.setText(invoice.getAmount()*product.getPrice()+"");
-                        }
-                    });
-                    holder.delete.setOnClickListener(new View.OnClickListener() {
-                        @Override
-                        public void onClick(View view) {
-//                            CartList.remove(CartList.get(position));
-                        }
-                    });
-                }
+        holder.product = productList.get(position);
+        holder.detail = invoiceDetail.get(position);
+        holder.title.setText(productList.get(position).getName());
+        holder.price.setText(formatter.format(productList.get(position).getPrice())+"đ");
+        holder.totalPrice.setText(formatter.format(productList.get(position).getPrice()*invoiceDetail.get(position).getAmount()) + "đ");
+        Picasso.get()
+                .load("http://daklod-backend.vercel.app/image/" + productList.get(position).getImg_url())
+                .fit()
+                .error(R.drawable.no_img)
+                .into(holder.img);
+        holder.img.setImageBitmap(productList.get(position).getBitmap());
+        holder.numberItem.setText(invoiceDetail.get(position).getAmount()+"");
+
+        holder.img.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent i=new Intent(context, ProductDetails.class);
+                i.putExtra("id", String.valueOf(productList.get(position).getProduct_id()));
+                context.startActivity(i);
             }
-        }
+        });
+        holder.minus.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                new CartFragment.ChangeAmountTask(fragment).execute(new CartAPI.AddCartBody(holder.product.getProduct_id(), - 1));
+            }
+        });
+        holder.plus.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                new CartFragment.ChangeAmountTask(fragment).execute(new CartAPI.AddCartBody(holder.product.getProduct_id(),  1));
+
+            }
+        });
+        holder.delete.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                new CartFragment.ChangeAmountTask(fragment).execute(new CartAPI.AddCartBody(holder.product.getProduct_id(),  holder.detail.getAmount() * -1));
+            }
+        });
 
     }
 
@@ -99,10 +102,11 @@ public class CartViewAdapter extends RecyclerView.Adapter<CartViewAdapter.CartVi
     public static class CartViewHolder extends RecyclerView.ViewHolder{
         ImageView img, delete;
         TextView title, price, totalPrice, minus, plus, numberItem;
+        PRODUCT product;
+        INVOICE_DETAIL detail;
 
         public CartViewHolder(@NonNull View itemView) {
             super(itemView);
-
             img = itemView.findViewById(R.id.imgOrdered);
             numberItem = itemView.findViewById(R.id.numberItem);
             delete = itemView.findViewById(R.id.imgDelete);

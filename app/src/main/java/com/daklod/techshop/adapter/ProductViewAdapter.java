@@ -48,9 +48,6 @@ public class ProductViewAdapter extends RecyclerView.Adapter<ProductViewAdapter.
 
         holder.name.setText(recentlyViewedList.get(position).getName());
 //        holder.description.setText(recentlyViewedList.get(position).getDescription());
-        NumberFormat money = NumberFormat.getCurrencyInstance();
-        money.setMaximumFractionDigits(0);
-        money.setCurrency(Currency.getInstance("VND"));
 
         DecimalFormat formatter = new DecimalFormat("#,###,###");
 
@@ -76,29 +73,12 @@ public class ProductViewAdapter extends RecyclerView.Adapter<ProductViewAdapter.
             Log.d("img", e.toString());
         }
 //        holder.bg.setImageBitmap(recentlyViewedList.get(position).getBitmap());
-        holder.itemView.setOnClickListener(new View.OnClickListener() {
+        holder.bg.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
                 Intent i=new Intent(context, ProductDetails.class);
                 i.putExtra("id", String.valueOf(recentlyViewedList.get(position).getProduct_id()));
-//                i.putExtra("name", recentlyViewedList.get(position).getName());
-//                i.putExtra("image", String.valueOf(holder.bg.getDrawable()));
-//
-////                BitmapDrawable bitmapDrawable = ((BitmapDrawable) );
-////                Bitmap bitmap = bitmapDrawable .getBitmap();
-////                ByteArrayOutputStream stream = new ByteArrayOutputStream();
-////                bitmap.compress(Bitmap.CompressFormat.JPEG, 100, stream);
-////                byte[] imageInByte = stream.toByteArray();
-////                ByteArrayInputStream bis = new ByteArrayInputStream(imageInByte);
-//
-//                i.putExtra("price",recentlyViewedList.get(position).getPrice());
-////                i.putExtra("desc",recentlyViewedList.get(position).getDescription());
-//                i.putExtra("qty",recentlyViewedList.get(position).getAmount());
-//                i.putExtra("unit",recentlyViewedList.get(position).getUnit());
-
                 context.startActivity(i);
-
             }
         });
 

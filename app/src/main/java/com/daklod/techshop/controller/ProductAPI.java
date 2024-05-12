@@ -26,6 +26,9 @@ public class ProductAPI extends Api{
         @GET("/api/v1/product")
         Call<List<PRODUCT>> getProductByID(@Query("filter") String filter);
 
+        @GET("/api/v1/product")
+        Call<List<PRODUCT>> getProductBySearch();
+
     }
     public ProductAPI(){
         super();
@@ -56,7 +59,7 @@ public class ProductAPI extends Api{
         try {
             Response<List<PRODUCT>> response = productRequest.getProductByID(filter).execute();
             productList = response.body();
-            Log.d("request", productList.get(0).toString());
+            Log.d("request", response.body().toString());
             return productList;
         } catch (Exception e){
             Log.e(TAG, "getProduct: ", e);
@@ -66,6 +69,23 @@ public class ProductAPI extends Api{
     }
 
 
+    public List<PRODUCT> getProductBySearch(String s) {
+        ProductRequest productRequest = retrofit.create(ProductRequest.class);
+        try {
+            Response<List<PRODUCT>> response = productRequest.getProduct().execute();
+            productList = response.body();
+            List<PRODUCT> newList = new ArrayList<>();
+            for (PRODUCT element : productList) {
+                if(element.getName().toLowerCase().contains(s.toLowerCase())) {
+                    newList.add(element);
+                }
+            }
+            return newList;
+        } catch (Exception e){
+            Log.e(TAG, "getProduct: ", e);
+            return productList;
+        }
+    }
 
 
 }
