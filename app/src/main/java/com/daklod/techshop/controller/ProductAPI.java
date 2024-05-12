@@ -18,42 +18,17 @@ import retrofit2.http.Query;
 public class ProductAPI extends Api{
     List<PRODUCT> productList;
     PRODUCT product;
-    public static class addCartBody {
-        int product_id, amount;
 
-        public addCartBody(int product_id, int amount) {
-            this.product_id = product_id;
-            this.amount = amount;
-        }
-
-        public int getProduct_id() {
-            return product_id;
-        }
-
-        public void setProduct_id(int product_id) {
-            this.product_id = product_id;
-        }
-
-        public int getAmount() {
-            return amount;
-        }
-
-        public void setAmount(int amount) {
-            this.amount = amount;
-        }
-    }
     interface ProductRequest{
         @GET("/api/v1/product")
         Call<List<PRODUCT>> getProduct();
 
         @GET("/api/v1/product")
-        Call<List<PRODUCT>> getProductBySearch();
-
-        @GET("/api/v1/product")
         Call<List<PRODUCT>> getProductByID(@Query("filter") String filter);
 
-        @POST("/api/v1/cart")
-        Call<PRODUCT> addProductToCart(@Body addCartBody body);
+        @GET("/api/v1/product")
+        Call<List<PRODUCT>> getProductBySearch();
+
     }
     public ProductAPI(){
         super();
@@ -77,6 +52,23 @@ public class ProductAPI extends Api{
             return productList;
         }
     }
+    public List<PRODUCT> getProductByID(int id) {
+
+        String filter = "product_id:eq:" + id;
+        ProductRequest productRequest = retrofit.create(ProductRequest.class);
+        try {
+            Response<List<PRODUCT>> response = productRequest.getProductByID(filter).execute();
+            productList = response.body();
+            Log.d("request", response.body().toString());
+            return productList;
+        } catch (Exception e){
+            Log.e(TAG, "getProduct: ", e);
+
+            return productList;
+        }
+    }
+
+
     public List<PRODUCT> getProductBySearch(String s) {
         ProductRequest productRequest = retrofit.create(ProductRequest.class);
         try {
@@ -94,38 +86,6 @@ public class ProductAPI extends Api{
             return productList;
         }
     }
-    public List<PRODUCT> getProductByID(int id) {
 
-        String filter = "product_id:eq:" + id;
-        ProductRequest productRequest = retrofit.create(ProductRequest.class);
-        try {
-            Response<List<PRODUCT>> response = productRequest.getProductByID(filter).execute();
-            productList = response.body();
-            Log.d("request", productList.get(0).toString());
-            return productList;
-        } catch (Exception e){
-            Log.e(TAG, "getProduct: ", e);
 
-            return productList;
-        }
-    }
-    public PRODUCT addProductToCart(addCartBody body) throws IOException {
-        ProductRequest requestProduct = retrofit.create(ProductRequest.class);
-
-        try {
-            Response<PRODUCT> response = requestProduct.addProductToCart(body).execute();
-
-            if (response.isSuccessful()) {
-                product = response.body();
-                Log.d(TAG, "postAddCart: Success");
-                return product;
-            } else {
-                Log.e(TAG, "postAddCart: Failed with code " + response.code());
-                return null;
-            }
-        } catch (IOException e) {
-            Log.e(TAG, "postAddCart: Error", e);
-            throw e;
-        }
-    }
 }

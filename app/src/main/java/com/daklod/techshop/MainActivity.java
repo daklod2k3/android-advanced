@@ -21,7 +21,6 @@ import com.daklod.techshop.view.SampleFragment;
 public class MainActivity extends AppCompatActivity {
 
     static String TAG = "MainActivity";
-
     BottomNavigationView bottomNavigationView;
 
     @Override
@@ -57,16 +56,40 @@ public class MainActivity extends AppCompatActivity {
 
                 case R.id.cart:
                     ReplaceFragment(new CartFragment());
+                    break;
             }
             return  true;
         });
     }
 
-    private void ReplaceFragment(Fragment fragment){
-        FragmentManager fragmentManager = getSupportFragmentManager();
-        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-        fragmentTransaction.replace(R.id.frame_layout, fragment);
-        fragmentTransaction.commit();
+    private void ReplaceFragment (Fragment fragment){
+        String backStateName = fragment.getClass().getName();
+        FragmentManager manager = getSupportFragmentManager();
+        boolean fragmentPopped = manager.popBackStackImmediate (backStateName, 0);
+
+        if (!fragmentPopped){ //fragment not in back stack, create it.
+            FragmentTransaction ft = manager.beginTransaction();
+            ft.replace(R.id.frame_layout, fragment);
+            ft.addToBackStack(backStateName);
+            ft.commit();
+        }
+    }
+
+//    private void ReplaceFragment(Fragment fragment){
+//        FragmentManager fragmentManager = getSupportFragmentManager();
+//        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+//        fragmentTransaction.replace(R.id.frame_layout, fragment);
+//        fragmentTransaction.commit();
+//    }
+
+    @Override
+    public void onBackPressed(){
+        if (getSupportFragmentManager().getBackStackEntryCount() == 1){
+            finish();
+        }
+        else {
+            super.onBackPressed();
+        }
     }
 
     class CheckAuthTask extends AsyncTask<Void, Void, Boolean>{
