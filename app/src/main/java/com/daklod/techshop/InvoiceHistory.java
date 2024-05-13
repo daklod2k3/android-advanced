@@ -91,7 +91,7 @@ public class InvoiceHistory extends AppCompatActivity {
     private void setAdapter(List<INVOICE> invoices){
         FlexboxLayoutManager layoutManager = new FlexboxLayoutManager(getBaseContext(), FlexDirection.ROW);
         recyclerView.setLayoutManager(layoutManager);
-        recyclerView.setAdapter(new InvoiceItemAdapter(getBaseContext(), invoices ));
+        recyclerView.setAdapter(new InvoiceItemAdapter(getApplication(), invoices));
 //        recyclerView.setAdapter(recentlyViewedAdapter);
     }
 

@@ -10,6 +10,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.daklod.techshop.DTO.INVOICE;
@@ -19,6 +20,7 @@ import com.daklod.techshop.ProductDetails;
 import com.daklod.techshop.R;
 import com.daklod.techshop.controller.CartAPI;
 import com.daklod.techshop.view.CartFragment;
+import com.daklod.techshop.view.InvoiceDetail;
 import com.squareup.picasso.Picasso;
 
 import java.text.DecimalFormat;
@@ -30,15 +32,21 @@ public class InvoiceItemAdapter extends RecyclerView.Adapter<InvoiceItemAdapter.
     int amount;
     Context context;
 
+    View view;
+
+
+
     public InvoiceItemAdapter(Context context, List<INVOICE> invoices) {
         this.context = context;
         this.invoices = invoices;
     }
+    Fragment fragment;
 
     @NonNull
     @Override
     public InvoiceItemAdapter.InvoiceViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(context).inflate(R.layout.invoice_item, parent, false);
+        view = LayoutInflater.from(context).inflate(R.layout.invoice_item, parent, false);
+
         return new InvoiceItemAdapter.InvoiceViewHolder(view);
     }
 
@@ -55,6 +63,16 @@ public class InvoiceItemAdapter extends RecyclerView.Adapter<InvoiceItemAdapter.
         holder.txtInvoiceTotal.setText("Thanh toán: " + formatter.format(invoice.getTotal_product()) + "đ");
 
         holder.txtAmountTotal.setText("Số lượng sản phẩm: " + invoice.getTotal_amount());
+
+        ((View) holder.txtInvoiceTotal.getParent()).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(context, InvoiceDetail.class);
+                intent.putExtra("invoice_id", invoice.getInvoice_id());
+                intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                context.startActivity(intent);
+            }
+        });
 
     }
 

@@ -96,6 +96,7 @@ public class CartFragment extends Fragment {
 
                 i.putExtras(bundle); // Đặt Bundle vào Intent
                 startActivity(i);
+                getActivity().finish();
 //                Toast.makeText(getContext(), "hello", Toast.LENGTH_SHORT).show();
             }
         });

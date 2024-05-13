@@ -3,7 +3,9 @@ package com.daklod.techshop.controller;
 import android.util.Log;
 
 import com.daklod.techshop.DTO.INVOICE;
+import com.daklod.techshop.DTO.INVOICE_DETAIL;
 import com.daklod.techshop.DTO.PRODUCT;
+import com.daklod.techshop.view.InvoiceDetail;
 import com.google.gson.annotations.SerializedName;
 
 import java.io.IOException;
@@ -24,7 +26,7 @@ public class InvoiceAPI extends Api {
         Call<List<INVOICE>> getInvoice();
 
         @GET("/api/v1/pay")
-        Call<List<INVOICE>> getInvoiceById(@Query("filter") String filter);
+        Call<GetInvoiceDetailResponse> getInvoiceById(@Query("filter") String filter);
     }
 
 
@@ -49,7 +51,29 @@ public class InvoiceAPI extends Api {
         return retrofit.create(RequestInvoice.class).getInvoice().execute();
     }
 
-    public Response<List<INVOICE>> getInvoiceById(int id) throws IOException {
+    public static class GetInvoiceDetailResponse {
+        @SerializedName("invoice")
+        INVOICE invoice;
+        @SerializedName("productList")
+        List<PRODUCT> productList;
+        @SerializedName("invoiceDetail")
+        List<INVOICE_DETAIL> invoiceDetail;
+
+
+        public List<PRODUCT> getProductList() {
+            return productList;
+        }
+
+        public List<INVOICE_DETAIL> getInvoiceDetail() {
+            return invoiceDetail;
+        }
+
+        public INVOICE getInvoice() {
+            return invoice;
+        }
+    }
+
+    public Response<GetInvoiceDetailResponse> getInvoiceById(int id) throws IOException {
         return retrofit.create(RequestInvoice.class).getInvoiceById("invoice_id:eq:" + id).execute();
     }
 

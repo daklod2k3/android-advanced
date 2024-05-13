@@ -42,11 +42,6 @@ public class CartAPI extends Api{
         List<PRODUCT> productList;
         List<INVOICE_DETAIL> invoiceDetail;
 
-        public GetCartResponse(List<PRODUCT> productList, List<INVOICE_DETAIL> invoiceDetail) {
-            this.productList = productList;
-            this.invoiceDetail = invoiceDetail;
-        }
-
         public List<PRODUCT> getProductList() {
             return productList;
         }

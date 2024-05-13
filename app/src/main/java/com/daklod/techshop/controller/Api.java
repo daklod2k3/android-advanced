@@ -17,8 +17,8 @@ public class Api {
     Retrofit retrofit;
     public static OkHttpClient client;
 
-    public static String url = "https://daklod-backend.vercel.app";
-//    public static String url = "http://10.0.2.2:3000";
+//    public static String url = "https://daklod-backend.vercel.app";
+    public static String url = "http://10.0.2.2:3000";
 
     public static final int TimeOut = 15;
 

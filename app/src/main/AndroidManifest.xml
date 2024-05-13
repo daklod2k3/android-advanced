@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.daklod.techshop">
+    package="com.daklod.techshop" >
 
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
@@ -13,12 +13,17 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
-        android:usesCleartextTraffic="true">
+        android:usesCleartextTraffic="true" >
+        <activity
+            android:name=".adapter.QRcodeActivity"
+            android:exported="false"
+            android:label="@string/title_activity_qrcode" />
+        <activity android:name=".view.InvoiceDetail" />
         <activity
             android:name=".LoginActivity"
             android:configChanges="orientation|keyboardHidden|screenSize"
             android:label="@string/title_activity_login"
-            android:theme="@style/AppTheme.Fullscreen">
+            android:theme="@style/AppTheme.Fullscreen" >
             <intent-filter>
                 <action android:name="com.google.firebase.MESSAGING_EVENT" />
                 <action android:name="android.intent.action.MAIN" />
@@ -31,10 +36,10 @@
         <activity android:name=".MainActivity" />
         <activity android:name=".RegisterActivity" />
         <activity android:name=".view.thanhtoanActivity" />
-        <activity android:name=".InvoiceHistory"/>
+        <activity android:name=".InvoiceHistory" />
         <activity
             android:name=".SearchActivity"
-            android:windowSoftInputMode="adjustNothing"></activity>
+            android:windowSoftInputMode="adjustNothing" />
         <activity android:name=".ResultActivity" />
 
         <meta-data

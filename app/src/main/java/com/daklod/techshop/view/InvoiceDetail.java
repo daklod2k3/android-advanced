@@ -2,6 +2,7 @@ package com.daklod.techshop.view;
 
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -12,6 +13,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.daklod.techshop.DTO.INVOICE;
 import com.daklod.techshop.DTO.INVOICE_DETAIL;
 import com.daklod.techshop.DTO.PRODUCT;
 import com.daklod.techshop.R;
@@ -31,20 +33,21 @@ import retrofit2.Response;
 public class InvoiceDetail extends AppCompatActivity {
     RecyclerView recyclerView;
     TextView subTotal,promotion,total,address;
-    Button btnThanhToan;
     ImageView btnBack;
     View rootView;
     List<PRODUCT> productList = new ArrayList<PRODUCT>();
     List<INVOICE_DETAIL> details = new ArrayList<INVOICE_DETAIL>();
-    int tongTien=0;
+
+    INVOICE invoice;
+    int invoice_id;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_thanhtoan);
+        setContentView(R.layout.activity_detail_invoice);
 
         recyclerView = findViewById(R.id.cartView);
 
-
+        invoice_id = getIntent().getIntExtra("invoice_id", 1);
 
 
         rootView = findViewById(R.id.rootView);
@@ -52,7 +55,6 @@ public class InvoiceDetail extends AppCompatActivity {
         promotion = findViewById(R.id.promotionTxt);
         total = findViewById(R.id.totalTxt);
         address = findViewById(R.id.addressTxt);
-        btnThanhToan = findViewById(R.id.btnOrderNow);
         btnBack = findViewById(R.id.btnBack);
         btnBack.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -61,7 +63,8 @@ public class InvoiceDetail extends AppCompatActivity {
                 onBackPressed();
             }
         });
-        new LoadCartTask().execute();
+        setLoad(true);
+        new LoadInvoice().execute();
 
     }
     public void loadGiaoDien(List<PRODUCT> mProductList,List<INVOICE_DETAIL> mDetails){
@@ -74,10 +77,6 @@ public class InvoiceDetail extends AppCompatActivity {
 
         }
 
-
-        for (int i = 0; i < productList.size();i++){
-            tongTien += productList.get(i).getPrice()*details.get(i).getAmount();
-        }
         NumberFormat money = NumberFormat.getCurrencyInstance();
         money.setMaximumFractionDigits(0);
         money.setCurrency(Currency.getInstance("VND"));
@@ -85,58 +84,45 @@ public class InvoiceDetail extends AppCompatActivity {
         DecimalFormat formatter = new DecimalFormat("#,###,###");
         promotion.setText("0đ");
 
-        subTotal.setText(formatter.format(tongTien) + "đ");
-        total.setText(formatter.format(tongTien) + "đ");
+        subTotal.setText(formatter.format(invoice.getTotal_product()) + "đ");
+        total.setText(formatter.format(invoice.getTotal_product()) + "đ");
         ThanhToanAdapter adapter = new ThanhToanAdapter(this,productList,details);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         recyclerView.setAdapter(adapter);
-        btnThanhToan.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                try {
-                    new payTask().execute();
-                } catch (Exception e) {
-                    throw new RuntimeException(e);
-                }
-            }
-        });
+
     }
-    class LoadCartTask extends AsyncTask<Void, String, CartAPI.GetCartResponse> {
+    class LoadInvoice extends AsyncTask<Void, String, InvoiceAPI.GetInvoiceDetailResponse> {
 
-        public LoadCartTask(){
-
-        }
 
         @Override
-        protected CartAPI.GetCartResponse doInBackground(Void... voids) {
+        protected InvoiceAPI.GetInvoiceDetailResponse doInBackground(Void... voids) {
             try {
-                Response<CartAPI.GetCartResponse> response = new CartAPI().getCart();
-                if (response.isSuccessful()){
-                    return response.body();
-                }
-                publishProgress(response.message());
+                return new InvoiceAPI().getInvoiceById(invoice_id).body();
 
             }catch (IOException e){
                 publishProgress("Lỗi kết nối!");
+            }catch (Exception e){
+                publishProgress(e.toString());
             }
             return null;
         }
         @Override
         protected void onProgressUpdate(String... values) {
+            Toast.makeText(getBaseContext(), values[0], Toast.LENGTH_SHORT).show();
+//            Log.e(TAG, "onProgressUpdate: ", e);
             setLoad(false);
-
+            cancel(true);
         }
 
-
-        public void onBackPressed() {
-            finish();
-        }
 
         @Override
-        protected void onPostExecute(CartAPI.GetCartResponse getCartResponse) {
+        protected void onPostExecute(InvoiceAPI.GetInvoiceDetailResponse getCartResponse) {
             setLoad(false);
             productList = getCartResponse.getProductList();
             details = getCartResponse.getInvoiceDetail();
+            invoice = getCartResponse.getInvoice();
+            Log.d("Invoice detail", "onPostExecute: " + getCartResponse.getInvoiceDetail().size());
+            Log.d("Invoice detail", "onPostExecute: " + invoice.getInvoice_id());
             loadGiaoDien(productList,details);
         }
     }
@@ -147,21 +133,5 @@ public class InvoiceDetail extends AppCompatActivity {
         }
         rootView.setVisibility(View.GONE);
     }
-    class payTask extends AsyncTask<Void, Void, Void> {
 
-        @Override
-        protected Void doInBackground(Void... voids) {
-            try {
-                return new InvoiceAPI().pay();
-            } catch (Exception e) {
-                throw new RuntimeException(e);
-            }
-        }
-
-        @Override
-        protected void onPostExecute(Void unused) {
-            Toast.makeText(getApplicationContext(), "Đặt hàng thành công", Toast.LENGTH_SHORT).show();
-            onBackPressed();
-        }
-    }
 }
