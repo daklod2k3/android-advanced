@@ -71,7 +71,7 @@ public class ProductAPI extends Api{
     public List<PRODUCT> getProductBySearch(String s) {
         ProductRequest productRequest = retrofit.create(ProductRequest.class);
         try {
-            Response<List<PRODUCT>> response = productRequest.getProduct().execute();
+            Response<List<PRODUCT>> response = productRequest.getProductBySearch().execute();
             productList = response.body();
             List<PRODUCT> newList = new ArrayList<>();
             for (PRODUCT element : productList) {
