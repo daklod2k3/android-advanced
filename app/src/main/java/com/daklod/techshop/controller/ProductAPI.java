@@ -26,8 +26,7 @@ public class ProductAPI extends Api{
         @GET("/api/v1/product")
         Call<List<PRODUCT>> getProductByID(@Query("filter") String filter);
 
-        @GET("/api/v1/product")
-        Call<List<PRODUCT>> getProductBySearch();
+
 
     }
     public ProductAPI(){
@@ -87,5 +86,9 @@ public class ProductAPI extends Api{
         }
     }
 
+
+    public Response<List<PRODUCT>> getProductByInvoice(int id) throws IOException{
+        return retrofit.create(ProductRequest.class).getProductByID("invoice_id:eq:" + id).execute();
+    }
 
 }

@@ -21,18 +21,16 @@ import android.widget.Toast;
 import com.daklod.techshop.AllCategory;
 import com.daklod.techshop.DTO.CUSTOMER;
 import com.daklod.techshop.DTO.USER;
+import com.daklod.techshop.InvoiceHistory;
 import com.daklod.techshop.LoginActivity;
 import com.daklod.techshop.R;
 import com.daklod.techshop.SearchActivity;
 import com.daklod.techshop.controller.Api;
 import com.daklod.techshop.controller.CheckAuthAPI;
 import com.daklod.techshop.controller.LoginAPI;
+import com.daklod.techshop.databinding.FragmentSampleBinding;
 
-/**
- * A simple {@link Fragment} subclass.
- * Use the {@link SampleFragment#newInstance} factory method to
- * create an instance of this fragment.
- */
+
 public class SampleFragment extends Fragment {
 
     // TODO: Rename parameter arguments, choose names that match
@@ -45,37 +43,11 @@ public class SampleFragment extends Fragment {
     private String mParam2;
     Button btn;
     TextView username;
-    public SampleFragment() {
-        // Required empty public constructor
-    }
-
-    /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
-     *
-     * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
-     * @return A new instance of fragment SampleFragment.
-     */
-    // TODO: Rename and change types and number of parameters
-    public static SampleFragment newInstance(String param1, String param2) {
-        SampleFragment fragment = new SampleFragment();
-        Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, param1);
-        args.putString(ARG_PARAM2, param2);
-        fragment.setArguments(args);
-        return fragment;
-    }
+    FragmentSampleBinding binding;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
-
-        if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
-        }
     }
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
@@ -90,6 +62,18 @@ public class SampleFragment extends Fragment {
         else{
             username.setText("Null");
         }
+
+        binding.btnInvoiceHistory.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Log.d(TAG, "onClick: ");
+                Intent intent = new Intent(getContext(), InvoiceHistory.class);
+                intent.putExtra("status", 1);
+                startActivity(intent);
+            }
+        });
+
+
 
 
         btn.setOnClickListener(new View.OnClickListener() {
@@ -106,6 +90,8 @@ public class SampleFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_sample, container, false);
+        View view = inflater.inflate(R.layout.fragment_sample, container, false);
+        binding = FragmentSampleBinding.inflate(inflater, container, false);
+        return binding.getRoot();
     }
 }

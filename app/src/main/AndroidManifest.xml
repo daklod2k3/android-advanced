@@ -3,9 +3,8 @@
     package="com.daklod.techshop">
 
     <uses-permission android:name="android.permission.INTERNET" />
-    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.POST_NOTIFICATIONS" />
-
 
     <application
         android:allowBackup="true"
@@ -16,26 +15,28 @@
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
         <activity
-            android:name="com.daklod.techshop.LoginActivity"
+            android:name=".LoginActivity"
             android:configChanges="orientation|keyboardHidden|screenSize"
             android:label="@string/title_activity_login"
             android:theme="@style/AppTheme.Fullscreen">
             <intent-filter>
                 <action android:name="com.google.firebase.MESSAGING_EVENT" />
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name="com.daklod.techshop.ProductDetails" />
-        <activity android:name="com.daklod.techshop.AllCategory" />
-        <activity android:name="com.daklod.techshop.MainActivity"/>
-        <activity android:name="com.daklod.techshop.RegisterActivity"/>
-        <activity android:name="com.daklod.techshop.view.thanhtoanActivity"/>
+        <activity android:name=".ProductDetails" />
+        <activity android:name=".AllCategory" />
+        <activity android:name=".MainActivity" />
+        <activity android:name=".RegisterActivity" />
+        <activity android:name=".view.thanhtoanActivity" />
+        <activity android:name=".InvoiceHistory"/>
         <activity
-            android:name="com.daklod.techshop.SearchActivity"
-            android:windowSoftInputMode="adjustNothing">
-        </activity>
-        <activity android:name="com.daklod.techshop.ResultActivity"/>
+            android:name=".SearchActivity"
+            android:windowSoftInputMode="adjustNothing"></activity>
+        <activity android:name=".ResultActivity" />
+
         <meta-data
             android:name="preloaded_fonts"
             android:resource="@array/preloaded_fonts" />

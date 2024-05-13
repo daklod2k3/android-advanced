@@ -64,7 +64,6 @@ public class CartFragment extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
 //        inflater.inflate(R.layout.activity_main, container);
-        if (fragmentView == null)
             fragmentView = inflater.inflate(R.layout.activity_cart, container, false);
         return fragmentView;
 
@@ -116,11 +115,14 @@ public class CartFragment extends Fragment {
     private void setLoad(boolean load){
         if (!load){
             animationView.setVisibility(View.GONE);
+            rootView.setClickable(true);
             rootView.setVisibility(View.VISIBLE);
+
             return;
         }
 
         animationView.setVisibility(View.VISIBLE);
+        rootView.setClickable(false);
         rootView.setVisibility(View.GONE);
     }
 

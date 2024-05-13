@@ -16,6 +16,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.airbnb.lottie.LottieAnimationView;
+import com.daklod.techshop.ResultActivity;
 import com.google.android.flexbox.FlexDirection;
 import com.google.android.flexbox.FlexWrap;
 import com.google.android.flexbox.FlexboxLayoutManager;
@@ -54,6 +55,7 @@ public class HomeFragment extends Fragment {
 //    List<RecentlyViewed> recentlyViewedList;
 
     TextView allCategory;
+    TextView allProduct;
     ViewGroup mainView;
 
     //
@@ -83,6 +85,7 @@ public class HomeFragment extends Fragment {
         recentlyViewedRecycler = getView().findViewById(R.id.productRecycler);
         bannerSliderView = getView().findViewById(R.id.bannerSlider);
         bannerView = getView().findViewById(R.id.bannerImage);
+        allProduct = getView().findViewById(R.id.show_all);
 
         categoryLoadAnim = getView().findViewById(R.id.categoryLoadAnimation);
         productLoadAnim = getView().findViewById(R.id.productLoadAnimation);
@@ -98,6 +101,14 @@ public class HomeFragment extends Fragment {
         });
         // test
 
+        allProduct.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getContext(), ResultActivity.class);
+                intent.putExtra("search", "");
+                startActivity(intent);
+            }
+        });
 
         mainView = (ViewGroup) view.findViewById(R.id.mainView);
         allCategory.setOnClickListener(new View.OnClickListener() {

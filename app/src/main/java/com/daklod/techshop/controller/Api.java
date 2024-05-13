@@ -2,6 +2,8 @@ package com.daklod.techshop.controller;
 
 import android.util.Log;
 
+import com.google.gson.GsonBuilder;
+
 import java.util.concurrent.TimeUnit;
 
 import okhttp3.OkHttpClient;
@@ -16,7 +18,7 @@ public class Api {
     public static OkHttpClient client;
 
     public static String url = "https://daklod-backend.vercel.app";
-//    public static String url = "http://192.168.2.5:3000";
+//    public static String url = "http://10.0.2.2:3000";
 
     public static final int TimeOut = 15;
 

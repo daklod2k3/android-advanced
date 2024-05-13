@@ -3,11 +3,16 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context="com.daklod.techshop.InvoiceHistory"
     android:theme="@style/NavigationTheme"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
 
-    <include layout="@layout/loading_view"
-        android:id="@+id/loadingAnimation"/>
+    >
+
+<!--    <include layout="@layout/loading_view"-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="match_parent"-->
+<!--        android:id="@+id/loadingAnimation"/>-->
 
     <LinearLayout
         app:layout_constraintTop_toTopOf="parent"
@@ -45,23 +50,27 @@
         android:background="#fff"
         />
 
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Không có đơn hàng"
+        android:textColor="#000"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"/>
+    <include layout="@layout/loading_view" android:id="@id/loadingAnimation"/>
+
     <androidx.recyclerview.widget.RecyclerView
         android:minHeight="700dp"
+        android:background="#fff"
         android:id="@+id/recycleInvoiceHistory"
         app:layout_constraintTop_toBottomOf="@id/invoiceTypeNavigation"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         tools:listitem="@layout/invoice_item">
     </androidx.recyclerview.widget.RecyclerView>
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Không có đơn hàng"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintBottom_toBottomOf="parent"/>
-    <include layout="@layout/loading_view" android:id="@id/loadingAnimation"/>
+
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

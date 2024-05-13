@@ -32,15 +32,13 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
+        initUI();
         Intent main = getIntent();
-        if (main.getStringExtra("admin") != null) initUI();
-        else
+        if (main.getStringExtra("admin") == null)
             try {
                 new CheckAuthTask().execute();
             }catch (Exception e){
                 Log.e(TAG, "onCreate: ", e);
-                initUI();
             }
 
     }
@@ -129,7 +127,7 @@ public class MainActivity extends AppCompatActivity {
             super.onPostExecute(aBoolean);
             Log.d(TAG, "onPostExecute: " + aBoolean);
             if (aBoolean) {
-                initUI();
+//                initUI();
                 return;
             };
 //            new Intent(getBaseContext(), LoginActivity.class);
