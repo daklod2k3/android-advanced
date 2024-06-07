@@ -43,6 +43,7 @@ public class InvoiceHistory extends AppCompatActivity {
     List<INVOICE> invoiceList;
 
 
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -53,6 +54,14 @@ public class InvoiceHistory extends AppCompatActivity {
         loadView = findViewById(R.id.loadingAnimation);
         navigationView = findViewById(R.id.invoiceTypeNavigation);
         recyclerView = findViewById(R.id.recycleInvoiceHistory);
+
+        findViewById(R.id.btnBack).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                onBackPressed();
+            }
+        });
+
 
         navigationView.setOnItemSelectedListener(new NavigationBarView.OnItemSelectedListener() {
             @Override
